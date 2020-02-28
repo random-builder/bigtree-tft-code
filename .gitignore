@@ -119,3 +119,6 @@ cmake-build-*
 .pydevproject
 .settings
 .classpath
+
+###
+.env
