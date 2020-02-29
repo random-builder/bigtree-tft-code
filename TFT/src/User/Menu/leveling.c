@@ -25,8 +25,12 @@ void menuAutoLeveling(void)
     switch(key_num)
     {
       case KEY_ICON_0:
-        storeCmd("G28\n");
-        storeCmd("G29\n");
+        storeCmd("G28\n"); // home/reset
+        storeCmd("G29 P1\n"); // measure
+        storeCmd("G29 P3.1\n"); // populate
+        storeCmd("G29 P5 C0.75\n"); // adjust
+        storeCmd("G29 T\n"); // report
+        storeCmd("G29 A\n"); // activate
         #ifdef AUTO_SAVE_LOAD_LEVELING_VALUE
           storeCmd("M500\n");
         #endif

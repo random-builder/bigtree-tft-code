@@ -233,3 +233,6 @@ custom gcode below are compatible only if MENU_LIST_MODE is active
 #define CANCEL_PRINT_GCODE "G28 X0 Y0\n"
 
 #endif
+
+// user override
+#include "Configuration_user.h"

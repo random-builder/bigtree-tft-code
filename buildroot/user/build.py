@@ -23,6 +23,7 @@ def platformio_run():
 
     build_dir = f"{root_dir}/.pioenvs/{display_name}"
     build_flags = f"-D{display_name}=true -DUSER_STAMP={user_stamp}"
+#     build_flags = f"-D{display_name}=true -DUSER_STAMP={user_stamp} -DSOFTWARE_VERSION={user_stamp}"
 
     script_setup = os.path.join(this_dir, "setup.py")
 
