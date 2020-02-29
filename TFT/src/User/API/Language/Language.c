@@ -169,6 +169,8 @@ const char *const en_pack[LABEL_NUM]={
   EN_M0_PAUSE,
   //
   EN_POINT_5,
+  EN_HOME_ALL,
+  EN_MOTION_STOP,
 };
 
 const char *const cn_pack[LABEL_NUM]={

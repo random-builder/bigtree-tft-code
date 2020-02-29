@@ -144,6 +144,8 @@ enum
   ICON_LEDCOLOR,
   //
   ICON_POINT_5,
+  ICON_HOME_ALL,
+  ICON_MOTION_STOP,
 
 //add new icons above this line  only 
 //  ICON_RESERVE

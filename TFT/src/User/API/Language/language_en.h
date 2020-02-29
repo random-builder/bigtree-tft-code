@@ -154,5 +154,7 @@
     #define EN_M0_PAUSE             "Paused by M0 command"
     //
     #define EN_POINT_5              "Point 5"
+    #define EN_HOME_ALL             "X-Y-Z"
+    #define EN_MOTION_STOP          "No Motion"
 
 #endif

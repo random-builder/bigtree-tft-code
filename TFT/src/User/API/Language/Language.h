@@ -180,6 +180,8 @@ enum
   LABEL_M0_PAUSE,
   //
   LABEL_POINT_5,
+  LABEL_HOME_ALL,
+  LABEL_MOTION_STOP,
 
   //add new keywords above this line only
   //keep the following always at the end of this list
