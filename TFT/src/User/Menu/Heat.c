@@ -199,7 +199,7 @@ void menuHeat(void)
     key_num = menuKeyGetValue();
     switch(key_num)
     {
-      case KEY_ICON_0:
+      case KEY_ICON_0: // DEC
         if(heater.T[heater.tool].target > 0)
         {
           heater.T[heater.tool].target = 
@@ -209,7 +209,7 @@ void menuHeat(void)
         }
         break;
       
-      case KEY_ICON_3:
+      case KEY_ICON_3: // INC
         if(heater.T[heater.tool].target < heat_max_temp[heater.tool])
         {
           heater.T[heater.tool].target = 
@@ -219,24 +219,24 @@ void menuHeat(void)
         }
         break;
         
-      case KEY_ICON_4:
+      case KEY_ICON_4: // NOZZLE
         lastHeater.tool = heater.tool = (TOOL)((heater.tool+1) % HEATER_NUM);
         heatItems.items[key_num] = itemTool[heater.tool];
         menuDrawItem(&heatItems.items[key_num], key_num);
         showTemperature();
         break;
       
-      case KEY_ICON_5:
+      case KEY_ICON_5: // DELTA
         item_degree_i = (item_degree_i+1) % ITEM_DEGREE_NUM;
         heatItems.items[key_num] = itemDegree[item_degree_i];
         menuDrawItem(&heatItems.items[key_num], key_num);
         break;
       
-      case KEY_ICON_6:
+      case KEY_ICON_6: // STOP
         heater.T[heater.tool].target = 0;
         break;
       
-      case KEY_ICON_7:
+      case KEY_ICON_7: // BACK
         infoMenu.cur--;
         break;
       

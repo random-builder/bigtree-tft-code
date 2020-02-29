@@ -142,6 +142,8 @@ enum
   ICON_GLOBAL_NOZZLE0,
   ICON_GLOBAL_BED,
   ICON_LEDCOLOR,
+  //
+  ICON_POINT_5,
 
 //add new icons above this line  only 
 //  ICON_RESERVE

@@ -19,6 +19,8 @@ const char iconBmpName[][32]={
 "PowerSupply", "Custom", "Custom0", "Custom1", "Custom2", "Custom3", "Custom4", "Custom5", "Custom6", "Home_Move", "Heat_Fan",
 "ManualLevel", "CoolDown", "SilentOff","StatusNozzle","StatusBed","StatusFan","MainMenu","StatusSpeed","StatusFlow",
 "parametersetting", "global_nozzle", "global_bed", "ledcolor",
+//
+"Point_5",
 }; 
 
 u8 scanUpdateFile(void)
