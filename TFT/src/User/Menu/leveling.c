@@ -3,9 +3,9 @@
 
 const MENUITEMS autoLevelingItems = {
 // title
-LABEL_ABL,
+LABEL_AUTO_LEVEL,
 // icon                        label
- {{ICON_LEVELING,              LABEL_ABL},
+ {{ICON_LEVELING,              LABEL_AUTO_LEVEL},
   {ICON_BLTOUCH_DEPLOY,        LABEL_BLTOUCH_DEPLOY},
   {ICON_BLTOUCH_STOW,          LABEL_BLTOUCH_STOW},
   {ICON_BLTOUCH_TEST,          LABEL_BLTOUCH_TEST},
@@ -65,7 +65,7 @@ void menuAutoLeveling(void)
 
 const MENUITEMS manualLevelingItems = {
 // title
-LABEL_LEVELING,
+LABEL_HAND_LEVEL,
 // icon                        label
  {{ICON_POINT_1,               LABEL_POINT_1},
   {ICON_POINT_2,               LABEL_POINT_2},

@@ -182,6 +182,8 @@ enum
   LABEL_POINT_5,
   LABEL_HOME_ALL,
   LABEL_MOTION_STOP,
+  LABEL_AUTO_LEVEL,
+  LABEL_HAND_LEVEL,
 
   //add new keywords above this line only
   //keep the following always at the end of this list

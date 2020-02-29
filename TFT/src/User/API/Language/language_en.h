@@ -2,9 +2,9 @@
 #define _LANGUAGE_EN_H_
 
     #define EN_LANGUAGE             "English"
-    #define EN_HEAT                 "Heat"
-    #define EN_MOVE                 "Move"
-    #define EN_HOME                 "Home"
+    #define EN_HEAT                 "Heater"
+    #define EN_MOVE                 "Motion"
+    #define EN_HOME                 "Homing"
     #define EN_PRINT                "Print"
     #define EN_EXTRUDE              "Extrude"
     #define EN_FAN                  "Fan"
@@ -17,7 +17,7 @@
     #define EN_SHUT_DOWN            "Shut Down"
     #define EN_RGB_SETTINGS         "LED Color"
     #define EN_RGB_OFF              "LED Off"
-    #define EN_GCODE                "Gcode"
+    #define EN_GCODE                "G code"
     #define EN_CUSTOM               "Custom"
     #define EN_LEVELING             "Leveling"
     #define EN_POINT_1              "Point 1"
@@ -125,7 +125,7 @@
     #define EN_PREHEAT              "Preheat"
     #define EN_PREHEAT_BOTH         "Both"
     #define EN_PREHEAT_PLA          "PLA"
-    #define EN_PREHEAT_PETG         "PETG"
+    #define EN_PREHEAT_PETG         "PET"
     #define EN_PREHEAT_ABS          "ABS"
     #define EN_PREHEAT_CUSTOM1      "CUSTOM1"
     #define EN_PREHEAT_CUSTOM2      "CUSTOM2"
@@ -155,6 +155,8 @@
     //
     #define EN_POINT_5              "Point 5"
     #define EN_HOME_ALL             "X-Y-Z"
-    #define EN_MOTION_STOP          "No Motion"
+    #define EN_MOTION_STOP          "Stop Moto"
+    #define EN_AUTO_LEVEL           "Auto Even"
+    #define EN_HAND_LEVEL           "Hand Tune"
 
 #endif

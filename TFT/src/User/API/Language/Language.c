@@ -171,6 +171,8 @@ const char *const en_pack[LABEL_NUM]={
   EN_POINT_5,
   EN_HOME_ALL,
   EN_MOTION_STOP,
+  EN_AUTO_LEVEL,
+  EN_HAND_LEVEL,
 };
 
 const char *const cn_pack[LABEL_NUM]={
