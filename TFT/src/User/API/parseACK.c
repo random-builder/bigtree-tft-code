@@ -5,10 +5,12 @@ char dmaL2Cache[ACK_MAX_SIZE];
 static u16 ack_index=0;
 static u8 ack_cur_src = SERIAL_PORT;
 int MODEselect;
+
 // Ignore reply "echo:" message (don't display in popup menu)
 const char *const ignoreEcho[] = {
   "Now fresh file:",
   "Probe Z Offset:",
+  "Active Extruder:",
 };
 
 void setCurrentAckSrc(uint8_t src)

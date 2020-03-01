@@ -156,8 +156,9 @@ void busyIndicator(SYS_STATUS status)
 {
   if(status == STATUS_BUSY)
   {
-    GUI_SetColor(YELLOW);
-    GUI_FillCircle(busySign.rect.x0, (busySign.rect.y1 - busySign.rect.y0) / 2, (busySign.rect.x1-busySign.rect.x0)/2);
+//  GUI_SetColor(CYAN);
+//  GUI_FillCircle(busySign.rect.x0, (busySign.rect.y1 - busySign.rect.y0) / 2, (busySign.rect.x1-busySign.rect.x0)/2);
+    GUI_FillRectColor(busySign.rect.x0, busySign.rect.y0, busySign.rect.x1, busySign.rect.y1, CYAN);
     GUI_SetColor(FONT_COLOR);
   }
   busySign.status = status;
