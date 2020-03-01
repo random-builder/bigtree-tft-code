@@ -6,7 +6,8 @@ const MENUITEMS homeItems = {
 //   title
 LABEL_HOME,
 // icon                       label
- {{ICON_HOME_ALL,             LABEL_HOME_ALL},
+ {
+  {ICON_HOME_ALL,             LABEL_HOME_ALL},
   {ICON_X_HOME,               LABEL_X_HOME},
   {ICON_Y_HOME,               LABEL_Y_HOME},
   {ICON_Z_HOME,               LABEL_Z_HOME},

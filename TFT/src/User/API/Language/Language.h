@@ -158,8 +158,8 @@ enum
   LABEL_IS_PAUSE,
   LABEL_AUTO_SHUT_DOWN,
   LABEL_MANUAL_SHUT_DOWN,
-  LABEL_UNIFIEDMOVE,
-  lABEL_UNIFIEDHEAT,
+  LABEL_UNI_MOVE,
+  lABEL_UNI_HEAT,
   LABEL_COOLDOWN,
   LABEL_EMERGENCYSTOP,
   LABEL_TOUCH_TO_EXIT,
@@ -185,12 +185,14 @@ enum
   LABEL_AUTO_LEVEL,
   LABEL_HAND_LEVEL,
   LABEL_PREHEAT_NYL,
+  LABEL_LOWER_BED,
+  LABEL_AUTO_PROBE,
 
   //add new keywords above this line only
   //keep the following always at the end of this list
   LABEL_NUM,
   LABEL_BACKGROUND,
-  LABEL_DYNAMIC
+  LABEL_DYNAMIC,
 };
 
 u8 * textSelect(u8 sel);

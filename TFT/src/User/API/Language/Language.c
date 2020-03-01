@@ -174,6 +174,8 @@ const char *const en_pack[LABEL_NUM]={
   EN_AUTO_LEVEL,
   EN_HAND_LEVEL,
   EN_PREHEAT_NYL,
+  EN_LOWER_BED,
+  EN_AUTO_PROBE,
 };
 
 const char *const cn_pack[LABEL_NUM]={

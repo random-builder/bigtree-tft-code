@@ -3,7 +3,7 @@
 
     #define EN_LANGUAGE             "English"
     #define EN_HEAT                 "Heater"
-    #define EN_MOVE                 "Motion"
+    #define EN_MOVE                 "Walking"
     #define EN_HOME                 "Homing"
     #define EN_PRINT                "Print"
     #define EN_EXTRUDE              "Filament"
@@ -132,7 +132,7 @@
     #define EN_IS_PAUSE             "Unable to extrude when printing, Pause printing?"
     #define EN_AUTO_SHUT_DOWN       "Auto Power"
     #define EN_MANUAL_SHUT_DOWN     "Manual"
-    #define EN_UNIFIEDMOVE          "Movement"
+    #define EN_UNIFIEDMOVE          "Motion"
     #define EN_UNIFIEDHEAT          "Heating"
     #define EN_COOLDOWN             "Cool Down"
     #define EN_EMERGENCYSTOP        "EM. STOP"
@@ -159,5 +159,7 @@
     #define EN_AUTO_LEVEL           "Auto Even"
     #define EN_HAND_LEVEL           "Hand Tune"
     #define EN_PREHEAT_NYL          "NYL"
+    #define EN_LOWER_BED            "Bed Down"
+    #define EN_AUTO_PROBE           "Probe"
 
 #endif

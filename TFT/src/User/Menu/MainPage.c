@@ -8,8 +8,8 @@ LABEL_READY,
 // icon                       label
   #ifdef UNIFIED_MENU //if Unified menu is selected
    {
-    {ICON_HOME_MOVE,            LABEL_UNIFIEDMOVE},
-    {ICON_HEAT_FAN,             lABEL_UNIFIEDHEAT},
+    {ICON_HOME_MOVE,            LABEL_UNI_MOVE},
+    {ICON_HEAT_FAN,             lABEL_UNI_HEAT},
     {ICON_EXTRUDE,              LABEL_FILAMENT},
     {ICON_BACKGROUND,           LABEL_BACKGROUND},
 //    {ICON_STOP,                 LABEL_EMERGENCYSTOP},
