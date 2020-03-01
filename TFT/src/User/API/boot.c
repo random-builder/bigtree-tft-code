@@ -1,5 +1,11 @@
+//
+//
+//
+
 #include "boot.h"
 #include "includes.h"
+
+#include "config.h"
 
 const GUI_RECT iconUpdateRect = {(LCD_WIDTH - ICON_WIDTH)/2,              (LCD_HEIGHT - ICON_HEIGHT)/2, 
                                  (LCD_WIDTH - ICON_WIDTH)/2 + ICON_WIDTH, (LCD_HEIGHT - ICON_HEIGHT)/2 + ICON_HEIGHT};
@@ -199,14 +205,14 @@ void scanResetDir(void)
 
 void scanUpdates(void)
 {
-  volatile u8 result = 0;   //must volatileï¼
+  volatile u8 result = 0;   // must use volatile
   if(mountSDCard())
   {
     result = scanUpdateFile();
     if (result & FONT)
     {
       updateFont(FONT_ROOT_DIR"/byte_ascii.fon", BYTE_ASCII_ADDR);
-      updateFont(FONT_ROOT_DIR"/word_unicode.fon", WORD_UNICODE);
+      updateFont(FONT_ROOT_DIR"/word_unicode.fon", WORD_UNICODE_ADDR);
     }
     if (result & BMP) //bmp
     {

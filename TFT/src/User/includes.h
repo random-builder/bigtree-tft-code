@@ -1,5 +1,8 @@
-#ifndef _INCLUDES_H_
-#define _INCLUDES_H_
+//
+//
+//
+
+#pragma once
 
 #include <AnyMenu.h>
 #include <AnyPopup.h>
@@ -106,6 +109,4 @@ typedef struct
 }HOST;
 
 extern HOST infoHost;
-
-#endif
 

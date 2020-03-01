@@ -1,5 +1,8 @@
-#ifndef _BOOT_H_
-#define _BOOT_H_
+//
+//
+//
+
+#pragma once
 
 #include "variants.h"
 #include "stdbool.h"
@@ -11,7 +14,7 @@
 #define ICON_ADDR(num)          ((num)*0x5000+0x4B000)
 
 //
-#define WORD_UNICODE            0x280000 // unicode (+0x480000 4.5M)
+#define WORD_UNICODE_ADDR       0x280000 // unicode (+0x480000 4.5M)
 #define BYTE_ASCII_ADDR         0x700000 // ascii (+0x1000 4K)
 //#define BYTE_RESERVE_ADDR      0x710000
 
@@ -169,5 +172,3 @@ typedef union
 
 void scanUpdates(void);
 bool bmpDecode(char *bmp, u32 addr);
-
-#endif 

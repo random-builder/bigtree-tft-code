@@ -26,7 +26,7 @@ static FONT_BITMAP font[] = {
     0x24F,
     BYTE_HEIGHT,
     BYTE_WIDTH,
-    WORD_UNICODE,
+    WORD_UNICODE_ADDR,
     BYTE_HEIGHT,
     BYTE_WIDTH * 2, // default "word_unicode.fon" dot matrix library font size is 24*24 / 16*16
     0x0,  // the first character in WORD_UNICODE is 0x0000
@@ -36,7 +36,7 @@ static FONT_BITMAP font[] = {
     0x451,
     BYTE_HEIGHT,
     BYTE_WIDTH,
-    WORD_UNICODE,
+    WORD_UNICODE_ADDR,
     BYTE_HEIGHT,
     BYTE_WIDTH * 2,
     0,
@@ -46,7 +46,7 @@ static FONT_BITMAP font[] = {
     0x58F,
     BYTE_HEIGHT,
     BYTE_WIDTH,
-    WORD_UNICODE,
+    WORD_UNICODE_ADDR,
     BYTE_HEIGHT,
     BYTE_WIDTH * 2, // default word_unicode.fon dot matrix library font size is 24*24 / 16*16
     0,
@@ -56,7 +56,7 @@ static FONT_BITMAP font[] = {
     0xFFFF,
     BYTE_HEIGHT,
     BYTE_WIDTH * 2,
-    WORD_UNICODE,
+    WORD_UNICODE_ADDR,
     BYTE_HEIGHT,
     BYTE_WIDTH * 2,
     0,
