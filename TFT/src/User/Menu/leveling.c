@@ -67,12 +67,13 @@ const MENUITEMS manualLevelingItems = {
 // title
 LABEL_HAND_LEVEL,
 // icon                        label
- {{ICON_POINT_1,               LABEL_POINT_1},
-  {ICON_POINT_2,               LABEL_POINT_2},
-  {ICON_POINT_3,               LABEL_POINT_3},
+ {
   {ICON_POINT_4,               LABEL_POINT_4},
-  {ICON_POINT_5,               LABEL_POINT_5},
+  {ICON_BACKGROUND,            LABEL_BACKGROUND}, // {ICON_POINT_2,               LABEL_POINT_2},
+  {ICON_POINT_3,               LABEL_POINT_3},
+  {ICON_BACKGROUND,            LABEL_BACKGROUND}, // {ICON_POINT_4,               LABEL_POINT_4},
   {ICON_BACKGROUND,            LABEL_BACKGROUND},
+  {ICON_POINT_5,               LABEL_POINT_5},
   {ICON_BACKGROUND,            LABEL_BACKGROUND},
   {ICON_BACK,                  LABEL_BACK},}
 };

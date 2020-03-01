@@ -8,18 +8,12 @@ LABEL_PREHEAT,
 // icon                       label
   {
     {ICON_PREHEAT_PLA,          LABEL_PREHEAT_PLA},
-    {ICON_PREHEAT_PETG,         LABEL_PREHEAT_PETG},
+    {ICON_PREHEAT_PET,          LABEL_PREHEAT_PET},
     {ICON_PREHEAT_ABS,          LABEL_PREHEAT_ABS},
-    {ICON_BACKGROUND,           LABEL_BACKGROUND},
-    {ICON_BACKGROUND,           LABEL_BACKGROUND},
-//    {ICON_PREHEAT_CUSTOM1,      LABEL_PREHEAT_CUSTOM1},
-//    {ICON_PREHEAT_CUSTOM2,      LABEL_PREHEAT_CUSTOM2},
     {ICON_PREHEAT_BOTH,         LABEL_PREHEAT_BOTH},
-    #ifdef UNIFIED_MENU
-    {ICON_BACKGROUND,           LABEL_BACKGROUND},
-    #else
-    {ICON_HEAT,                 LABEL_HEAT},
-    #endif
+    {ICON_PREHEAT_NYL,          LABEL_PREHEAT_NYL},
+    {ICON_PREHEAT_NYL,          LABEL_PREHEAT_NYL},
+    {ICON_PREHEAT_NYL,          LABEL_PREHEAT_NYL},
     {ICON_BACK,                 LABEL_BACK},
   }
 };
@@ -55,6 +49,9 @@ void menuPreheat(void)
       case KEY_ICON_0:
       case KEY_ICON_1:
       case KEY_ICON_2:
+      case KEY_ICON_4:
+      case KEY_ICON_5:
+      case KEY_ICON_6:
         switch(nowHeater){
           case BOTH:
             heatSetTargetTemp(BED, preheat_bed_temp[key_num]);
@@ -69,18 +66,12 @@ void menuPreheat(void)
         }
         break;
         
-      case KEY_ICON_5:
+      case KEY_ICON_3: // Solo or Both
         nowHeater = (TOOLPREHEAT)((nowHeater+1) % 3);
         preheatItems.items[key_num] = itemToolPreheat[nowHeater];
         menuDrawItem(&preheatItems.items[key_num], key_num);;
         break;
       
-      #ifndef UNIFIED_MENU
-      case KEY_ICON_6:
-        infoMenu.menu[++infoMenu.cur] = menuHeat;
-        break;
-      
-      #endif
       case KEY_ICON_7:
         infoMenu.cur--; break;
       default:break;

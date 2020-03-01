@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# copy firmware to remote octopi host with marlin usb connection
+# copy firmware to remote octopi host
 #
 
 import os
@@ -22,9 +22,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--user_name', dest="user_name", default="pi")
-parser.add_argument('--host_name', dest="host_name", default="octopi2")
-parser.add_argument('--disk_label', dest="disk_label", default="MKS-BASE")
+parser.add_argument('--user_name', dest="user_name", default="user0")
+parser.add_argument('--host_name', dest="host_name", default="localhost")
+parser.add_argument('--disk_label', dest="disk_label", default="BTT_TFT")
 parser.add_argument('--firmware_path', dest="firmware_path", required=True)
 
 params = parser.parse_args()

@@ -1,7 +1,6 @@
 #include "Speed.h"
 #include "includes.h"
 
-//1��title(����), ITEM_PER_PAGE��item(ͼ��+��ǩ) 
 MENUITEMS percentageItems = {
 //   title
 LABEL_PERCENTAGE_SPEED,
@@ -46,12 +45,11 @@ void speedSetSendWaiting(u8 tool, bool isWaiting)
   send_waiting[tool] = isWaiting;
 }
 
-/* ���õ�ǰ�İٷֱ� */
 void speedSetPercent(u8 tool, u16 per)
 {
   percentage[tool]=limitValue(10, per, 999);
 }
-/* ��õ�ǰ�İٷֱ� */
+
 u16 speedGetPercent(u8 tool)
 {
   return percentage[tool];

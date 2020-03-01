@@ -17,7 +17,7 @@
 void menuStatus(void);
 //void set_status_icon(void);
 void drawTemperature(void);
-void storegantry(int n, float val);
+void persistPosition(int n, float val);
 void toggleTool(void);
 void statusScreen_setMsg(const uint8_t *title,const uint8_t *msg);
 void drawStatusScreenMsg(void);

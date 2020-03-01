@@ -2,9 +2,9 @@
 #include "includes.h"
 #include "list_item.h"
 
-// exhibitRect is 2 ICON Space in the Upper Row and 2 Center Coloum. 
+// exhibitRect position: [-X--]
 const GUI_RECT exhibitRect = {
-   1*ICON_WIDTH+1*SPACE_X+START_X,  0*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y,  3*ICON_WIDTH+2*SPACE_X+START_X,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y
+   1*ICON_WIDTH+1*SPACE_X+START_X,  0*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y,  2*ICON_WIDTH+2*SPACE_X+START_X,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y
 };
 
 const GUI_RECT rect_of_key[ITEM_PER_PAGE*2]={

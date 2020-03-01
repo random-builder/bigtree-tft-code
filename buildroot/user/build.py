@@ -47,5 +47,10 @@ def platformio_run():
 
     # invoke build
     platformio = f"{root_dir}/.env/bin/platformio"
-    command_build = [platformio, "run", "--environment", environment, "--project-dir", root_dir, "--target", "setup"]
+    command_build = [
+        platformio, "run",
+        "--environment", environment,
+        "--project-dir", root_dir,
+        "--target", "setup",
+    ]
     subprocess.run(command_build)

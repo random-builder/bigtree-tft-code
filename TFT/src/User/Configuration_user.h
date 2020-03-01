@@ -4,6 +4,8 @@
 
 #define UNIFIED_MENU
 
+#undef  SHOW_BTT_BOOTSCREEN
+
 #undef  AUTO_SAVE_LOAD_LEVELING_VALUE
 
 #undef  X_MAX_POS
@@ -77,3 +79,9 @@
 #define LEVELING_POINT_4_Y         (Y_MAX_POS - 10)
 #define LEVELING_POINT_5_X         (X_MIN_POS + X_MAX_POS)/2
 #define LEVELING_POINT_5_Y         (Y_MIN_POS + 10)
+
+#undef  SPEED_ID
+#define SPEED_ID         {"M/S", "F/R"}
+
+#undef  HEAT_MAX_TEMP
+#define HEAT_MAX_TEMP    {150,    350,       350,       350,       350,       350,       350}

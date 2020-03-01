@@ -173,6 +173,7 @@ const char *const en_pack[LABEL_NUM]={
   EN_MOTION_STOP,
   EN_AUTO_LEVEL,
   EN_HAND_LEVEL,
+  EN_PREHEAT_NYL,
 };
 
 const char *const cn_pack[LABEL_NUM]={

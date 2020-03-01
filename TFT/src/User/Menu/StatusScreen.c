@@ -1,29 +1,27 @@
 #include "StatusScreen.h"
 #include "includes.h"
 #include "GUI.h"
+
 //1 title, ITEM_PER_PAGE items (icon + label) 
 MENUITEMS StatusItems = {
 // title
 LABEL_READY,
 // icon                       label
- {{ICON_STATUSNOZZLE,         LABEL_BACKGROUND},
-  {ICON_STATUSBED,            LABEL_BACKGROUND},
-  {ICON_STATUSFAN,            LABEL_BACKGROUND},
+ {{ICON_STATUS_NOZZLE,        LABEL_BACKGROUND},
+  {ICON_STATUS_BED,           LABEL_BACKGROUND},
+  {ICON_STATUS_FAN,           LABEL_BACKGROUND},
   {ICON_STATUS_SPEED,         LABEL_BACKGROUND},
-  {ICON_MAINMENU,             LABEL_MAINMENU},  
+  {ICON_BACKGROUND,           LABEL_BACKGROUND}, // {ICON_MAINMENU,             LABEL_MAINMENU},
   {ICON_BACKGROUND,           LABEL_BACKGROUND}, //Reserved for gantry position to be added later
   {ICON_BACKGROUND,           LABEL_BACKGROUND}, //Reserved for gantry position to be added later
-  {ICON_PRINT,                LABEL_PRINT},}
+  {ICON_MAINMENU,             LABEL_MAINMENU},}  // {ICON_PRINT,                LABEL_PRINT},}
 };
 
 const ITEM ToolItems[3] = {
 // icon                       label
-  {ICON_STATUSNOZZLE,         LABEL_BACKGROUND},
-  {ICON_STATUSBED,            LABEL_BACKGROUND},
-  {ICON_STATUSFAN,            LABEL_BACKGROUND},
-//{ICON_HEAT_STATUS,          LABEL_BACKGROUND},
-//{ICON_BED_STATUS,           LABEL_BACKGROUND},
-//{ICON_FAN_STATUS,           LABEL_BACKGROUND},
+  {ICON_STATUS_NOZZLE,         LABEL_BACKGROUND},
+  {ICON_STATUS_BED,            LABEL_BACKGROUND},
+  {ICON_STATUS_FAN,            LABEL_BACKGROUND},
 };
 const ITEM SpeedItems[2] = {
 // icon                       label
@@ -32,18 +30,18 @@ const ITEM SpeedItems[2] = {
 };
 
 static u32 nowTime = 0;
-static u32 update_time = 200; // 1 seconds is 100
+static u32 update_time = 100; // 1 seconds is 100
 SCROLL     msgScroll;
-static int lastConnection_status = -1;
+static int connected_status = -1;
 
-static char msgtitle[20];
-static char msgbody[512];
+static char msg_head[20];
+static char msg_body[512];
 
 //static char msgxyz[512];
-static float xaxis;
-static float yaxis;
-static float zaxis;
-static bool gantryCmdWait = false;
+static float position_X;
+static float position_Y;
+static float position_Z;
+static bool positionCmdWait = false;
 
 TOOL current_Ext = NOZZLE0;
 int current_fan = 0;
@@ -138,29 +136,29 @@ void drawTemperature(void)
   GUI_SetTextMode(GUI_TEXTMODE_NORMAL);
   GUI_SetColor(GANTRYLBL_COLOR);
   GUI_SetBkColor(GANTRYLBL_BKCOLOR);
-  my_sprintf(tempstr, "   X: %.2f   Y: %.2f   Z: %.2f   ", xaxis, yaxis, zaxis);
+  my_sprintf(tempstr, "   X: %.2f   Y: %.2f   Z: %.2f   ", position_X, position_Y, position_Z);
   GUI_DispStringInPrect(&RecGantry,(u8 *)tempstr);
   
   GUI_RestoreColorDefault();
 }
 
-void storegantry(int n, float val){
+void persistPosition(int n, float val){
     //float* px = &val;
   switch (n)
   {
   case 0:
-    xaxis = val;
+    position_X = val;
     break;
   case 1:
-    yaxis = val;
+    position_Y = val;
     break;
   case 2:
-    zaxis = val;
+    position_Z = val;
     break;   
   default:
     break;
   }
-  gantryCmdWait = false;
+  positionCmdWait = false;
 }
 
 void gantry_inc(int n, float val){
@@ -168,21 +166,21 @@ void gantry_inc(int n, float val){
   switch (n)
   {
   case 0:
-    xaxis += val;
-    if ( xaxis > X_MAX_POS){
-      xaxis = X_MAX_POS;
+    position_X += val;
+    if ( position_X > X_MAX_POS){
+      position_X = X_MAX_POS;
     }
     break;
   case 1:
-    yaxis += val;
-    if ( yaxis > Y_MAX_POS){
-      yaxis = Y_MAX_POS;
+    position_Y += val;
+    if ( position_Y > Y_MAX_POS){
+      position_Y = Y_MAX_POS;
     }
     break;
   case 2:
-    zaxis += val;
-    if ( zaxis > Z_MAX_POS){
-      zaxis = Z_MAX_POS;
+    position_Z += val;
+    if ( position_Z > Z_MAX_POS){
+      position_Z = Z_MAX_POS;
     }
     break;   
   default:
@@ -194,21 +192,21 @@ void gantry_dec(int n, float val){
   switch (n)
   {
   case 0:
-    xaxis -= val;
-    if ( xaxis < X_MIN_POS){
-      xaxis = X_MIN_POS;
+    position_X -= val;
+    if ( position_X < X_MIN_POS){
+      position_X = X_MIN_POS;
     }
     break;
   case 1:
-    yaxis -= val;
-    if ( yaxis < Y_MIN_POS){
-      yaxis = Y_MIN_POS;
+    position_Y -= val;
+    if ( position_Y < Y_MIN_POS){
+      position_Y = Y_MIN_POS;
     }
     break;
   case 2:
-    zaxis -= val;
-    if ( zaxis < Z_MIN_POS){
-      zaxis = Z_MIN_POS;
+    position_Z -= val;
+    if ( position_Z < Z_MIN_POS){
+      position_Z = Z_MIN_POS;
     }
     break;   
   default:
@@ -220,21 +218,21 @@ float getAxisLocation(u8 n){
   switch (n)
   {
   case 0:
-    return xaxis;
+    return position_X;
   case 1:
-    return yaxis;
+    return position_Y;
   case 2:
-    return zaxis;
+    return position_Z;
   default:
-    return xaxis;
+    return position_X;
   }
 }
 
 
 void statusScreen_setMsg(const uint8_t *title, const uint8_t *msg)
 {
-  memcpy(msgtitle, (char *)title, sizeof(msgtitle));
-  memcpy(msgbody, (char *)msg, sizeof(msgbody));
+  memcpy(msg_head, (char *)title, sizeof(msg_head));
+  memcpy(msg_body, (char *)msg, sizeof(msg_body));
 
   if (infoMenu.menu[infoMenu.cur] == menuStatus)
   {
@@ -251,11 +249,11 @@ void drawStatusScreenMsg(void)
   GUI_SetColor(INFOMSG_BKCOLOR);
   GUI_DispString(RectInfo.x0 + STATUS_MSG_ICON_XOFFSET, RectInfo.y0 + STATUS_MSG_ICON_YOFFSET,IconCharSelect(ICONCHAR_INFO));
 
-  GUI_DispString(RectInfo.x0 + BYTE_HEIGHT+ STATUS_MSG_TITLE_XOFFSET,RectInfo.y0 + STATUS_MSG_ICON_YOFFSET,(u8*)msgtitle); 
+  GUI_DispString(RectInfo.x0 + BYTE_HEIGHT+ STATUS_MSG_TITLE_XOFFSET,RectInfo.y0 + STATUS_MSG_ICON_YOFFSET,(u8*)msg_head); 
   GUI_SetBkColor(INFOMSG_BKCOLOR);
   GUI_FillPrect(&msgRect);
   
-  Scroll_CreatePara(&msgScroll, (u8 *)msgbody, &msgRect);
+  Scroll_CreatePara(&msgScroll, (u8 *)msg_body, &msgRect);
 
   GUI_RestoreColorDefault();
 }
@@ -289,15 +287,15 @@ void toggleTool(void)
     
     if (infoHost.connected == true)
     {
-      if (gantryCmdWait != true)
+      if (positionCmdWait != true)
       {
-        gantryCmdWait = true;
-        storeCmd("M114\n");
+        positionCmdWait = true;
+        storeCmd("M114\n"); // query position
       }
     }
     else
     {
-      gantryCmdWait = false;
+      positionCmdWait = false;
     }
   }
 }
@@ -306,46 +304,49 @@ void menuStatus(void)
 {
   KEY_VALUES key_num = KEY_IDLE;
   GUI_SetBkColor(BACKGROUND_COLOR);
-  //set_status_icon();
+//set_status_icon();
   menuDrawPage(&StatusItems);
   GUI_SetColor(GANTRYLBL_BKCOLOR);
-      //GUI_ClearPrect(&RecGantry);
+//GUI_ClearPrect(&RecGantry);
   GUI_FillPrect(&RecGantry);
   drawTemperature();
   drawStatusScreenMsg();
 
   while (infoMenu.menu[infoMenu.cur] == menuStatus)
   {
-    if(infoHost.connected != lastConnection_status){
+    if(infoHost.connected != connected_status){
       if(infoHost.connected == false){
         statusScreen_setMsg(textSelect(LABEL_SCREEN_INFO), textSelect(LABEL_UNCONNECTED));
       }
       else{
         statusScreen_setMsg(textSelect(LABEL_SCREEN_INFO), textSelect(LABEL_READY));
       }
-      lastConnection_status = infoHost.connected;
+      connected_status = infoHost.connected;
     } 
     scrollMsg();
     key_num = menuKeyGetValue();
     switch (key_num)
     {
-      case KEY_ICON_0:
-        infoMenu.menu[++infoMenu.cur] = menuUnifiedHeat;
+      case KEY_ICON_0: // dynamic nozzle
+        heatSetCurrentTool((TOOL)NOZZLE0);
+        infoMenu.menu[++infoMenu.cur] = menuHeat;
         break;
-      case KEY_ICON_1:
-        infoMenu.menu[++infoMenu.cur] = menuUnifiedHeat;
+      case KEY_ICON_1: // dynamic bed
+        heatSetCurrentTool((TOOL)BED);
+        infoMenu.menu[++infoMenu.cur] = menuHeat;
         break;
-      case KEY_ICON_2:
+      case KEY_ICON_2: // dynamic fan
         infoMenu.menu[++infoMenu.cur] = menuFan;
         break;
-      case KEY_ICON_3:
+      case KEY_ICON_3: // dynamic motion speed / feed rate
         infoMenu.menu[++infoMenu.cur] = menuSpeed;
         break;
-      case KEY_ICON_4:
-        infoMenu.menu[++infoMenu.cur] = menuMain;
-        break;
+
+//      case KEY_ICON_4:
+//        infoMenu.menu[++infoMenu.cur] = menuMain;
+//        break;
       case KEY_ICON_7:
-        infoMenu.menu[++infoMenu.cur] = menuPrint;
+        infoMenu.menu[++infoMenu.cur] = menuMain; // menuPrint;
         break;
 
       default:break;

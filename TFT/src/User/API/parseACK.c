@@ -152,16 +152,16 @@ void parseACK(void)
     }
     if(ack_seen("X:"))
     {
-      storegantry(0, ack_value());
+      persistPosition(0, ack_value());
       //storeCmd("M118 %d\n", ack_value());
       if (ack_seen("Y:"))
       {
-        storegantry(1, ack_value());
+        persistPosition(1, ack_value());
         //storeCmd("M118 %d\n", ack_value());
         if (ack_seen("Z:"))
         {
           //storeCmd("M118 %d\n", ack_value());
-          storegantry(2, ack_value());
+          persistPosition(2, ack_value());
         }
       }
     }					

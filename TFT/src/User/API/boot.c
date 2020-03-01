@@ -20,9 +20,10 @@ const char iconBmpName[][32]={
 "ManualLevel", "CoolDown", "SilentOff","StatusNozzle","StatusBed","StatusFan","MainMenu","StatusSpeed","StatusFlow",
 "parametersetting", "global_nozzle", "global_bed", "ledcolor",
 //
-"Point_5", // ICON_POINT_5
-"Home",    // ICON_HOME_ALL
-"Stop",    // ICON_MOTION_STOP
+"Point_5",     // ICON_POINT_5
+"Home",        // ICON_HOME_ALL
+"Stop",        // ICON_MOTION_STOP
+"Preheat_PLA", // ICON_PREHEAT_NYL
 }; 
 
 u8 scanUpdateFile(void)

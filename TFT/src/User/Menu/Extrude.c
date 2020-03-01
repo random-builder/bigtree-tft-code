@@ -4,12 +4,12 @@
 //1��title(����), ITEM_PER_PAGE��item(ͼ��+��ǩ) 
 MENUITEMS extrudeItems = {
 //   title
-LABEL_EXTRUDE,
+LABEL_FILAMENT,
 // icon                       label
  {{ICON_UNLOAD,               LABEL_UNLOAD},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_LOAD,                 LABEL_LOAD},
+  {ICON_HEAT,                 LABEL_PREHEAT},
   {ICON_NOZZLE,               LABEL_NOZZLE},
   {ICON_NORMAL_SPEED,         LABEL_NORMAL_SPEED},
   {ICON_E_5_MM,               LABEL_5_MM},
@@ -85,37 +85,42 @@ void menuExtrude(void)
   showExtrudeCoordinate();
   
   if(eRelative) mustStoreCmd("M82\n"); // Set extruder to absolute
+
   while(infoMenu.menu[infoMenu.cur] == menuExtrude)
   {
     key_num = menuKeyGetValue();
     switch(key_num)
     {
-      case KEY_ICON_0:
+      case KEY_ICON_0: // Unload
         eTemp -= item_len[item_len_i];
         break;
       
-      case KEY_ICON_3:
+      case KEY_ICON_2: // Load
         eTemp += item_len[item_len_i];
         break;
-      
-      case KEY_ICON_4:
+
+      case KEY_ICON_3: // Preheat
+        infoMenu.menu[++infoMenu.cur] = menuPreheat;
+        break;
+
+      case KEY_ICON_4: // Tool
         item_extruder_i = (item_extruder_i + 1) % ITEM_EXTRUDER_NUM;
         showExtrudeCoordinate();
         break;
 
-      case KEY_ICON_5:
+      case KEY_ICON_5: // Speed
         item_speed_i = (item_speed_i+1) % ITEM_SPEED_NUM;
         extrudeItems.items[key_num] = itemSpeed[item_speed_i];
         menuDrawItem(&extrudeItems.items[key_num], key_num);
         break;
       
-      case KEY_ICON_6:
+      case KEY_ICON_6: // Length
         item_len_i = (item_len_i+1) % ITEM_LEN_NUM;
         extrudeItems.items[key_num] = itemLen[item_len_i];
         menuDrawItem(&extrudeItems.items[key_num], key_num);
         break;
 
-      case KEY_ICON_7: 
+      case KEY_ICON_7: // Back
         infoMenu.cur--; 
         break;
       
