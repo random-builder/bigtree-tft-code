@@ -133,7 +133,7 @@
     #define CZ_AUTO_SHUT_DOWN       "Automat"
     #define CZ_MANUAL_SHUT_DOWN     "Ručně"
     #define CZ_UNIFIEDMOVE          "Movement"
-    #define CZ_UNIFIEDHEAT          "Heat&Fan"
+    #define CZ_UNIFIEDHEAT          "Heat&Cooler"
     #define CZ_COOLDOWN             "Zchladit"
     #define CZ_EMERGENCYSTOP        "!!STOP!!"
     #define CZ_TOUCH_TO_EXIT        "Pro návrat se dotkněte obrazovky..."

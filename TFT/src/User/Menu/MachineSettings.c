@@ -410,7 +410,7 @@ void menuMachineSettings(void)
         break;
       
       case KEY_ICON_2:
-        infoMenu.menu[++infoMenu.cur] = menuSendGcode;
+        infoMenu.menu[++infoMenu.cur] = menuInvokeGcode;
         break;
       
       case KEY_ICON_3:

@@ -1,6 +1,22 @@
 #ifndef _INCLUDES_H_
 #define _INCLUDES_H_
 
+#include <AnyMenu.h>
+#include <AnyPopup.h>
+#include <ArkonGUI.h>
+#include <ArkonMenu.h>
+#include <CoolerControl.h>
+#include <FilamentControl.h>
+#include <HeaterControl.h>
+#include <HeaterPreset.h>
+#include <HomingControl.h>
+#include <HotbedBabyStep.h>
+#include <HotbedLeveling.h>
+#include <HotbedProbeOffset.h>
+#include <InvokeGcode.h>
+#include <LightingControl.h>
+#include <ParameterControl.h>
+#include <PositionControl.h>
 #include "variants.h"
 
 #include <stdio.h>
@@ -8,6 +24,9 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <TinkerFeedSpeed.h>
+#include <UnifiedHeating.h>
+#include <UnifiedMotion.h>
 #include "my_misc.h"
 
 #include "variants.h"
@@ -51,41 +70,20 @@
 #include "flashStore.h"
 #include "parseACK.h"
 #include "Selectmode.h"
-#include "Parametersetting.h"
-
 #include "extend.h"
 
 //menu
-#include "menu.h"
-#include "MainPage.h"
-#include "PreheatMenu.h"
-#include "Heat.h"
-#include "Move.h"
-#include "Home.h"
 #include "Print.h"
 #include "Printing.h"
 #include "More.h"
-#include "Speed.h"
-#include "BabyStep.h"
-#include "ledcolor.h"
-
-#include "Extrude.h"
-#include "Fan.h"
 #include "Settings.h"
 #include "ScreenSettings.h"
 #include "MachineSettings.h"
 #include "FeatureSettings.h"
-#include "SendGcode.h"
-#include "leveling.h"
-#include "ProbeOffset.h"
 #include "PowerFailed.h"
 
-#include "Popup.h"
 #include "Mode.h"
 
-#include "UnifiedMove.h"
-#include "UnifiedHeat.h"
-#include "StatusScreen.h"
 #include "list_item.h"
 
 #define MAX_MENU_DEPTH 10       // max sub menu depth

@@ -14,7 +14,7 @@ void menuIsPause(void)
     {
       case KEY_POPUP_CONFIRM:
 				if(setPrintPause(true,false))
-			    infoMenu.menu[infoMenu.cur]=menuExtrude;
+			    infoMenu.menu[infoMenu.cur]=menuFilament;
 			  break;
 
       case KEY_POPUP_CANCEL:	
@@ -50,7 +50,7 @@ void menuMore(void)
     switch(key_num)
     {
       case KEY_ICON_0:
-        infoMenu.menu[++infoMenu.cur] = menuFan;
+        infoMenu.menu[++infoMenu.cur] = menuCoolerControl;
         break;
       
       case KEY_ICON_1:
@@ -61,7 +61,7 @@ void menuMore(void)
 				if (isPrinting() && !isPause()) // need paused before extrude
 				  infoMenu.menu[++infoMenu.cur] = menuIsPause;
 				else
-				  infoMenu.menu[++infoMenu.cur] = menuExtrude; 
+				  infoMenu.menu[++infoMenu.cur] = menuFilament; 
         break;
       
       case KEY_ICON_3:

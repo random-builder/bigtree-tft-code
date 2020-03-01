@@ -1,8 +1,8 @@
 #ifndef _POWERFAILED_H_
 #define _POWERFAILED_H_
 
+#include <HeaterControl.h>
 #include "variants.h"
-#include "Heat.h"
 #include "coordinate.h"
 #include "ff.h"
 #include "Configuration.h"

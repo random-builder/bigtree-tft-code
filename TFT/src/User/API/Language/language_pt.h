@@ -133,7 +133,7 @@
     #define PT_AUTO_SHUT_DOWN       "Auto Power"
     #define PT_MANUAL_SHUT_DOWN     "Manual"
     #define PT_UNIFIEDMOVE          "Movimento"
-    #define PT_UNIFIEDHEAT          "Heat/Fan"
+    #define PT_UNIFIEDHEAT          "Heat/Cooler"
     #define PT_COOLDOWN             "Arrefecer"
     #define PT_EMERGENCYSTOP        "EMERGENCIA STOP"
     #define PT_TOUCH_TO_EXIT        "Toque em qualquer lugar para sair"

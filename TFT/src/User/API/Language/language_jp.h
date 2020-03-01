@@ -133,7 +133,7 @@
     #define JP_AUTO_SHUT_DOWN       "Auto Power"
     #define JP_MANUAL_SHUT_DOWN     "Manual"
     #define JP_UNIFIEDMOVE          "Movement"
-    #define JP_UNIFIEDHEAT          "Heat&Fan"
+    #define JP_UNIFIEDHEAT          "Heat&Cooler"
     #define JP_COOLDOWN             "Cool Down"
     #define JP_EMERGENCYSTOP        "EM. STOP"
     #define JP_TOUCH_TO_EXIT        "Touch anywhere to exit"

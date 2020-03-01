@@ -440,11 +440,11 @@ void menuPrinting(void)
         break;
         
       case KEY_ICON_4:
-        infoMenu.menu[++infoMenu.cur] = menuHeat;
+        infoMenu.menu[++infoMenu.cur] = menuHeaterControl;
         break;
       
       case KEY_ICON_5:
-        infoMenu.menu[++infoMenu.cur] = menuSpeed;
+        infoMenu.menu[++infoMenu.cur] = menuFeedSpeed;
         break;
       
       case KEY_ICON_6:

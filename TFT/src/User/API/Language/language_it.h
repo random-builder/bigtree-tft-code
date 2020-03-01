@@ -133,7 +133,7 @@
     #define IT_AUTO_SHUT_DOWN       "Auto Spegnimento"
     #define IT_MANUAL_SHUT_DOWN     "Manuale"
     #define IT_UNIFIEDMOVE          "Movimento"
-    #define IT_UNIFIEDHEAT          "Caldo/Fan"
+    #define IT_UNIFIEDHEAT          "Caldo/Cooler"
     #define IT_COOLDOWN             "Blocco Freddo"
     #define IT_EMERGENCYSTOP        "EM. STOP"
     #define IT_TOUCH_TO_EXIT        "Premi ovunque per uscire"

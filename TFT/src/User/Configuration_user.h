@@ -2,8 +2,6 @@
 //
 //
 
-#define UNIFIED_MENU
-
 #undef  SHOW_BTT_BOOTSCREEN
 
 #undef  AUTO_SAVE_LOAD_LEVELING_VALUE

@@ -135,10 +135,6 @@
 // this does not work if LIST MODE is enabled. To invert z axis in LIST MODE go to setting->feature settings
 //#define INVERT_ZAXIS
 
-// Enable Unified Move Menu
-// Move, Home, Extrude, ABL at one Place and bring Gcode Menu on Home Menu
-//#define UNIFIED_MENU
-
 /**
  * Enable list mode in Files menu and settings menu
  * It is friendly to display long file name, but the model preview feature is not available
@@ -180,8 +176,6 @@
 #define AUTO_SHUT_DOWN_MAXTEMP 50
 
 #define EXTRUDE_STEPS  100.0f
-
-#define SHOW_FAN_PERCENTAGE // enable to show fan speed as a percentage instead of a value
 
 /** CUSTOM GCODE COMMANDS
  * Support up to 7 custom gcodes in Icon mode and 15 in List Mode.

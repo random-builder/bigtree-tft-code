@@ -3,10 +3,10 @@
 #ifndef _LIST_ITEM_H_
 #define _LIST_ITEM_H_
 
+#include <AnyMenu.h>
 #include "stdint.h"
 #include "stdbool.h"
 #include "GUI.h"
-#include "menu.h"
 
 enum{
 ICONCHAR_BLANK = 0,

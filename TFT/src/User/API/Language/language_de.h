@@ -133,7 +133,7 @@
     #define DE_AUTO_SHUT_DOWN       "Auto Power"
     #define DE_MANUAL_SHUT_DOWN     "Manual"    
     #define DE_UNIFIEDMOVE          "Movement"
-    #define DE_UNIFIEDHEAT          "Heat&Fan"
+    #define DE_UNIFIEDHEAT          "Heat&Cooler"
     #define DE_COOLDOWN             "Cool Down"
     #define DE_EMERGENCYSTOP        "EM. STOP"
     #define DE_TOUCH_TO_EXIT        "Touch anywhere to exit"

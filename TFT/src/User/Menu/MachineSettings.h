@@ -1,8 +1,9 @@
-#ifndef _MACHINE_SETTINGS_H_
-#define _MACHINE_SETTINGS_H_
+//
+//
+//
+
+#pragma once
 
 void menuRGBSettings(void);
 void menuMachineSettings(void);
 void menuCustom(void);
-
-#endif
