@@ -176,7 +176,52 @@ void updateIcon(void)
   }
 }
 
-void updateFont(char *font, u32 addr)
+void updateFont(char *file_path, const u32 base_addr)
+{
+  FIL  file_data;
+  UINT read_size = 0;
+  u32  flash_addr = 0;
+  u32  flash_offset = 0;
+  u8*  flash_buff = NULL;
+  u8   progress_info = 0;
+  u8   progress_unit = 0;
+  char text_buff[128];
+
+  if (f_open(&file_data, file_path, FA_OPEN_EXISTING|FA_READ) != FR_OK)  return;
+
+  FSIZE_t file_size = f_size(&file_data);
+
+  flash_buff = malloc(W25QXX_SECTOR_SIZE);
+  if (flash_buff == NULL)  return;
+
+  GUI_Clear(BACKGROUND_COLOR);
+  GUI_DispString(100, 5, (u8*)"Font Update...");
+
+  my_sprintf((void *)text_buff,"%s Size=%dK",file_path, (u32)file_size>>10);
+  GUI_DispString(0, 100, (u8*)text_buff);
+  GUI_DispString(0, 140, (u8*)"Updating:   %");
+
+  while(!f_eof(&file_data))
+  {
+    if (f_read(&file_data, flash_buff, W25QXX_SECTOR_SIZE, &read_size) != FR_OK) break;
+    flash_addr = base_addr + flash_offset;
+    W25Qxx_EraseSector(flash_addr);
+    W25Qxx_WriteBuffer(flash_buff, flash_addr, W25QXX_SECTOR_SIZE);
+    flash_offset += read_size;
+    progress_unit = flash_offset * 100 / file_size;
+    if(progress_info != progress_unit)
+    {
+      progress_info = progress_unit;
+      GUI_DispDec(0 + BYTE_WIDTH*9, 140, progress_info, 3, RIGHT);
+    }
+    if(read_size !=W25QXX_SECTOR_SIZE) break;
+  }
+
+  f_close(&file_data);
+  free(flash_buff);
+}
+
+void updateFontXXX(char *font, u32 addr)
 {
   u8   progress = 0;
   UINT rnum = 0;
@@ -244,7 +289,7 @@ void scanUpdates(void)
     {
       updateIcon();
     }
-    if (result) f_rename(ROOT_DIR, ROOT_DIR".CUR");
+    //if (result) f_rename(ROOT_DIR, ROOT_DIR".CUR");
     scanResetDir();
   }
 }
