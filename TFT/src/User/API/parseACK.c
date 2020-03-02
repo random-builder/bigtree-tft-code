@@ -179,17 +179,13 @@ void parseACK(void)
           heatSyncTargetTemp(i, ack_second_value()+0.5);
         }      
       }
-     #ifdef MENU_LIST_MODE
       avoid_terminal = infoSettings.terminalACK;
-    #endif
     }
     else if(ack_seen("B:"))		
     {
       heatSetCurrentTemp(TOOL_HOTBED,ack_value()+0.5);
       heatSyncTargetTemp(TOOL_HOTBED, ack_second_value()+0.5);
-      #ifdef MENU_LIST_MODE
       avoid_terminal = infoSettings.terminalACK;
-      #endif
     }
     else if(ack_seen("Mean:"))
     {

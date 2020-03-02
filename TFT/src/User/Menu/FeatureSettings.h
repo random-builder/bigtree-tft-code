@@ -1,6 +1,7 @@
-#ifndef _FEATURE_SETTINGS_H_
-#define _FEATURE_SETTINGS_H_
+//
+//
+//
+
+#pragma once
 
 void menuFeatureSettings(void);
-
-#endif

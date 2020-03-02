@@ -5,7 +5,6 @@
 #include <PrintControl.h>
 #include "includes.h"
 
-#ifdef MENU_LIST_MODE
   LISTITEMS printItems = {
   // title
   LABEL_BACKGROUND,
@@ -21,25 +20,6 @@
     {ICONCHAR_BACK,       LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},}
   };
 
-#else
-
-  MENUITEMS printItems = {
-    //  title
-    LABEL_BACKGROUND,
-    // icon                       label
-    {
-      {ICON_BACKGROUND,           LABEL_BACKGROUND},
-      {ICON_BACKGROUND,           LABEL_BACKGROUND},
-      {ICON_BACKGROUND,           LABEL_BACKGROUND},
-      {ICON_BACKGROUND,           LABEL_BACKGROUND},
-      {ICON_BACKGROUND,           LABEL_BACKGROUND},
-      {ICON_PAGE_UP,              LABEL_PAGE_UP},
-      {ICON_PAGE_DOWN,            LABEL_PAGE_DOWN},
-      {ICON_BACK,                 LABEL_BACK},
-    }
-  };
-#endif
-
 // File list number per page
 #define NUM_PER_PAGE	5
 
@@ -48,63 +28,13 @@ GUI_RECT titleRect={10, (TITLE_END_Y - BYTE_HEIGHT) / 2, LCD_WIDTH-10, (TITLE_EN
 
 SCROLL   gcodeScroll;
   
-#ifndef MENU_LIST_MODE
-/*   GUI_RECT gcodeRect[NUM_PER_PAGE] = { 
-    {START_X + BYTE_HEIGHT + 4,  0*LISTITEM_HEIGHT+ICON_START_Y+1,    LISTITEM_WIDTH+START_X - 2,  1*LISTITEM_HEIGHT+ICON_START_Y-1},
-    {START_X + BYTE_HEIGHT + 4,  1*LISTITEM_HEIGHT+ICON_START_Y+1,    LISTITEM_WIDTH+START_X - 2,  2*LISTITEM_HEIGHT+ICON_START_Y-1},
-    {START_X + BYTE_HEIGHT + 4,  2*LISTITEM_HEIGHT+ICON_START_Y+1,    LISTITEM_WIDTH+START_X - 2,  3*LISTITEM_HEIGHT+ICON_START_Y-1},
-    {START_X + BYTE_HEIGHT + 4,  3*LISTITEM_HEIGHT+ICON_START_Y+1,    LISTITEM_WIDTH+START_X - 2,  4*LISTITEM_HEIGHT+ICON_START_Y-1},
-    {START_X + BYTE_HEIGHT + 4,  4*LISTITEM_HEIGHT+ICON_START_Y+1,    LISTITEM_WIDTH+START_X - 2,  5*LISTITEM_HEIGHT+ICON_START_Y-1},
-  };
-#else */
-  GUI_RECT gcodeRect[NUM_PER_PAGE] = { 
-   {BYTE_WIDTH/2+0*SPACE_X_PER_ICON,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2,  
-    1*SPACE_X_PER_ICON-BYTE_WIDTH/2,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2+BYTE_HEIGHT},
-
-   {BYTE_WIDTH/2+1*SPACE_X_PER_ICON,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2,
-    2*SPACE_X_PER_ICON-BYTE_WIDTH/2,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2+BYTE_HEIGHT},
-
-   {BYTE_WIDTH/2+2*SPACE_X_PER_ICON,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2,
-    3*SPACE_X_PER_ICON-BYTE_WIDTH/2,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2+BYTE_HEIGHT},
-
-   {BYTE_WIDTH/2+3*SPACE_X_PER_ICON,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2,
-    4*SPACE_X_PER_ICON-BYTE_WIDTH/2,  1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2+BYTE_HEIGHT},
-
-   {BYTE_WIDTH/2+0*SPACE_X_PER_ICON,  2*ICON_HEIGHT+1*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2,
-    1*SPACE_X_PER_ICON-BYTE_WIDTH/2,  2*ICON_HEIGHT+1*SPACE_Y+ICON_START_Y+(SPACE_Y-BYTE_HEIGHT)/2+BYTE_HEIGHT},
-  };
-  
-  void scrollFileNameCreate(u8 i)
-  {    
-    u8 num=infoFile.cur_page * NUM_PER_PAGE + i;	
-
-    if(infoFile.F_num + infoFile.f_num==0)
-    {
-      memset(&gcodeScroll,0,sizeof(SCROLL));
-      return;
-    }
-    if(num<infoFile.F_num)
-    {
-      Scroll_CreatePara(&gcodeScroll, (u8* )infoFile.folder[num],&gcodeRect[i]);
-    }
-    else if(num<infoFile.F_num+infoFile.f_num)
-    {
-      Scroll_CreatePara(&gcodeScroll, (u8* )infoFile.file[num-infoFile.F_num],&gcodeRect[i]);
-    }
-  }
-#endif
-
 void normalNameDisp(const GUI_RECT *rect, u8 *name)
 {
   if(name == NULL) return;
 
   GUI_ClearPrect(rect);
   GUI_SetRange(rect->x0, rect->y0, rect->x1, rect->y1);
-  #ifdef MENU_LIST_MODE
-    GUI_DispString(rect->x0, rect->y0 + (rect->y1 - rect->y0 - BYTE_HEIGHT)/2, name);
-  #else
-    GUI_DispStringInPrect(rect, name);
-  #endif
+  GUI_DispString(rect->x0, rect->y0 + (rect->y1 - rect->y0 - BYTE_HEIGHT)/2, name);
   GUI_CancelRange();
 }
 
@@ -123,7 +53,6 @@ int16_t get_Pre_Icon(char * filename)
   return ICON_BACKGROUND;
 }
 
-#ifdef MENU_LIST_MODE
   void gocdeListDraw(void)
   {
     u8 i = 0,k = 0;
@@ -203,61 +132,6 @@ int16_t get_Pre_Icon(char * filename)
       menuDrawListItem(&printItems.items[6],6);
   }
 
-#else
-
-  void gocdeListDraw(void)
-  {
-    u8 i=0,k = 0;
-    int gn;
-    char *gnew;
-    ITEM curItem = {ICON_BACKGROUND, LABEL_BACKGROUND};
-   
-    scrollFileNameCreate(0);
-    Scroll_CreatePara(&titleScroll, (uint8_t* )infoFile.title, &titleRect);
-    printItems.title.address = (uint8_t* )infoFile.title;
-    GUI_SetBkColor(TITLE_BACKGROUND_COLOR);
-    GUI_ClearPrect(&titleRect);
-    GUI_SetBkColor(BACKGROUND_COLOR);
-
-    for(i=0;(i + infoFile.cur_page * NUM_PER_PAGE < infoFile.F_num)
-            &&(i < NUM_PER_PAGE)                                  ; i++)                  // folder
-    {
-      curItem.icon = ICON_FOLDER;
-      menuDrawItem(&curItem, i);
-      normalNameDisp(&gcodeRect[i], (u8* )infoFile.folder[i + infoFile.cur_page * NUM_PER_PAGE]);
-    }
-    for(   ;(i + infoFile.cur_page * NUM_PER_PAGE < infoFile.f_num + infoFile.F_num)
-            &&(i < NUM_PER_PAGE)                                                   ;i++)  // gcode file
-    {
-      curItem.icon = ICON_FILE;
-      // Preview
-      k = i + infoFile.cur_page * NUM_PER_PAGE - infoFile.F_num;
-      gn = strlen(infoFile.file[i + infoFile.cur_page * NUM_PER_PAGE - infoFile.F_num]) - 6; // -6 means ".gcode"
-      gnew = malloc(gn + 10);
-      if(gnew && get_Pre_Icon(infoFile.file[k]) == ICON_BACKGROUND)
-      {
-        strcpy(gnew, getCurFileSource());
-        strncat(gnew, infoFile.file[i + infoFile.cur_page * NUM_PER_PAGE - infoFile.F_num], gn);
-        if(bmpDecode(strcat(gnew, "_"STRINGIFY(ICON_WIDTH)".bmp"), ICON_ADDR(ICON_PREVIEW+i)))
-        {
-          curItem.icon = ICON_PREVIEW+i;
-          icon_File_Name[show_Num]=infoFile.file[k];
-          icon_Enum[show_Num]=ICON_PREVIEW+show_Num;
-          show_Num++;
-        }
-        free(gnew);
-      }
-      menuDrawItem(&curItem, i);
-      normalNameDisp(&gcodeRect[i], (u8* )infoFile.file[i + infoFile.cur_page * NUM_PER_PAGE - infoFile.F_num]);
-    }
-    for(; (i<NUM_PER_PAGE); i++)			//background
-    {		
-      curItem.icon = ICON_BACKGROUND;
-      menuDrawItem(&curItem, i);
-    }
-  }
-#endif
-
 const int16_t labelVolumeError[] = {LABEL_READ_TFTSD_ERROR, LABEL_READ_U_DISK_ERROR, LABEL_READ_ONBOARDSD_ERROR};
 
 void menuPrintFromSource(void)
@@ -271,11 +145,7 @@ void menuPrintFromSource(void)
 
   if (mountFS() == true && scanPrintFiles() == true)
   {
-    #ifdef MENU_LIST_MODE
       menuDrawListPage(&printItems);
-    #else
-      menuDrawPage(&printItems);
-    #endif
     gocdeListDraw();	
   }
   else
@@ -290,9 +160,7 @@ void menuPrintFromSource(void)
     GUI_SetBkColor(TITLE_BACKGROUND_COLOR);
     Scroll_DispString(&titleScroll, LEFT);    //
     GUI_SetBkColor(BACKGROUND_COLOR);
-    #ifndef MENU_LIST_MODE
-      Scroll_DispString(&gcodeScroll, CENTER); //
-    #endif
+    Scroll_DispString(&gcodeScroll, CENTER); //
 
     key_num = menuKeyGetValue();
 
@@ -352,16 +220,6 @@ void menuPrintFromSource(void)
             infoMenu.menu[++infoMenu.cur] = menuBeforePrinting;	
           }				
         }
-        #ifndef MENU_LIST_MODE                
-        else if(key_num >=KEY_LABEL_0 && key_num <= KEY_LABEL_4)     
-        {                  
-          if(key_num - KEY_LABEL_0 + infoFile.cur_page * NUM_PER_PAGE < infoFile.F_num + infoFile.f_num)
-          {
-            normalNameDisp(gcodeScroll.rect, gcodeScroll.text);
-            scrollFileNameCreate(key_num - KEY_LABEL_0);
-          }
-        }
-        #endif
         break;
     }
     

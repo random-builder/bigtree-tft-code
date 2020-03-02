@@ -174,7 +174,6 @@
  * Uncomment CUSTOM_X_LABEL and CUSTOM_X_GCODE to enable custom gcode.
  * CUSTOM_X_LABEL is the name of the custom button, CUSTOM_X_GCODE
  * CUSTOM_X_GCODE is the gcode to be sent by the custom button, end with '\n'
- * You also need to customize the icon corresponding to the command if MENU_LIST_MODE is not enabled.
  * Copy your custom icon to the SD card to be updated, such as:"TFT35/bmp/Custom0.bmp", "TFT24/bmp/Custom1.bmp", etc...
  * The format of the custom icon is as follows
  * Bit depth: 24 / 32 bit, Pixel size: 95*95(for TFT35), 70*70(for TFT28/TFT24)
