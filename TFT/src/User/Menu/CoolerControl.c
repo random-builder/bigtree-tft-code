@@ -17,7 +17,7 @@ LABEL_FAN,
   {ICON_BACKGROUND,           LABEL_BACKGROUND}, // 3
   {ICON_FAN ,                 LABEL_FAN},
   {ICON_FAN_FULL_SPEED,       LABEL_FAN_FULL_SPEED},
-  {ICON_STOP,                 LABEL_ISSURE_RESET},
+  {ICON_STOP,                 LABEL_ISSUE_RESET},
   {ICON_BACK,                 LABEL_BACK},}
 };
 

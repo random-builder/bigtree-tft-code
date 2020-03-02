@@ -12,8 +12,8 @@ LABEL_PREHEAT,
     {ICON_PREHEAT_3,          LABEL_PREHEAT_ABS},
     {ICON_PREHEAT_BOTH,       LABEL_PREHEAT_BOTH},
     {ICON_PREHEAT_4,          LABEL_PREHEAT_NYL},
-    {ICON_PREHEAT_5,          LABEL_PREHEAT_NYL},
-    {ICON_STOP,               LABEL_PREHEAT_NYL},
+    {ICON_PREHEAT_5,          LABEL_PREHEAT_PEK},
+    {ICON_STOP,               LABEL_ISSUE_RESET},
     {ICON_BACK,               LABEL_BACK},
   }
 };

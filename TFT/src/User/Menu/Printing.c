@@ -10,7 +10,7 @@ LABEL_BACKGROUND,
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_STOP,                 LABEL_STOP},
-  {ICON_HEAT,                 LABEL_HEAT},
+  {ICON_HEAT,                 LABEL_HEAT_CTL},
   {ICON_PERCENTAGE,           LABEL_PERCENTAGE},
   {ICON_BABYSTEP,             LABEL_BABYSTEP},
   {ICON_MORE,                 LABEL_MORE},}

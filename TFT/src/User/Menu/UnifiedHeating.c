@@ -4,10 +4,10 @@
 //1 title, ITEM_PER_PAGE items(icon + label)
 const MENUITEMS UnifiedHeatItems = {
 // title
-lABEL_UNI_HEAT,
+LABEL_UNI_HEAT,
 // icon                       label
- {{ICON_HEAT,                 LABEL_PREHEAT},
-  {ICON_HEAT,                 LABEL_HEAT},
+ {{ICON_HEAT_1,               LABEL_PREHEAT},
+  {ICON_HEAT_2,               LABEL_HEAT_CTL},
   {ICON_FAN,                  LABEL_FAN},
   {ICON_COOLDOWN,             LABEL_COOLDOWN},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},

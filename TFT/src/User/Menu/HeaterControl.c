@@ -4,7 +4,7 @@
 //1 title, ITEM_PER_PAGE items (icon + label) 
 MENUITEMS heatItems = {
 // title
-LABEL_HEAT,
+LABEL_HEAT_CTL,
 // icon                       label
  {
   {ICON_DEC,                  LABEL_DEC},
@@ -13,7 +13,7 @@ LABEL_HEAT,
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_NOZZLE,               LABEL_NOZZLE},
   {ICON_5_DEGREE,             LABEL_5_DEGREE},
-  {ICON_STOP,                 LABEL_ISSURE_RESET},
+  {ICON_STOP,                 LABEL_ISSUE_RESET},
   {ICON_BACK,                 LABEL_BACK},}
 };
 

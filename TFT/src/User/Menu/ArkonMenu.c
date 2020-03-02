@@ -12,7 +12,7 @@ LABEL_READY,
 // icon                       label
    {
     {ICON_HOME_MOVE,            LABEL_UNI_MOVE}, // 0
-    {ICON_HEAT_FAN,             lABEL_UNI_HEAT}, // 1
+    {ICON_HEAT_FAN,             LABEL_UNI_HEAT}, // 1
     {ICON_EXTRUDE,              LABEL_FILAMENT}, // 2
     {ICON_SETTINGS,             LABEL_SETTINGS}, // 3
     {ICON_BACKGROUND,           LABEL_BACKGROUND},

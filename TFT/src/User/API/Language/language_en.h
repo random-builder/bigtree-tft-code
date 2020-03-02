@@ -159,8 +159,9 @@
     #define EN_AUTO_LEVEL           "Leveling"
     #define EN_HAND_LEVEL           "Tuning"
     #define EN_PREHEAT_NYL          "NYL"
+    #define EN_PREHEAT_PEK          "PEK"
     #define EN_LOWER_BED            "Bed Down"
     #define EN_AUTO_PROBE           "Probe"
-    #define EN_ISSURE_RESET         "Reset"
+    #define EN_ISSUE_RESET          "Reset"
 
 #endif
