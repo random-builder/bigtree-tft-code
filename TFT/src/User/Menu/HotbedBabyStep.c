@@ -10,14 +10,16 @@ MENUITEMS babyStepItems = {
 //title
   LABEL_BABYSTEP,
 //icon                        label
- {{ICON_DEC,                  LABEL_DEC},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
+ {
+  {ICON_DEC,                  LABEL_DEC},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_INC,                  LABEL_INC},
+  {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_EEPROM_SAVE,          LABEL_EEPROM_SAVE},
   {ICON_01_MM,                LABEL_01_MM},
   {ICON_NORMAL_SPEED,         LABEL_VALUE_ZERO},
-  {ICON_BACK,                 LABEL_BACK},}
+  {ICON_BACK,                 LABEL_BACK},
+ }
 };
 
 typedef struct
@@ -84,33 +86,33 @@ void menuBabyStep(void)
     key_num = menuKeyGetValue();
     switch(key_num)
     {
-      case KEY_ICON_0:
+      case KEY_ICON_0: // Decrease
         if(baby_step_value - elementsUnit.ele[elementsUnit.cur] > BABYSTEP_MIN_VALUE)
         {
           if(storeCmd("M290 Z-%.2f\n",elementsUnit.ele[elementsUnit.cur]))
             baby_step_value -= elementsUnit.ele[elementsUnit.cur];
         }
         break;
-      case KEY_ICON_3:
+      case KEY_ICON_2: // Increase
         if(baby_step_value + elementsUnit.ele[elementsUnit.cur] < BABYSTEP_MAX_VALUE)
         {
           if(storeCmd("M290 Z%.2f\n",elementsUnit.ele[elementsUnit.cur]))
             baby_step_value += elementsUnit.ele[elementsUnit.cur];
         }
         break;
-      case KEY_ICON_4:
+      case KEY_ICON_4: // Save to PROM
         storeCmd("M500\n");
         break;
-      case KEY_ICON_5:
+      case KEY_ICON_5: // Delta size
         elementsUnit.cur = (elementsUnit.cur + 1) % elementsUnit.totaled;
         babyStepItems.items[key_num] = elementsUnit.list[elementsUnit.cur];
         menuDrawItem(&babyStepItems.items[key_num], key_num);
         break;
-      case KEY_ICON_6:
+      case KEY_ICON_6: // Reset to zero
         if(storeCmd("M290 Z%.2f\n",-baby_step_value))
           baby_step_value = 0.0f;
         break;
-      case KEY_ICON_7:
+      case KEY_ICON_7: // Back
         infoMenu.cur--;
         break;
       default :

@@ -187,6 +187,7 @@ enum
   LABEL_PREHEAT_NYL,
   LABEL_LOWER_BED,
   LABEL_AUTO_PROBE,
+  LABEL_ISSURE_RESET,
 
   //add new keywords above this line only
   //keep the following always at the end of this list

@@ -11,8 +11,8 @@ LABEL_PERCENTAGE_SPEED,
 // icon                       label
  {{ICON_DEC,                  LABEL_DEC},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_INC,                  LABEL_INC},
+  {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_MOVE,                 LABEL_PERCENTAGE_SPEED},
   {ICON_E_5_MM,               LABEL_5_PERCENT},
   {ICON_NORMAL_SPEED,         LABEL_NORMAL_SPEED},
@@ -85,7 +85,7 @@ void menuFeedSpeed(void)
     key_num = menuKeyGetValue();
     switch(key_num)
     {
-      case KEY_ICON_0:
+      case KEY_ICON_0: // Decrease
         if(percentage[item_percentage_i] > 10)
         {
           percentage[item_percentage_i] = 
@@ -95,7 +95,7 @@ void menuFeedSpeed(void)
         }
         break;
         
-      case KEY_ICON_3:
+      case KEY_ICON_2: // Increase
         if(percentage[item_percentage_i] < 999)
         {
           percentage[item_percentage_i] = 
@@ -105,7 +105,7 @@ void menuFeedSpeed(void)
         }
         break;
         
-      case KEY_ICON_4:
+      case KEY_ICON_4: // Selector
         item_percentage_i = (item_percentage_i+1) % ITEM_PERCENTAGE_NUM;
         percentageItems.items[key_num] = itemPercentage[item_percentage_i];
         menuDrawItem(&percentageItems.items[key_num], key_num);      
@@ -114,14 +114,16 @@ void menuFeedSpeed(void)
         showPercentage();
         break;
       
-      case KEY_ICON_5:
+      case KEY_ICON_5: // Delta Size
         item_percent_unit_i = (item_percent_unit_i+1) % ITEM_PERCENT_UNIT_NUM;
         percentageItems.items[key_num] = itemPercentUnit[item_percent_unit_i];
         menuDrawItem(&percentageItems.items[key_num], key_num);
         break;
-      case KEY_ICON_6:
+
+      case KEY_ICON_6: // Reset to Normal
         percentage[item_percentage_i] = 100;
         break;
+
       case KEY_ICON_7:
         infoMenu.cur--;
         break;

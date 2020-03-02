@@ -1,5 +1,5 @@
 //
-//
+// TODO load config from usb disk
 //
 
 #pragma once

@@ -27,7 +27,7 @@
     #define EN_ABL                  "ABL"
     #define EN_BLTOUCH              "Bltouch"
     #define EN_BLTOUCH_TEST         "Test"
-    #define EN_BLTOUCH_DEPLOY       "Deploy"
+    #define EN_BLTOUCH_DEPLOY       "Drop"
     #define EN_BLTOUCH_STOW         "Stow"
     #define EN_BLTOUCH_REPEAT       "Repeat"
     #define EN_PROBE_OFFSET         "Offset"
@@ -155,11 +155,12 @@
     //
     #define EN_POINT_5              "Frnt/Cntr"
     #define EN_HOME_ALL             "X-Y-Z"
-    #define EN_MOTION_STOP          "Stop Moto"
-    #define EN_AUTO_LEVEL           "Auto Even"
-    #define EN_HAND_LEVEL           "Hand Tune"
+    #define EN_MOTION_STOP          "Drive Off"
+    #define EN_AUTO_LEVEL           "Leveling"
+    #define EN_HAND_LEVEL           "Tuning"
     #define EN_PREHEAT_NYL          "NYL"
     #define EN_LOWER_BED            "Bed Down"
     #define EN_AUTO_PROBE           "Probe"
+    #define EN_ISSURE_RESET         "Reset"
 
 #endif

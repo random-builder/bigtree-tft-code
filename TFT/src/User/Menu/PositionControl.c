@@ -104,7 +104,7 @@ static u8    item_move_len_i = 1;
 static u32 nowTime = 0;
 static u32 update_time = 50; // 1 seconds is 100
 
-void menuMove(void)
+void menuPosition(void)
 {
   KEY_VALUES  key_num = KEY_IDLE;
 
@@ -171,7 +171,7 @@ void menuMove(void)
   mustStoreCmd("M114\n");
   render_position();
 
-  while(infoMenu.menu[infoMenu.cur] == menuMove)
+  while(infoMenu.menu[infoMenu.cur] == menuPosition)
   {
     key_num = menuKeyGetValue();
     switch(key_num)

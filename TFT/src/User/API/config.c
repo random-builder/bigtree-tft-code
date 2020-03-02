@@ -1,9 +1,12 @@
 //
-//
+// TODO load config from usb disk
 //
 
 #include "config.h"
 #include "ini.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 typedef struct {
     int version;

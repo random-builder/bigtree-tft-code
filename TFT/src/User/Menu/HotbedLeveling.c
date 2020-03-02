@@ -9,7 +9,7 @@ LABEL_AUTO_LEVEL,
   {ICON_BLTOUCH_DEPLOY,        LABEL_BLTOUCH_DEPLOY}, //0
   {ICON_BLTOUCH_STOW,          LABEL_BLTOUCH_STOW},
   {ICON_BLTOUCH_TEST,          LABEL_BLTOUCH_TEST},
-  {ICON_LEVELING,              LABEL_AUTO_PROBE},     // 3
+  {ICON_BLTOUCH,               LABEL_AUTO_PROBE},     // 3
   {ICON_BLTOUCH_REPEAT,        LABEL_BLTOUCH_REPEAT},
   {ICON_PROBE_OFFSET,          LABEL_PROBE_OFFSET},
   {ICON_BABYSTEP,              LABEL_BABYSTEP},
@@ -25,7 +25,7 @@ void menuAutoLeveling(void)
     key_num = menuKeyGetValue();
     switch(key_num)
     {
-      case KEY_ICON_0: // Deploy
+      case KEY_ICON_0: // Drop
         storeCmd("M280 P0 S10\n");
         break;
       case KEY_ICON_1: // Stow
@@ -35,7 +35,7 @@ void menuAutoLeveling(void)
         storeCmd("M280 P0 S120\n");
         break;
 
-      case KEY_ICON_3: // Auto Event
+      case KEY_ICON_3: // Levelingt
         storeCmd("G28\n"); // home/reset
         storeCmd("G29 P1\n"); // measure
         storeCmd("G29 P3.1\n"); // populate

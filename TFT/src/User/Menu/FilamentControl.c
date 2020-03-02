@@ -10,7 +10,8 @@ MENUITEMS extrudeItems = {
 //   title
 LABEL_FILAMENT,
 // icon                       label
- {{ICON_UNLOAD,               LABEL_UNLOAD},
+ {
+  {ICON_UNLOAD,               LABEL_UNLOAD},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_LOAD,                 LABEL_LOAD},
   {ICON_HEAT,                 LABEL_PREHEAT},

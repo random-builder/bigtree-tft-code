@@ -6,14 +6,16 @@ MENUITEMS probeOffsetItems = {
 // title
 LABEL_PROBE_OFFSET,
 // icon                        label
- {{ICON_DEC,                  LABEL_DEC},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
+ {
+  {ICON_DEC,                  LABEL_DEC},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_INC,                  LABEL_INC},
+  {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_EEPROM_SAVE,          LABEL_EEPROM_SAVE},
   {ICON_01_MM,                LABEL_01_MM},
   {ICON_NORMAL_SPEED,         LABEL_VALUE_ZERO},
-  {ICON_BACK,                 LABEL_BACK},}
+  {ICON_BACK,                 LABEL_BACK},
+ }
 };
 
 typedef struct
@@ -60,6 +62,7 @@ void showProbeOffset(void)
 {
   GUI_DispFloat(CENTER_X - 5*BYTE_WIDTH/2, CENTER_Y, probe_offset_value, 3, 2, RIGHT);
 }
+
 void probeOffsetReDraw(void)
 {
   GUI_DispFloat(CENTER_X - 5*BYTE_WIDTH/2, CENTER_Y, probe_offset_value, 3, 2, RIGHT);
@@ -84,29 +87,29 @@ void menuProbeOffset(void)
     key_num = menuKeyGetValue();
     switch(key_num)
     {
-      case KEY_ICON_0:
+      case KEY_ICON_0: // Decrease
         if(probe_offset_value - elementsUnit.ele[elementsUnit.cur] > PROBE_OFFSET_MIN_VALUE)
         {
           if(storeCmd("M851 Z%.2f\n",probe_offset_value-elementsUnit.ele[elementsUnit.cur]))
             probe_offset_value -= elementsUnit.ele[elementsUnit.cur];
         }
         break;
-      case KEY_ICON_3:
+      case KEY_ICON_2: // Increase
         if(probe_offset_value + elementsUnit.ele[elementsUnit.cur] < PROBE_OFFSET_MAX_VALUE)
         {
           if(storeCmd("M851 Z%.2f\n",probe_offset_value+elementsUnit.ele[elementsUnit.cur]))
             probe_offset_value += elementsUnit.ele[elementsUnit.cur];
         }
         break;
-      case KEY_ICON_4:
+      case KEY_ICON_4: // Save to PROM
         storeCmd("M500\n");
         break;
-      case KEY_ICON_5:
+      case KEY_ICON_5: // Delta size
         elementsUnit.cur = (elementsUnit.cur + 1) % elementsUnit.totaled;
         probeOffsetItems.items[key_num] = elementsUnit.list[elementsUnit.cur];
         menuDrawItem(&probeOffsetItems.items[key_num], key_num);
         break;
-      case KEY_ICON_6:
+      case KEY_ICON_6: // Reset to zero
         if(storeCmd("M851 Z%.2f\n",0))
           probe_offset_value = 0.0f;
         break;

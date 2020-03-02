@@ -27,7 +27,7 @@
     #define JP_ABL                  "自動調整"
     #define JP_BLTOUCH              "Bltouch"
     #define JP_BLTOUCH_TEST         "Test"
-    #define JP_BLTOUCH_DEPLOY       "Deploy"
+    #define JP_BLTOUCH_DEPLOY       "Drop"
     #define JP_BLTOUCH_STOW         "Stow"
     #define JP_BLTOUCH_REPEAT       "Repeat"
     #define JP_PROBE_OFFSET         "Offset"

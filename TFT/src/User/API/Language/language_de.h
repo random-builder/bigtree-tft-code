@@ -27,7 +27,7 @@
     #define DE_ABL                  "ABL"
     #define DE_BLTOUCH              "Bltouch"
     #define DE_BLTOUCH_TEST         "Test"
-    #define DE_BLTOUCH_DEPLOY       "Deploy"
+    #define DE_BLTOUCH_DEPLOY       "Drop"
     #define DE_BLTOUCH_STOW         "Stow"
     #define DE_BLTOUCH_REPEAT       "Repeat"
     #define DE_PROBE_OFFSET         "Offset"

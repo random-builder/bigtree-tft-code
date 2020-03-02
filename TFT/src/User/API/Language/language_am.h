@@ -27,7 +27,7 @@
     #define AM_ABL                  "ABL"
     #define AM_BLTOUCH              "Bltouch"
     #define AM_BLTOUCH_TEST         "Test"
-    #define AM_BLTOUCH_DEPLOY       "Deploy"
+    #define AM_BLTOUCH_DEPLOY       "Drop"
     #define AM_BLTOUCH_STOW         "Stow"
     #define AM_BLTOUCH_REPEAT       "Repeat"
     #define AM_PROBE_OFFSET         "Offset"

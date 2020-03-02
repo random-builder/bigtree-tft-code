@@ -8,6 +8,7 @@
 #include <AnyPopup.h>
 #include <ArkonGUI.h>
 #include <ArkonMenu.h>
+#include <ArkonMode.h>
 #include <CoolerControl.h>
 #include <FilamentControl.h>
 #include <HeaterControl.h>
@@ -20,6 +21,7 @@
 #include <LightingControl.h>
 #include <ParameterControl.h>
 #include <PositionControl.h>
+#include <PrintControl.h>
 #include "variants.h"
 
 #include <stdio.h>
@@ -76,7 +78,6 @@
 #include "extend.h"
 
 //menu
-#include "Print.h"
 #include "Printing.h"
 #include "More.h"
 #include "Settings.h"
@@ -84,8 +85,6 @@
 #include "MachineSettings.h"
 #include "FeatureSettings.h"
 #include "PowerFailed.h"
-
-#include "Mode.h"
 
 #include "list_item.h"
 
