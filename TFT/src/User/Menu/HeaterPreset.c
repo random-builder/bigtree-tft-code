@@ -10,7 +10,7 @@ LABEL_PREHEAT,
     {ICON_PREHEAT_1,          LABEL_PREHEAT_PLA},
     {ICON_PREHEAT_2,          LABEL_PREHEAT_PET},
     {ICON_PREHEAT_3,          LABEL_PREHEAT_ABS},
-    {ICON_PREHEAT_BOTH,       LABEL_PREHEAT_BOTH},
+    {ICON_NOZZLE,             LABEL_NOZZLE},
     {ICON_PREHEAT_4,          LABEL_PREHEAT_NYL},
     {ICON_PREHEAT_5,          LABEL_PREHEAT_PEK},
     {ICON_STOP,               LABEL_ISSUE_RESET},
@@ -33,10 +33,10 @@ const ITEM itemToolPreheat[] = {
 const u16   preheat_bed_temp[] = PREHEAT_BED;
 const u16   preheat_hotend_temp[] = PREHEAT_HOTEND;
 
+static TOOL_PREHEAT nowHeater = PREHEAT_NOZZLE0;
 
 void menuHeaterPreset(void)
 {
-  static TOOLPREHEAT nowHeater = BOTH;
   KEY_VALUES  key_num = KEY_IDLE;
 
   menuDrawPage(&preheatItems);
@@ -53,21 +53,21 @@ void menuHeaterPreset(void)
       case KEY_ICON_5:
       case KEY_ICON_6:
         switch(nowHeater){
-          case BOTH:
-            heatSetTargetTemp(BED, preheat_bed_temp[key_num]);
+          case PREHEAT_BOTH:
+            heatSetTargetTemp(TOOL_HOTBED, preheat_bed_temp[key_num]);
             heatSetTargetTemp(heatGetCurrentToolNozzle(), preheat_hotend_temp[key_num]);
             break;
-          case BED_PREHEAT:
-            heatSetTargetTemp(BED, preheat_bed_temp[key_num]);
+          case PREHEAT_HOTBED:
+            heatSetTargetTemp(TOOL_HOTBED, preheat_bed_temp[key_num]);
             break;
-          case NOZZLE0_PREHEAT:
+          case PREHEAT_NOZZLE0:
             heatSetTargetTemp(heatGetCurrentToolNozzle(), preheat_hotend_temp[key_num]);
             break;
         }
         break;
         
-      case KEY_ICON_3: // Solo or Both
-        nowHeater = (TOOLPREHEAT)((nowHeater+1) % 3);
+      case KEY_ICON_3: // Nozzle, Hotbed, or Both
+        nowHeater = (TOOL_PREHEAT)((nowHeater+1) % 3);
         preheatItems.items[key_num] = itemToolPreheat[nowHeater];
         menuDrawItem(&preheatItems.items[key_num], key_num);;
         break;

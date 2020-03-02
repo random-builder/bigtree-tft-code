@@ -58,12 +58,12 @@ u8 scanUpdateFile(void)
   
   if (f_opendir(&dir, BMP_ROOT_DIR) == FR_OK)
   {
-    rst |= BMP;  
+    rst |= HAS_BMP;  
     f_closedir(&dir);
   }
   if (f_opendir(&dir, FONT_ROOT_DIR) == FR_OK)
   {
-    rst |= FONT;  
+    rst |= HAS_FONT;  
     f_closedir(&dir);
   }
   return rst;
@@ -235,12 +235,12 @@ void scanUpdates(void)
   if(mountSDCard())
   {
     result = scanUpdateFile();
-    if (result & FONT)
+    if (result & HAS_FONT)
     {
       updateFont(FONT_ROOT_DIR"/byte_ascii.fon", BYTE_ASCII_ADDR);
       updateFont(FONT_ROOT_DIR"/word_unicode.fon", WORD_UNICODE_ADDR);
     }
-    if (result & BMP) //bmp
+    if (result & HAS_BMP) //bmp
     {
       updateIcon();
     }

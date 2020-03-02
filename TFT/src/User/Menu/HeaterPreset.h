@@ -5,10 +5,10 @@
 
 typedef enum
 {
-  BOTH = 0,
-  BED_PREHEAT = 1,
-  NOZZLE0_PREHEAT = 2,
-}TOOLPREHEAT;
+  PREHEAT_BOTH = 0,
+  PREHEAT_HOTBED = 1,
+  PREHEAT_NOZZLE0 = 2,
+}TOOL_PREHEAT;
 
 
 void menuHeaterPreset(void);

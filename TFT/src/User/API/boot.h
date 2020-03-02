@@ -22,8 +22,8 @@
 #define SMALL_ICON_START_ADDR   (INFOBOX_ADDR+0xA7F8)
 #define SMALL_ICON_ADDR(num)    ((num)*0x1000+SMALL_ICON_START_ADDR)
 
-#define BMP		(1<<1)
-#define FONT	(1<<2)
+#define HAS_BMP     (1<<1)
+#define HAS_FONT    (1<<2)
 
 #define BMP_ROOT_DIR "0:"ROOT_DIR"/bmp"
 #define FONT_ROOT_DIR "0:"ROOT_DIR"/font"

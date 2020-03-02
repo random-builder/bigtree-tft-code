@@ -29,7 +29,7 @@ void menuUniHeating(void)
       case KEY_ICON_1: infoMenu.menu[++infoMenu.cur] = menuHeaterControl;    break;
       case KEY_ICON_2: infoMenu.menu[++infoMenu.cur] = menuCoolerControl;    break;
       case KEY_ICON_3:
-        for(TOOL i = BED; i < HEATER_NUM; i++)
+        for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
         {
           heatSetTargetTemp(i, 0);
         }

@@ -136,7 +136,7 @@ void menuFilament(void)
     {
       extrudeCoordinate = eTemp;
       extrudeCoordinateReDraw();
-      if(item_extruder_i != heatGetCurrentToolNozzle() - NOZZLE0)
+      if(item_extruder_i != heatGetCurrentToolNozzle() - TOOL_NOZZLE0)
         storeCmd("%s\n", tool_change[item_extruder_i]);
       storeCmd("G0 E%.5f F%d\n", extrudeCoordinate, item_speed[item_speed_i]);
     }
