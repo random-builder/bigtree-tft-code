@@ -6,8 +6,8 @@ const MENUITEMS UnifiedHeatItems = {
 // title
 lABEL_UNI_HEAT,
 // icon                       label
- {{ICON_HEAT_1,               LABEL_PREHEAT},
-  {ICON_HEAT_2,               LABEL_HEAT},
+ {{ICON_HEAT,                 LABEL_PREHEAT},
+  {ICON_HEAT,                 LABEL_HEAT},
   {ICON_FAN,                  LABEL_FAN},
   {ICON_COOLDOWN,             LABEL_COOLDOWN},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
@@ -29,7 +29,7 @@ void menuUniHeating(void)
       case KEY_ICON_1: infoMenu.menu[++infoMenu.cur] = menuHeaterControl;    break;
       case KEY_ICON_2: infoMenu.menu[++infoMenu.cur] = menuCoolerControl;    break;
       case KEY_ICON_3:
-        for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
+        for(TOOL i = BED; i < HEATER_NUM; i++)
         {
           heatSetTargetTemp(i, 0);
         }

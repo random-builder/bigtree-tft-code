@@ -199,14 +199,14 @@ void sendQueueCmd(void)
         case 109: //M109
         {
           TOOL i = heatGetCurrentToolNozzle();
-          if(cmd_seen('T')) i = (TOOL)(cmd_value() + TOOL_NOZZLE0);
+          if(cmd_seen('T')) i = (TOOL)(cmd_value() + NOZZLE0);
           infoCmd.queue[infoCmd.index_r].gcode[3]='4';
           heatSetIsWaiting(i,true);
         }
         case 104: //M104
         {
           TOOL i = heatGetCurrentToolNozzle();
-          if(cmd_seen('T')) i = (TOOL)(cmd_value() + TOOL_NOZZLE0);
+          if(cmd_seen('T')) i = (TOOL)(cmd_value() + NOZZLE0);
           if(cmd_seen('S'))
           {	
             heatSyncTargetTemp(i, cmd_value()); 
@@ -269,18 +269,18 @@ void sendQueueCmd(void)
           break;
         case 190: //M190
           infoCmd.queue[infoCmd.index_r].gcode[2]='4';
-          heatSetIsWaiting(TOOL_HOTBED,true);
+          heatSetIsWaiting(BED,true);											
         case 140: //M140
           if(cmd_seen('S'))
           {
-            heatSyncTargetTemp(TOOL_HOTBED,cmd_value());
+            heatSyncTargetTemp(BED,cmd_value()); 
           }
           else
           {
             char buf[12];
-            sprintf(buf, "S%d\n", heatGetTargetTemp(TOOL_HOTBED));
+            sprintf(buf, "S%d\n", heatGetTargetTemp(BED));
             strcat(infoCmd.queue[infoCmd.index_r].gcode,(const char*)buf);
-            heatSetSendWaiting(TOOL_HOTBED, false);
+            heatSetSendWaiting(BED, false);
           }
           break;
           
@@ -372,7 +372,7 @@ void sendQueueCmd(void)
 
     case 'T':
       cmd=strtol(&infoCmd.queue[infoCmd.index_r].gcode[1], NULL, 10);
-      heatSetCurrentToolNozzle((TOOL)(cmd + TOOL_NOZZLE0));
+      heatSetCurrentToolNozzle((TOOL)(cmd + NOZZLE0));
       break;
   }
   

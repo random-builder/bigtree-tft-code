@@ -67,7 +67,7 @@ void powerFailedCache(u32 offset)
   infoBreakPoint.speed = speedGetPercent(0);
   infoBreakPoint.flow = speedGetPercent(1);
   
-  for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
+  for(TOOL i = BED; i < HEATER_NUM; i++)
   {
     infoBreakPoint.target[i] = heatGetTargetTemp(i);
   }
@@ -130,7 +130,7 @@ bool powerOffGetData(void)
   if(f_lseek(&fp, MAX_PATH_LEN)                                 != FR_OK)        return false;  
   if(f_read(&fp, &infoBreakPoint,  sizeof(infoBreakPoint), &br) != FR_OK)        return false;
 
-  for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
+  for(TOOL i = BED; i < HEATER_NUM; i++)
   {
     if(infoBreakPoint.target[i] != 0)
       mustStoreCacheCmd("%s S%d\n", heatWaitCmd[i], infoBreakPoint.target[i]);
@@ -142,7 +142,7 @@ bool powerOffGetData(void)
       mustStoreCacheCmd("%s S%d\n", fanCmd[i], infoBreakPoint.fan[i]);
   }
   
-  mustStoreCacheCmd("%s\n", tool_change[infoBreakPoint.nozzle - TOOL_NOZZLE0]);
+  mustStoreCacheCmd("%s\n", tool_change[infoBreakPoint.nozzle - NOZZLE0]);
   if(infoBreakPoint.feedrate != 0)
   {
     mustStoreCacheCmd("G92 Z%.3f\n", infoBreakPoint.axis[Z_AXIS]

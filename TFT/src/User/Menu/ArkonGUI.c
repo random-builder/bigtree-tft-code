@@ -49,7 +49,7 @@ static float position_Y;
 static float position_Z;
 static bool positionCmdWait = false;
 
-TOOL current_Ext = TOOL_NOZZLE0;
+TOOL current_Ext = NOZZLE0;
 int current_fan = 0;
 int current_speedID = 0;
 const char* SpeedID[2] = SPEED_ID;
@@ -112,9 +112,9 @@ void drawTemperature(void)
 
   GUI_SetColor(HEADING_COLOR);
   menuDrawIconOnly(&ToolItems[1],1);                                          //Bed icon
-  GUI_DispStringRight(pointID[1].x, pointID[1].y, (u8 *)heatDisplayID[TOOL_HOTBED]);             //Bed label
+  GUI_DispStringRight(pointID[1].x, pointID[1].y, (u8 *)heatDisplayID[BED]);             //Bed label
   GUI_SetColor(VAL_COLOR);
-  my_sprintf(tempstr, "%d/%d", heatGetCurrentTemp(TOOL_HOTBED), heatGetTargetTemp(TOOL_HOTBED));
+  my_sprintf(tempstr, "%d/%d", heatGetCurrentTemp(BED), heatGetTargetTemp(BED));
   GUI_DispStringInPrect(&rectB[1], (u8 *)tempstr);                        //Bed value
 
   GUI_SetColor(HEADING_COLOR);
@@ -330,11 +330,11 @@ void menuStatus(void)
     switch (key_num)
     {
       case KEY_ICON_0: // dynamic nozzle
-        heatSetCurrentTool((TOOL)TOOL_NOZZLE0);
+        heatSetCurrentTool((TOOL)NOZZLE0);
         infoMenu.menu[++infoMenu.cur] = menuHeaterControl;
         break;
       case KEY_ICON_1: // dynamic bed
-        heatSetCurrentTool((TOOL)TOOL_HOTBED);
+        heatSetCurrentTool((TOOL)BED);
         infoMenu.menu[++infoMenu.cur] = menuHeaterControl;
         break;
       case KEY_ICON_2: // dynamic fan

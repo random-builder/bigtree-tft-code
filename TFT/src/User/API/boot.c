@@ -21,11 +21,7 @@ const char iconBmpName[][32]={
 "BackGroundColor", "FontColor", "Disconnect", "BaudRate", "Percentage", "BabyStep", "Mmm_001", "OnBoardSD", "OnTFTSD", "U_Disk",
 "Runout", "Point_1", "Point_2", "Point_3", "Point_4", "Marlin", "BigTreeTech", "Gcode", "BLTouch", "BLTouchDrop",
 "BLTouchStow", "BLTouchTest", "BLTouchRepeat", "TSCSettings", "MachineSettings", "FeatureSettings", "ProbeOffset", "EEPROMSave", "SilentOn", "ShutDown",
-"RGB_Settings", "RGB_Red", "RGB_Green", "RGB_Blue", "RGB_White", "RGB_Off",
-"Preheat_Both",
-"Preheat_1",
-"Preheat_2",
-"Preheat_3",
+"RGB_Settings", "RGB_Red", "RGB_Green", "RGB_Blue", "RGB_White", "RGB_Off", "Preheat_Both", "Preheat_PLA", "Preheat_PETG", "Preheat_ABS",
 "PowerSupply", "Custom", "Custom0", "Custom1", "Custom2", "Custom3", "Custom4", "Custom5", "Custom6", "Home_Move", "Heat_Fan",
 "ManualLevel", "CoolDown", "SilentOff","StatusNozzle","StatusBed","StatusFan","MainMenu","StatusSpeed","StatusFlow",
 "parametersetting", "global_nozzle", "global_bed", "ledcolor",
@@ -33,10 +29,7 @@ const char iconBmpName[][32]={
 "Point_5",     // ICON_POINT_5
 "Home",        // ICON_HOME_ALL
 "Stop",        // ICON_MOTION_STOP
-"Preheat_4",   // ICON_PREHEAT_4
-"Preheat_5",   // ICON_PREHEAT_5
-"Heat_1",      // ICON_HEAT_1
-"Heat_2",      // ICON_HEAT_2
+"Preheat_PLA", // ICON_PREHEAT_NYL
 }; 
 
 u8 scanUpdateFile(void)
@@ -46,12 +39,12 @@ u8 scanUpdateFile(void)
   
   if (f_opendir(&dir, BMP_ROOT_DIR) == FR_OK)
   {
-    rst |= HAS_BMP;
+    rst |= BMP;  
     f_closedir(&dir);
   }
   if (f_opendir(&dir, FONT_ROOT_DIR) == FR_OK)
   {
-    rst |= HAS_FONT;
+    rst |= FONT;  
     f_closedir(&dir);
   }
   return rst;
@@ -135,9 +128,8 @@ bool bmpDecode(char *bmp, u32 addr)
 void updateIcon(void)
 {
   char nowBmp[64];  
-
   GUI_Clear(BACKGROUND_COLOR);
-  GUI_DispString(100, 5, (u8*)"Logo Update");
+  GUI_DispString(100, 5, (u8*)"Icon Update");
 
   if(bmpDecode(BMP_ROOT_DIR"/Logo.bmp", LOGO_ADDR))
   {
@@ -145,8 +137,6 @@ void updateIcon(void)
   }
 
   GUI_Clear(BACKGROUND_COLOR);
-  GUI_DispString(100, 5, (u8*)"Icon Update");
-
   for(int i=0; i<COUNT(iconBmpName); i++)
   {
     my_sprintf(nowBmp, BMP_ROOT_DIR"/%s.bmp", iconBmpName[i]);
@@ -176,10 +166,7 @@ void updateFont(char *font, u32 addr)
 
   tempbuf = malloc(W25QXX_SECTOR_SIZE);
   if (tempbuf == NULL)  return;
-
   GUI_Clear(BACKGROUND_COLOR);
-  GUI_DispString(100, 5, (u8*)"Font Update");
-
   my_sprintf((void *)buffer,"%s Size: %dKB",font, (u32)f_size(&myfp)>>10);
   GUI_DispString(0, 100, (u8*)buffer);
   GUI_DispString(0, 140, (u8*)"Updating:   %");
@@ -222,12 +209,12 @@ void scanUpdates(void)
   if(mountSDCard())
   {
     result = scanUpdateFile();
-    if (result & HAS_FONT)
+    if (result & FONT)
     {
       updateFont(FONT_ROOT_DIR"/byte_ascii.fon", BYTE_ASCII_ADDR);
       updateFont(FONT_ROOT_DIR"/word_unicode.fon", WORD_UNICODE_ADDR);
     }
-    if (result & HAS_BMP) //bmp
+    if (result & BMP) //bmp
     {
       updateIcon();
     }

@@ -5,7 +5,7 @@
 #include <FilamentControl.h>
 #include "includes.h"
 
-//
+//1��title(����), ITEM_PER_PAGE��item(ͼ��+��ǩ) 
 MENUITEMS extrudeItems = {
 //   title
 LABEL_FILAMENT,
@@ -14,7 +14,7 @@ LABEL_FILAMENT,
   {ICON_UNLOAD,               LABEL_UNLOAD},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_LOAD,                 LABEL_LOAD},
-  {ICON_HEAT_1,               LABEL_PREHEAT},
+  {ICON_HEAT,                 LABEL_PREHEAT},
   {ICON_NOZZLE,               LABEL_NOZZLE},
   {ICON_NORMAL_SPEED,         LABEL_NORMAL_SPEED},
   {ICON_E_5_MM,               LABEL_5_MM},
@@ -136,7 +136,7 @@ void menuFilament(void)
     {
       extrudeCoordinate = eTemp;
       extrudeCoordinateReDraw();
-      if(item_extruder_i != heatGetCurrentToolNozzle() - TOOL_NOZZLE0)
+      if(item_extruder_i != heatGetCurrentToolNozzle() - NOZZLE0)
         storeCmd("%s\n", tool_change[item_extruder_i]);
       storeCmd("G0 E%.5f F%d\n", extrudeCoordinate, item_speed[item_speed_i]);
     }

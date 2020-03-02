@@ -12,7 +12,7 @@
 #include <CoolerControl.h>
 #include <FilamentControl.h>
 #include <HeaterControl.h>
-#include <HeaterPreheat.h>
+#include <HeaterPreset.h>
 #include <HomingControl.h>
 #include <HotbedBabyStep.h>
 #include <HotbedLeveling.h>

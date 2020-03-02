@@ -171,7 +171,7 @@ void parseACK(void)
     {
       heatSetCurrentTemp(heatGetCurrentToolNozzle(), ack_value()+0.5);
       heatSyncTargetTemp(heatGetCurrentToolNozzle(), ack_second_value()+0.5);
-      for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
+      for(TOOL i = BED; i < HEATER_NUM; i++)
       {
         if(ack_seen(toolID[i])) 
         {
@@ -185,8 +185,8 @@ void parseACK(void)
     }
     else if(ack_seen("B:"))		
     {
-      heatSetCurrentTemp(TOOL_HOTBED,ack_value()+0.5);
-      heatSyncTargetTemp(TOOL_HOTBED, ack_second_value()+0.5);
+      heatSetCurrentTemp(BED,ack_value()+0.5);
+      heatSyncTargetTemp(BED, ack_second_value()+0.5);
       #ifdef MENU_LIST_MODE
       avoid_terminal = infoSettings.terminalACK;
       #endif

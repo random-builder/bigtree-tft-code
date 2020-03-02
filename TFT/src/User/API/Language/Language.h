@@ -185,10 +185,9 @@ enum
   LABEL_AUTO_LEVEL,
   LABEL_HAND_LEVEL,
   LABEL_PREHEAT_NYL,
-  LABEL_PREHEAT_PEK,
   LABEL_LOWER_BED,
   LABEL_AUTO_PROBE,
-  LABEL_ISSUE_RESET,
+  LABEL_ISSURE_RESET,
 
   //add new keywords above this line only
   //keep the following always at the end of this list
