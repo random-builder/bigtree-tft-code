@@ -1,5 +1,4 @@
-#ifndef _CONFIGRATION_H_
-#define _CONFIGRATION_H_
+# pragma once
 
 //===========================================================================
 //=========================== Marlin Mode Settings ===========================
@@ -135,13 +134,6 @@
 // this does not work if LIST MODE is enabled. To invert z axis in LIST MODE go to setting->feature settings
 //#define INVERT_ZAXIS
 
-/**
- * Enable list mode in Files menu and settings menu
- * It is friendly to display long file name, but the model preview feature is not available
- * Disable this if you want to use the model preview feature
- */
-#define MENU_LIST_MODE
-
 
 //-------RESET SETTINGS & TOUCH SCREEN CALIBRATION------||
 // To reset the touch screen create a text file with name 'reset.txt' in root folder of the sd card and press reset button.
@@ -195,38 +187,30 @@
 #define CUSTOM_2_GCODE "M21\n"
 #define CUSTOM_3_LABEL "Release Sd Card"
 #define CUSTOM_3_GCODE "M22\n"
-//#define CUSTOM_4_LABEL "Custom4"
-//#define CUSTOM_4_GCODE "M105\n"
-//#define CUSTOM_5_LABEL "Custom5"
-//#define CUSTOM_5_GCODE "M105\n"
-//#define CUSTOM_6_LABEL "Custom6"
-//#define CUSTOM_6_GCODE "M105\n"
-
-/*
-custom gcode below are compatible only if MENU_LIST_MODE is active
-*/
-#ifdef MENU_LIST_MODE
-//#define CUSTOM_7_LABEL "Custom7"
-//#define CUSTOM_7_GCODE "M105\n"
-//#define CUSTOM_8_LABEL "Custom8"
-//#define CUSTOM_8_GCODE "M105\n"
-//#define CUSTOM_9_LABEL "Custom9"
-//#define CUSTOM_9_GCODE "M105\n"
-//#define CUSTOM_10_LABEL "Custom10"
-//#define CUSTOM_10_GCODE "M105\n"
-//#define CUSTOM_11_LABEL "Custom11"
-//#define CUSTOM_11_GCODE "M105\n"
-//#define CUSTOM_12_LABEL "Custom12"
-//#define CUSTOM_12_GCODE "M105\n"
-//#define CUSTOM_13_LABEL "Custom13"
-//#define CUSTOM_13_GCODE "M105\n"
-//#define CUSTOM_14_LABEL "Custom14"
-//#define CUSTOM_14_GCODE "M105\n"
-#endif
+#define CUSTOM_4_LABEL "Custom4"
+#define CUSTOM_4_GCODE "M105\n"
+#define CUSTOM_5_LABEL "Custom5"
+#define CUSTOM_5_GCODE "M105\n"
+#define CUSTOM_6_LABEL "Custom6"
+#define CUSTOM_6_GCODE "M105\n"
+#define CUSTOM_7_LABEL "Custom7"
+#define CUSTOM_7_GCODE "M105\n"
+#define CUSTOM_8_LABEL "Custom8"
+#define CUSTOM_8_GCODE "M105\n"
+#define CUSTOM_9_LABEL "Custom9"
+#define CUSTOM_9_GCODE "M105\n"
+#define CUSTOM_10_LABEL "Custom10"
+#define CUSTOM_10_GCODE "M105\n"
+#define CUSTOM_11_LABEL "Custom11"
+#define CUSTOM_11_GCODE "M105\n"
+#define CUSTOM_12_LABEL "Custom12"
+#define CUSTOM_12_GCODE "M105\n"
+#define CUSTOM_13_LABEL "Custom13"
+#define CUSTOM_13_GCODE "M105\n"
+#define CUSTOM_14_LABEL "Custom14"
+#define CUSTOM_14_GCODE "M105\n"
 
 #define CANCEL_PRINT_GCODE "G28 X0 Y0\n"
-
-#endif
 
 // user override
 #include "Configuration_user.h"

@@ -7,14 +7,14 @@ MENUITEMS preheatItems = {
 LABEL_PREHEAT,
 // icon                       label
   {
-    {ICON_PREHEAT_PLA,          LABEL_PREHEAT_PLA},
-    {ICON_PREHEAT_PET,          LABEL_PREHEAT_PET},
-    {ICON_PREHEAT_ABS,          LABEL_PREHEAT_ABS},
-    {ICON_PREHEAT_BOTH,         LABEL_PREHEAT_BOTH},
-    {ICON_PREHEAT_NYL,          LABEL_PREHEAT_NYL},
-    {ICON_PREHEAT_NYL,          LABEL_PREHEAT_NYL},
-    {ICON_PREHEAT_NYL,          LABEL_PREHEAT_NYL},
-    {ICON_BACK,                 LABEL_BACK},
+    {ICON_PREHEAT_1,          LABEL_PREHEAT_PLA},
+    {ICON_PREHEAT_2,          LABEL_PREHEAT_PET},
+    {ICON_PREHEAT_3,          LABEL_PREHEAT_ABS},
+    {ICON_PREHEAT_BOTH,       LABEL_PREHEAT_BOTH},
+    {ICON_PREHEAT_4,          LABEL_PREHEAT_NYL},
+    {ICON_PREHEAT_5,          LABEL_PREHEAT_NYL},
+    {ICON_STOP,               LABEL_PREHEAT_NYL},
+    {ICON_BACK,               LABEL_BACK},
   }
 };
 
