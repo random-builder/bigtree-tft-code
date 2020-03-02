@@ -128,15 +128,19 @@ bool bmpDecode(char *bmp, u32 addr)
 void updateIcon(void)
 {
   char nowBmp[64];  
+
   GUI_Clear(BACKGROUND_COLOR);
-  GUI_DispString(100, 5, (u8*)"Icon Update");
+  GUI_DispString(100, 5, (u8*)"Logo Update...");
 
   if(bmpDecode(BMP_ROOT_DIR"/Logo.bmp", LOGO_ADDR))
   {
     LOGO_ReadDisplay();
+    Delay_ms(2*1000);
   }
 
   GUI_Clear(BACKGROUND_COLOR);
+  GUI_DispString(100, 5, (u8*)"Icon Update...");
+
   for(int i=0; i<COUNT(iconBmpName); i++)
   {
     my_sprintf(nowBmp, BMP_ROOT_DIR"/%s.bmp", iconBmpName[i]);
@@ -166,7 +170,10 @@ void updateFont(char *font, u32 addr)
 
   tempbuf = malloc(W25QXX_SECTOR_SIZE);
   if (tempbuf == NULL)  return;
+
   GUI_Clear(BACKGROUND_COLOR);
+  GUI_DispString(100, 5, (u8*)"Font Update...");
+
   my_sprintf((void *)buffer,"%s Size: %dKB",font, (u32)f_size(&myfp)>>10);
   GUI_DispString(0, 100, (u8*)buffer);
   GUI_DispString(0, 140, (u8*)"Updating:   %");
@@ -218,7 +225,7 @@ void scanUpdates(void)
     {
       updateIcon();
     }
-    if (result) f_rename(ROOT_DIR, ROOT_DIR".CUR");
+    //if (result) f_rename(ROOT_DIR, ROOT_DIR".CUR");
     scanResetDir();
   }
 }
