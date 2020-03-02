@@ -69,77 +69,84 @@ u8 scanUpdateFile(void)
   return rst;
 }
 
-bool bmpDecode(char *bmp, u32 addr)  
+//
+// https://en.wikipedia.org/wiki/BMP_file_format
+//
+bool bmpDecode(char *file_path, const u32 base_addr)
 {  
-  FIL   bmpFile;
-  char  magic[2];  
-  int   w,h,bytePerLine;  
-  short bpp; 
-  int   offset;   
-  u8    buf[256];
-  u8    lcdcolor[4];
-  u16   bnum=0;
-  UINT  mybr;
+  const int flash_page = 256; // spec BY25Q64AS
 
-  GUI_COLOR pix;
+  FIL   image_file;
+  UINT  read_size;
+  char  image_magic[2];  
+  int   image_width,image_height,bytePerLine;  
+  short image_bpp; 
+  int   image_offset;
+  u32   flash_addr;
+  u32   flash_offset;
+  u8    flash_buff[flash_page];
+  u8    image_pixel[4];
+  GUI_COLOR screen_pixel;
 
-  if(f_open(&bmpFile,bmp,FA_OPEN_EXISTING | FA_READ)!=FR_OK)
+  if(f_open(&image_file,file_path,FA_OPEN_EXISTING | FA_READ)!=FR_OK)
     return false;
 
-  f_read(&bmpFile, magic, 2 ,&mybr);  
-  if (memcmp(magic, "BM", 2))  
+  f_read(&image_file, image_magic, 2 ,&read_size);  
+  if (memcmp(image_magic, "BM", 2))  
     return false;
   
-  f_lseek(&bmpFile, 10);  
-  f_read(&bmpFile, &offset, sizeof(int),&mybr);  
+  f_lseek(&image_file, 10);  
+  f_read(&image_file, &image_offset, sizeof(int),&read_size);  
 
-  f_lseek(&bmpFile, 18);  
-  f_read(&bmpFile, &w, sizeof(int),&mybr);  
-  f_read(&bmpFile, &h, sizeof(int),&mybr);  
+  f_lseek(&image_file, 18);  
+  f_read(&image_file, &image_width, sizeof(int),&read_size);  
+  f_read(&image_file, &image_height, sizeof(int),&read_size);  
 
-  f_lseek(&bmpFile, 28);  
-  f_read(&bmpFile, &bpp, sizeof(short),&mybr);  
-  if(bpp<24)
-    return false;
-  bpp >>=3; 
-  bytePerLine=w*bpp;     
-  if(bytePerLine%4 !=0) //bmp
-    bytePerLine=(bytePerLine/4+1)*4;  
+  f_lseek(&image_file, 28);  
+  f_read(&image_file, &image_bpp, sizeof(short),&read_size);  
+
+  if(image_bpp<24) return false;
+  image_bpp >>=3; 
+  bytePerLine=image_width*image_bpp;     
+  if(bytePerLine%4 !=0) bytePerLine=(bytePerLine/4+1)*4;
   
-  for(bnum=0; bnum<(w*h*2+W25QXX_SECTOR_SIZE-1)/W25QXX_SECTOR_SIZE; bnum++)
+  const int flash_sector_max = (image_width*image_height*2+W25QXX_SECTOR_SIZE-1)/W25QXX_SECTOR_SIZE;
+
+  for(int flash_sector=0; flash_sector<flash_sector_max; flash_sector++)
   {
-    W25Qxx_EraseSector(addr+bnum*W25QXX_SECTOR_SIZE);
+    flash_addr=base_addr+flash_sector*W25QXX_SECTOR_SIZE;
+    W25Qxx_EraseSector(flash_addr);
   }
-  bnum=0;
+
+  flash_addr=base_addr;
+  flash_offset=0;
     
-  for(int j=0; j<h; j++)
+  for(int image_Y=0; image_Y<image_height; image_Y++)
   {  
-    f_lseek(&bmpFile, offset+(h-j-1)*bytePerLine);
-    for(int i=0; i<w; i++)
+    f_lseek(&image_file, image_offset+(image_height-image_Y-1)*bytePerLine);
+    for(int image_X=0; image_X<image_width; image_X++)
     {
-      f_read(&bmpFile,(char *)&lcdcolor,bpp,&mybr);
+      f_read(&image_file,(char *)&image_pixel,image_bpp,&read_size);
 
-      pix.RGB.r=lcdcolor[2]>>3;
-      pix.RGB.g=lcdcolor[1]>>2;        
-      pix.RGB.b=lcdcolor[0]>>3;
+      screen_pixel.RGB.r=image_pixel[2]>>3;
+      screen_pixel.RGB.g=image_pixel[1]>>2;        
+      screen_pixel.RGB.b=image_pixel[0]>>3;
 
-//      GUI_DrawPixel(i,j,pix.color);
+      flash_buff[flash_offset++]=(u8)(screen_pixel.color>>8);
+      flash_buff[flash_offset++]=(u8)(screen_pixel.color&0xFF);
       
-      buf[bnum++]=(u8)(pix.color>>8);
-      buf[bnum++]=(u8)(pix.color&0xFF);
-      
-      if(bnum == 256)
+      if(flash_offset == flash_page)
       {
-        W25Qxx_WritePage(buf,addr,256);
-        addr+=256;
-        bnum=0;
+        W25Qxx_WritePage(flash_buff,flash_addr,flash_page);
+        flash_addr+=flash_page;
+        flash_offset=0;
       }
     }
   }    
 
-  W25Qxx_WritePage(buf,addr,bnum);
-  addr+=bnum;
-  f_close(&bmpFile);
+  W25Qxx_WritePage(flash_buff,flash_addr,flash_offset);
+
+  f_close(&image_file);
 
   return true;  
 }  
@@ -178,6 +185,8 @@ void updateIcon(void)
 
 void updateFont(char *file_path, const u32 base_addr)
 {
+  return; // FIXME
+
   FIL  file_data;
   UINT read_size = 0;
   u32  flash_addr = 0;
@@ -219,46 +228,6 @@ void updateFont(char *file_path, const u32 base_addr)
 
   f_close(&file_data);
   free(flash_buff);
-}
-
-void updateFontXXX(char *font, u32 addr)
-{
-  u8   progress = 0;
-  UINT rnum = 0;
-  u32  offset = 0;
-  char buffer[128];
-  FIL  myfp;
-  u8*  tempbuf = NULL;
-  
-  if (f_open(&myfp, font, FA_OPEN_EXISTING|FA_READ) != FR_OK)  return;
-
-  tempbuf = malloc(W25QXX_SECTOR_SIZE);
-  if (tempbuf == NULL)  return;
-
-  GUI_Clear(BACKGROUND_COLOR);
-  GUI_DispString(100, 5, (u8*)"Font Update...");
-
-  my_sprintf((void *)buffer,"%s Size: %dKB",font, (u32)f_size(&myfp)>>10);
-  GUI_DispString(0, 100, (u8*)buffer);
-  GUI_DispString(0, 140, (u8*)"Updating:   %");
-  
-  while(!f_eof(&myfp))
-  {
-    if (f_read(&myfp, tempbuf, W25QXX_SECTOR_SIZE, &rnum) != FR_OK) break;
-    
-    W25Qxx_EraseSector(addr + offset);
-    W25Qxx_WriteBuffer(tempbuf, addr + offset, W25QXX_SECTOR_SIZE);
-    offset += rnum;
-    if(progress != offset * 100 / f_size(&myfp))
-    {
-      progress = offset * 100 / f_size(&myfp);
-      GUI_DispDec(0 + BYTE_WIDTH*9, 140, progress, 3, RIGHT);
-    }
-    if(rnum !=W25QXX_SECTOR_SIZE)break;
-  }
-  
-  f_close(&myfp);
-  free(tempbuf);
 }
 
 void scanResetDir(void)
