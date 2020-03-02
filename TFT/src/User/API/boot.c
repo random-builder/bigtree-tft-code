@@ -12,7 +12,7 @@ const GUI_RECT iconUpdateRect = {(LCD_WIDTH - ICON_WIDTH)/2,              (LCD_H
 const GUI_RECT labelUpdateRect = {0,        (LCD_HEIGHT - ICON_HEIGHT)/2 + ICON_HEIGHT, 
                                  LCD_WIDTH, (LCD_HEIGHT - ICON_HEIGHT)/2 + ICON_HEIGHT + BYTE_HEIGHT};
 
-const char iconBmpName[][32]={
+const char icon_file_list[][32]={
 "Heat", "Move", "Home", "Print", "Extrude", "Fan", "Settings", "Leveling", "Inc", "Dec",
 "Nozzle", "Hotbed", "Temp_1", "Temp_5", "Temp_10", "Stop", "Back", "Inc_X", "Inc_Y", "Inc_Z",
 "Mmm_01", "Mmm_1", "Mmm_10", "Dec_X", "Dec_Y","Dec_Z", "Home_X", "Home_Y", "Home_Z", "Folder",
@@ -49,7 +49,7 @@ const char iconBmpName[][32]={
 "Preheat_5",   // ICON_PREHEAT_5
 "Heat_1",      // ICON_HEAT_1
 "Heat_2",      // ICON_HEAT_2
-}; 
+};
 
 u8 scanUpdateFile(void)
 {
@@ -74,7 +74,6 @@ u8 scanUpdateFile(void)
 //
 bool bmpDecode(char *file_path, const u32 base_addr)
 {  
-  const int flash_page = 256; // spec BY25Q64AS
 
   FIL   image_file;
   UINT  read_size;
@@ -84,9 +83,9 @@ bool bmpDecode(char *file_path, const u32 base_addr)
   int   image_offset;
   u32   flash_addr;
   u32   flash_offset;
-  u8    flash_buff[flash_page];
+  u8    flash_buff[W25QXX_PAGE_SIZE];
   u8    image_pixel[4];
-  GUI_COLOR screen_pixel;
+  GUI_PIXEL screen_pixel;
 
   if(f_open(&image_file,file_path,FA_OPEN_EXISTING | FA_READ)!=FR_OK)
     return false;
@@ -135,10 +134,10 @@ bool bmpDecode(char *file_path, const u32 base_addr)
       flash_buff[flash_offset++]=(u8)(screen_pixel.color>>8);
       flash_buff[flash_offset++]=(u8)(screen_pixel.color&0xFF);
       
-      if(flash_offset == flash_page)
+      if(flash_offset == W25QXX_PAGE_SIZE)
       {
-        W25Qxx_WritePage(flash_buff,flash_addr,flash_page);
-        flash_addr+=flash_page;
+        W25Qxx_WritePage(flash_buff,flash_addr,W25QXX_PAGE_SIZE);
+        flash_addr+=W25QXX_PAGE_SIZE;
         flash_offset=0;
       }
     }
@@ -153,7 +152,11 @@ bool bmpDecode(char *file_path, const u32 base_addr)
 
 void updateIcon(void)
 {
-  char nowBmp[64];  
+  char file_path[64];  
+  u32  flash_addr = 0;
+  u8   progress_info = 0;
+  u8   progress_unit = 0;
+  char text_buff[128];
 
   GUI_Clear(BACKGROUND_COLOR);
   GUI_DispString(100, 5, (u8*)"Logo Update...");
@@ -161,31 +164,41 @@ void updateIcon(void)
   if(bmpDecode(BMP_ROOT_DIR"/Logo.bmp", LOGO_ADDR))
   {
     LOGO_ReadDisplay();
-    Delay_ms(2*1000);
+    Delay_ms(2*1000); // preview time
+  }
+
+  if(bmpDecode(BMP_ROOT_DIR"/InfoBox.bmp", INFOBOX_ADDR))
+  {
+    ICON_CustomReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, INFOBOX_WIDTH, INFOBOX_HEIGHT,INFOBOX_ADDR);
   }
 
   GUI_Clear(BACKGROUND_COLOR);
   GUI_DispString(100, 5, (u8*)"Icon Update...");
 
-  for(int i=0; i<COUNT(iconBmpName); i++)
+  for(int icon_index=0; icon_index<COUNT(icon_file_list); icon_index++)
   {
-    my_sprintf(nowBmp, BMP_ROOT_DIR"/%s.bmp", iconBmpName[i]);
-    if(bmpDecode(nowBmp, ICON_ADDR(i)))
+    my_sprintf(file_path, BMP_ROOT_DIR"/%s.bmp", icon_file_list[icon_index]);
+    flash_addr = ICON_ADDR(icon_index);
+    if(bmpDecode(file_path, flash_addr))
     {
       GUI_ClearRect(labelUpdateRect.x0, labelUpdateRect.y0, labelUpdateRect.x1, labelUpdateRect.y1);
-      GUI_DispStringInPrect(&labelUpdateRect, (u8 *)nowBmp);
-      ICON_ReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, i);
+      GUI_DispStringInPrect(&labelUpdateRect, (u8 *)file_path);
+      ICON_ReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, icon_index);
+    }
+    progress_unit = flash_addr * 100 / FLASH_TOTAL_SIZE;
+    if(progress_info != progress_unit) {
+        progress_info = progress_unit;
+        my_sprintf((void *)text_buff,"Flash used: %d %%   ", progress_unit);
+        GUI_DispString(0, 50, (u8*)text_buff);
     }
   }
-    if(bmpDecode(BMP_ROOT_DIR"/InfoBox.bmp", INFOBOX_ADDR))
-  {
-    ICON_CustomReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, INFOBOX_WIDTH, INFOBOX_HEIGHT,INFOBOX_ADDR);
-  }
+
+  Delay_ms(2*1000); // preview time
+
 }
 
 void updateFont(char *file_path, const u32 base_addr)
 {
-  return; // FIXME
 
   FIL  file_data;
   UINT read_size = 0;
@@ -208,7 +221,7 @@ void updateFont(char *file_path, const u32 base_addr)
 
   my_sprintf((void *)text_buff,"%s Size=%dK",file_path, (u32)file_size>>10);
   GUI_DispString(0, 100, (u8*)text_buff);
-  GUI_DispString(0, 140, (u8*)"Updating:   %");
+  GUI_DispString(0, 140, (u8*)"Progress:   %");
 
   while(!f_eof(&file_data))
   {
