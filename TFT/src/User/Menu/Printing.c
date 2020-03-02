@@ -104,7 +104,7 @@ void endGcodeExecute(void)
 {
   mustStoreCmd("G90\n");
   mustStoreCmd("G92 E0\n");
-  for(TOOL i = BED; i < HEATER_NUM; i++)
+  for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
   {
     mustStoreCmd("%s S0\n", heatCmd[i]);  
   }
@@ -306,8 +306,8 @@ void reValueNozzle(void)
 
 void reValueBed(void)
 {
-  GUI_DispDec(BED_X + 2 * BYTE_WIDTH, TEMP_Y-BYTE_HEIGHT, heatGetCurrentTemp(BED), 3, RIGHT);
-  GUI_DispDec(BED_X + 6 * BYTE_WIDTH, TEMP_Y-BYTE_HEIGHT, heatGetTargetTemp(BED),  3, LEFT);
+  GUI_DispDec(BED_X + 2 * BYTE_WIDTH, TEMP_Y-BYTE_HEIGHT, heatGetCurrentTemp(TOOL_HOTBED), 3, RIGHT);
+  GUI_DispDec(BED_X + 6 * BYTE_WIDTH, TEMP_Y-BYTE_HEIGHT, heatGetTargetTemp(TOOL_HOTBED),  3, LEFT);
 }
 
 void reDrawTime(void)
@@ -404,11 +404,11 @@ void menuPrinting(void)
       nowHeat.T[heatGetCurrentToolNozzle()].target = heatGetTargetTemp(heatGetCurrentToolNozzle());
       reValueNozzle();	
     }
-    if (nowHeat.T[BED].current != heatGetCurrentTemp(BED) 
-     || nowHeat.T[BED].target != heatGetTargetTemp(BED))
+    if (nowHeat.T[TOOL_HOTBED].current != heatGetCurrentTemp(TOOL_HOTBED) 
+     || nowHeat.T[TOOL_HOTBED].target != heatGetTargetTemp(TOOL_HOTBED))
     {
-      nowHeat.T[BED].current = heatGetCurrentTemp(BED);
-      nowHeat.T[BED].target = heatGetTargetTemp(BED);
+      nowHeat.T[TOOL_HOTBED].current = heatGetCurrentTemp(TOOL_HOTBED);
+      nowHeat.T[TOOL_HOTBED].target = heatGetTargetTemp(TOOL_HOTBED);
       reValueBed();	
     }
     
@@ -569,9 +569,9 @@ void menuShutDown(void)
         break;		
     }
     tempIsLower = true;
-    for (TOOL i = NOZZLE0; i < HEATER_NUM; i++)
+    for (TOOL i = TOOL_NOZZLE0; i < HEATER_NUM; i++)
     {
-      if(heatGetCurrentTemp(NOZZLE0) >= AUTO_SHUT_DOWN_MAXTEMP)
+      if(heatGetCurrentTemp(TOOL_NOZZLE0) >= AUTO_SHUT_DOWN_MAXTEMP)
         tempIsLower = false;
     }
     if(tempIsLower)
