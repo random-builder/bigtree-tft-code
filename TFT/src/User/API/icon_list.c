@@ -8,7 +8,7 @@
 // define icon file list (no suffix)
 const char icon_file_store[][FILE_NAME_SIZE] = {
 #define X_IMAGE(NAME) STRINGIFY(NAME),
-#include "icon_list.x"
+#include "icon_list.inc"
 #undef  X_IMAGE
         };
 

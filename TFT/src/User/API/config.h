@@ -7,7 +7,7 @@
 // define the config struct type
 typedef struct {
 #define X_ENTRY(SECTION, NAME, DEFAULT_VALUE) char * SECTION##_##NAME ;
-#include "config.x"
+#include "config.inc"
 #undef  X_ENTRY
 } SYSTEM_CONFIG;
 

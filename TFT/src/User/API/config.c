@@ -13,7 +13,7 @@
 // declare global instance and populate with default values
 SYSTEM_CONFIG system_config = {
 #define X_ENTRY(SECTION, NAME, DEFAULT_VALUE) DEFAULT_VALUE ,
-#include "config.x"
+#include "config.inc"
 #undef  X_ENTRY
         };
 
@@ -24,7 +24,7 @@ int config_handler(void *user, const char *section, const char *name, const char
     }
 #define X_ENTRY(SECTION, NAME, DEF_VAL) else if \
     (strcmp(section, #SECTION)==0 && strcmp(name, #NAME)==0) { config->SECTION##_##NAME = strdup(value); }
-#include "config.x"
+#include "config.inc"
 #undef  X_ENTRY
     else {
         return -1; // failure: wrong section/name

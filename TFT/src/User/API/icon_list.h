@@ -10,7 +10,7 @@
 // define index for icon name
 enum {
 #define X_IMAGE(NAME) ICON_##NAME,
-#include "icon_list.x"
+#include "icon_list.inc"
 #undef  X_IMAGE
     // keep last
     ICON_PREVIEW,
