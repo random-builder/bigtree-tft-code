@@ -148,29 +148,37 @@ bool bmpDecode(char *file_path, const u32 base_addr)
   f_close(&image_file);
 
   return true;  
-}  
+}
+
+//
+// report flash usage percent
+//
+void report_flash(u8 flash_info) {
+    char text_buff[64];
+    my_sprintf((void *)text_buff,"Flash used: %d %%   ", flash_info);
+    GUI_DispString(0, 50, (u8*)text_buff);
+}
+
+void updateLogo(void) {
+
+    GUI_Clear(BACKGROUND_COLOR);
+    GUI_DispString(100, 5, (u8*)"Logo Update...");
+
+    if(bmpDecode(BMP_ROOT_DIR"/Logo.bmp", LOGO_ADDR))
+    {
+      LOGO_ReadDisplay();
+      Delay_ms(2*1000); // preview time
+    }
+
+}
+
 
 void updateIcon(void)
 {
   char file_path[64];  
   u32  flash_addr = 0;
-  u8   progress_info = 0;
-  u8   progress_unit = 0;
-  char text_buff[128];
-
-  GUI_Clear(BACKGROUND_COLOR);
-  GUI_DispString(100, 5, (u8*)"Logo Update...");
-
-  if(bmpDecode(BMP_ROOT_DIR"/Logo.bmp", LOGO_ADDR))
-  {
-    LOGO_ReadDisplay();
-    Delay_ms(2*1000); // preview time
-  }
-
-  if(bmpDecode(BMP_ROOT_DIR"/InfoBox.bmp", INFOBOX_ADDR))
-  {
-    ICON_CustomReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, INFOBOX_WIDTH, INFOBOX_HEIGHT,INFOBOX_ADDR);
-  }
+  u8   flash_info = 0;
+  u8   flash_unit = 0;
 
   GUI_Clear(BACKGROUND_COLOR);
   GUI_DispString(100, 5, (u8*)"Icon Update...");
@@ -185,12 +193,16 @@ void updateIcon(void)
       GUI_DispStringInPrect(&labelUpdateRect, (u8 *)file_path);
       ICON_ReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, icon_index);
     }
-    progress_unit = flash_addr * 100 / FLASH_TOTAL_SIZE;
-    if(progress_info != progress_unit) {
-        progress_info = progress_unit;
-        my_sprintf((void *)text_buff,"Flash used: %d %%   ", progress_unit);
-        GUI_DispString(0, 50, (u8*)text_buff);
+    flash_unit = flash_addr * 100 / FLASH_TOTAL_SIZE;
+    if(flash_info != flash_unit) {
+        flash_info = flash_unit;
+        report_flash(flash_info);
     }
+  }
+
+  if(bmpDecode(BMP_ROOT_DIR"/InfoBox.bmp", INFOBOX_ADDR))
+  {
+    ICON_CustomReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, INFOBOX_WIDTH, INFOBOX_HEIGHT,INFOBOX_ADDR);
   }
 
   Delay_ms(2*1000); // preview time
@@ -205,6 +217,8 @@ void updateFont(char *file_path, const u32 base_addr)
   u32  flash_addr = 0;
   u32  flash_offset = 0;
   u8*  flash_buff = NULL;
+  u8   flash_info = 0;
+  u8   flash_unit = 0;
   u8   progress_info = 0;
   u8   progress_unit = 0;
   char text_buff[128];
@@ -230,6 +244,13 @@ void updateFont(char *file_path, const u32 base_addr)
     W25Qxx_EraseSector(flash_addr);
     W25Qxx_WriteBuffer(flash_buff, flash_addr, W25QXX_SECTOR_SIZE);
     flash_offset += read_size;
+    // flash usage
+    flash_unit = flash_addr * 100 / FLASH_TOTAL_SIZE;
+    if (flash_info != flash_unit) {
+        flash_info = flash_unit;
+        report_flash(flash_info);
+    }
+    // file progress
     progress_unit = flash_offset * 100 / file_size;
     if(progress_info != progress_unit)
     {
@@ -243,7 +264,7 @@ void updateFont(char *file_path, const u32 base_addr)
   free(flash_buff);
 }
 
-void scanResetDir(void)
+void scanResetFile(void)
 {
   FIL resetfile;
   if (f_open(&resetfile, TFT_RESET_FILE, FA_OPEN_EXISTING | FA_READ) == FR_OK)
@@ -269,9 +290,12 @@ void scanUpdates(void)
     }
     if (result & HAS_BMP) //bmp
     {
+#ifdef SHOW_LOGO
+      updateLogo();
+#endif
       updateIcon();
     }
     //if (result) f_rename(ROOT_DIR, ROOT_DIR".CUR");
-    scanResetDir();
+    scanResetFile();
   }
 }

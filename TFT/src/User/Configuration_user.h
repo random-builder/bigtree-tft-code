@@ -4,8 +4,6 @@
 
 #pragma once
 
-#undef  SHOW_BTT_BOOTSCREEN
-
 #undef  AUTO_SAVE_LOAD_LEVELING_VALUE
 
 #undef  X_MAX_POS

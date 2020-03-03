@@ -40,7 +40,11 @@
 #define BYTE_ASCII_ADDR         WORD_UNICODE_TAIL
 #define BYTE_ASCII_TAIL         BYTE_ASCII_ADDR + BYTE_ASCII_SIZE
 
+#ifdef SHOW_LOGO
 #define LOGO_SIZE               FLASH_IMAGE_BLOCK(LCD_WIDTH,LCD_HEIGHT)
+#else
+#define LOGO_SIZE               0
+#endif
 #define LOGO_ADDR               BYTE_ASCII_TAIL
 #define LOGO_TAIL               LOGO_ADDR + LOGO_SIZE
 
