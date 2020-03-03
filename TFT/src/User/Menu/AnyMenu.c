@@ -91,7 +91,7 @@ void menuDrawItem(const ITEM *item, uint8_t positon)
 {
   uint8_t *content = labelGetAddress(&item->label);
   const GUI_RECT *rect = rect_of_key + positon;
-  if(item->icon != ICON_BACKGROUND)
+  if(item->icon != ICON_EMPTY)
     ICON_ReadDisplay(rect->x0, rect->y0, item->icon);
   else
     GUI_ClearPrect(rect);
@@ -105,7 +105,7 @@ void menuDrawItem(const ITEM *item, uint8_t positon)
 void menuDrawIconOnly(const ITEM *item, uint8_t positon)
 {
   const GUI_RECT *rect = rect_of_key + positon;
-  if(item->icon != ICON_BACKGROUND)
+  if(item->icon != ICON_EMPTY)
     ICON_ReadDisplay(rect->x0, rect->y0, item->icon);
   else
     GUI_ClearPrect(rect);
@@ -310,7 +310,7 @@ void itemDrawIconPress(u8 position, u8 is_press)
   if (isListview == false)
   {
     if (curMenuItems == NULL) return;
-    if (curMenuItems->items[position].icon == ICON_BACKGROUND) return;
+    if (curMenuItems->items[position].icon == ICON_EMPTY) return;
     
     const GUI_RECT *rect = rect_of_key + position;
     

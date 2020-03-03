@@ -5,6 +5,7 @@
 #pragma once
 
 #include "config.h"
+#include "icon_list.h"
 
 #include <AnyMenu.h>
 #include <AnyPopup.h>

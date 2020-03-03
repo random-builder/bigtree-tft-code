@@ -29,14 +29,14 @@ MENUITEMS moreItems = {
 //  title
 LABEL_MORE,
 // icon                       label
- {{ICON_FAN,                  LABEL_FAN},
-  {ICON_RGB_SETTINGS,         LABEL_RGB_SETTINGS},
-  {ICON_EXTRUDE,              LABEL_FILAMENT},
-  {ICON_FEATURE_SETTINGS,     LABEL_FEATURE_SETTINGS},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_Fan,                  LABEL_FAN},
+  {ICON_RGB_Settings,         LABEL_RGB_SETTINGS},
+  {ICON_Extrude,              LABEL_FILAMENT},
+  {ICON_FeatureSettings,      LABEL_FEATURE_SETTINGS},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 void menuMore(void)

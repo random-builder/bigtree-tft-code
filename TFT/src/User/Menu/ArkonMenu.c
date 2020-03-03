@@ -11,14 +11,14 @@ const MENUITEMS mainPageItems = {
 LABEL_READY,
 // icon                       label
    {
-    {ICON_HOME_MOVE,            LABEL_UNI_MOVE}, // 0
-    {ICON_HEAT_FAN,             LABEL_UNI_HEAT}, // 1
-    {ICON_EXTRUDE,              LABEL_FILAMENT}, // 2
-    {ICON_SETTINGS,             LABEL_SETTINGS}, // 3
-    {ICON_BACKGROUND,           LABEL_BACKGROUND},
-    {ICON_GCODE,                LABEL_GCODE},    // 5
-    {ICON_CUSTOM,               LABEL_CUSTOM},   // 6
-    {ICON_BACK,                 LABEL_BACK}      // 7
+    {ICON_Home_Move,            LABEL_UNI_MOVE}, // 0
+    {ICON_Heat_Fan,             LABEL_UNI_HEAT}, // 1
+    {ICON_Extrude,              LABEL_FILAMENT}, // 2
+    {ICON_Settings,             LABEL_SETTINGS}, // 3
+    {ICON_EMPTY,           LABEL_BACKGROUND},
+    {ICON_Gcode,                LABEL_GCODE},    // 5
+    {ICON_Custom,               LABEL_CUSTOM},   // 6
+    {ICON_Back,                 LABEL_BACK}      // 7
   }
 };
 

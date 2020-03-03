@@ -6,14 +6,14 @@ const MENUITEMS UnifiedHeatItems = {
 // title
 LABEL_UNI_HEAT,
 // icon                       label
- {{ICON_HEAT_1,               LABEL_PREHEAT},
-  {ICON_HEAT_2,               LABEL_HEAT_CTL},
-  {ICON_FAN,                  LABEL_FAN},
-  {ICON_COOLDOWN,             LABEL_COOLDOWN},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_Heat_1,               LABEL_PREHEAT},
+  {ICON_Heat_2,               LABEL_HEAT_CTL},
+  {ICON_Fan,                  LABEL_FAN},
+  {ICON_CoolDown,             LABEL_COOLDOWN},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 void menuUniHeating(void)

@@ -7,27 +7,27 @@ MENUITEMS preheatItems = {
 LABEL_PREHEAT,
 // icon                       label
   {
-    {ICON_PREHEAT_1,          LABEL_PREHEAT_PLA},
-    {ICON_PREHEAT_2,          LABEL_PREHEAT_PET},
-    {ICON_PREHEAT_3,          LABEL_PREHEAT_ABS},
-    {ICON_NOZZLE,             LABEL_NOZZLE},
-    {ICON_PREHEAT_4,          LABEL_PREHEAT_NYL},
-    {ICON_PREHEAT_5,          LABEL_PREHEAT_PEK},
-    {ICON_STOP,               LABEL_ISSUE_RESET},
-    {ICON_BACK,               LABEL_BACK},
+    {ICON_Preheat_1,          LABEL_PREHEAT_PLA},
+    {ICON_Preheat_2,          LABEL_PREHEAT_PET},
+    {ICON_Preheat_3,          LABEL_PREHEAT_ABS},
+    {ICON_Nozzle,             LABEL_NOZZLE},
+    {ICON_Preheat_4,          LABEL_PREHEAT_NYL},
+    {ICON_Preheat_5,          LABEL_PREHEAT_PEK},
+    {ICON_Stop,               LABEL_ISSUE_RESET},
+    {ICON_Back,               LABEL_BACK},
   }
 };
 
 const ITEM itemToolPreheat[] = {
 // icon                       label
-  {ICON_PREHEAT_BOTH,         LABEL_PREHEAT_BOTH},
-  {ICON_BED,                  LABEL_BED},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
+  {ICON_Preheat_Both,         LABEL_PREHEAT_BOTH},
+  {ICON_Hotbed,                  LABEL_BED},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
 };   
 
 const u16   preheat_bed_temp[] = PREHEAT_BED;

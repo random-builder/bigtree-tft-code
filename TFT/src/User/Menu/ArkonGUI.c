@@ -12,27 +12,27 @@ MENUITEMS StatusItems = {
 LABEL_READY,
 // icon                       label
  {
-  {ICON_STATUS_NOZZLE,        LABEL_BACKGROUND}, // 0
-  {ICON_STATUS_BED,           LABEL_BACKGROUND},
-  {ICON_STATUS_FAN,           LABEL_BACKGROUND},
-  {ICON_STATUS_SPEED,         LABEL_BACKGROUND},
-  {ICON_MAINMENU,             LABEL_MAINMENU},   // 4
-  {ICON_BACKGROUND,           LABEL_BACKGROUND}, // status window
-  {ICON_BACKGROUND,           LABEL_BACKGROUND}, // status window
-  {ICON_BACKGROUND,           LABEL_BACKGROUND}, // {ICON_PRINT,                LABEL_PRINT},}
+  {ICON_StatusNozzle,        LABEL_BACKGROUND}, // 0
+  {ICON_StatusBed,           LABEL_BACKGROUND},
+  {ICON_StatusFan,           LABEL_BACKGROUND},
+  {ICON_StatusSpeed,         LABEL_BACKGROUND},
+  {ICON_MainMenu,             LABEL_MAINMENU},   // 4
+  {ICON_EMPTY,           LABEL_BACKGROUND}, // status window
+  {ICON_EMPTY,           LABEL_BACKGROUND}, // status window
+  {ICON_EMPTY,           LABEL_BACKGROUND}, // {ICON_PRINT,                LABEL_PRINT},}
  }
 };
 
 const ITEM ToolItems[3] = {
 // icon                       label
-  {ICON_STATUS_NOZZLE,         LABEL_BACKGROUND},
-  {ICON_STATUS_BED,            LABEL_BACKGROUND},
-  {ICON_STATUS_FAN,            LABEL_BACKGROUND},
+  {ICON_StatusNozzle,         LABEL_BACKGROUND},
+  {ICON_StatusBed,            LABEL_BACKGROUND},
+  {ICON_StatusFan,            LABEL_BACKGROUND},
 };
 const ITEM SpeedItems[2] = {
 // icon                       label
-  {ICON_STATUS_SPEED,         LABEL_BACKGROUND},
-  {ICON_STATUS_FLOW,          LABEL_BACKGROUND},
+  {ICON_StatusSpeed,         LABEL_BACKGROUND},
+  {ICON_StatusFlow,          LABEL_BACKGROUND},
 };
 
 static u32 nowTime = 0;

@@ -50,7 +50,7 @@ int16_t get_Pre_Icon(char * filename)
     if(strcmp(icon_File_Name[i],filename)==0)
     return icon_Enum[i];
   }
-  return ICON_BACKGROUND;
+  return ICON_EMPTY;
 }
 
   void gocdeListDraw(void)
@@ -84,7 +84,7 @@ int16_t get_Pre_Icon(char * filename)
       gn = strlen(infoFile.file[k]) - 6; // -6 means ".gcode"
       gnew = malloc(gn + 10);
 
-      if(gnew && get_Pre_Icon(infoFile.file[k]) == ICON_BACKGROUND)
+      if(gnew && get_Pre_Icon(infoFile.file[k]) == ICON_EMPTY)
       {
 
         strcpy(gnew, getCurFileSource());
@@ -244,23 +244,23 @@ MENUITEMS sourceSelItems = {
 //  title
 LABEL_PRINT,
 // icon                       label
- {{ICON_SD_SOURCE,            LABEL_TFTSD},
+ {{ICON_OnTFTSD,              LABEL_TFTSD},
  #ifdef ONBOARD_SD_SUPPORT
-  {ICON_BSD_SOURCE,           LABEL_ONBOARDSD},
+  {ICON_OnBoardSD,            LABEL_ONBOARDSD},
  #endif
  #ifdef U_DISK_SUPPROT
-  {ICON_U_DISK,               LABEL_U_DISK},
+  {ICON_U_Disk,               LABEL_U_DISK},
  #else
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
  #endif
  #ifndef ONBOARD_SD_SUPPORT
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
  #endif
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 void menuPrint(void)

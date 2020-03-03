@@ -11,22 +11,22 @@ MENUITEMS extrudeItems = {
 LABEL_FILAMENT,
 // icon                       label
  {
-  {ICON_UNLOAD,               LABEL_UNLOAD},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_LOAD,                 LABEL_LOAD},
-  {ICON_HEAT,                 LABEL_PREHEAT},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NORMAL_SPEED,         LABEL_NORMAL_SPEED},
-  {ICON_E_5_MM,               LABEL_5_MM},
-  {ICON_BACK,                 LABEL_BACK},}
+  {ICON_Unload,               LABEL_UNLOAD},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Load,                 LABEL_LOAD},
+  {ICON_Heat,                 LABEL_PREHEAT},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Normal,               LABEL_NORMAL_SPEED},
+  {ICON_Emm_5,                LABEL_5_MM},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 #define ITEM_EXTRUDER_NUM EXTRUDER_NUM
 //const ITEM itemExtruder[ITEM_EXTRUDER_NUM] = {
 //// icon                       label
-//  {ICON_SLOW_SPEED,           LABEL_SLOW_SPEED},
-//  {ICON_NORMAL_SPEED,         LABEL_NORMAL_SPEED},
-//  {ICON_FAST_SPEED,           LABEL_FAST_SPEED},
+//  {ICON_Slow,           LABEL_SLOW_SPEED},
+//  {ICON_Normal,         LABEL_NORMAL_SPEED},
+//  {ICON_Fast,           LABEL_FAST_SPEED},
 //};
 //const  u32 item_extruder[ITEM_EXTRUDER_NUM] = {EXTRUDE_SLOW_SPEED, EXTRUDE_NORMAL_SPEED, EXTRUDE_FAST_SPEED};
 static u8  item_extruder_i = 0;
@@ -34,9 +34,9 @@ static u8  item_extruder_i = 0;
 #define ITEM_SPEED_NUM 3
 const ITEM itemSpeed[ITEM_SPEED_NUM] = {
 // icon                       label
-  {ICON_SLOW_SPEED,           LABEL_SLOW_SPEED},
-  {ICON_NORMAL_SPEED,         LABEL_NORMAL_SPEED},
-  {ICON_FAST_SPEED,           LABEL_FAST_SPEED},
+  {ICON_Slow,           LABEL_SLOW_SPEED},
+  {ICON_Normal,         LABEL_NORMAL_SPEED},
+  {ICON_Fast,           LABEL_FAST_SPEED},
 };
 const  u32 item_speed[ITEM_SPEED_NUM] = {EXTRUDE_SLOW_SPEED, EXTRUDE_NORMAL_SPEED, EXTRUDE_FAST_SPEED};
 static u8  item_speed_i = 1;
@@ -44,9 +44,9 @@ static u8  item_speed_i = 1;
 #define ITEM_LEN_NUM 3
 const ITEM itemLen[ITEM_LEN_NUM] = {
 // icon                       label
-  {ICON_E_1_MM,               LABEL_1_MM},
-  {ICON_E_5_MM,               LABEL_5_MM},
-  {ICON_E_10_MM,              LABEL_10_MM},
+  {ICON_Emm_1,               LABEL_1_MM},
+  {ICON_Emm_5,               LABEL_5_MM},
+  {ICON_Emm_10,              LABEL_10_MM},
 };
 const  u8 item_len[ITEM_LEN_NUM] = {1, 5, 10};
 static u8 item_len_i = 1;

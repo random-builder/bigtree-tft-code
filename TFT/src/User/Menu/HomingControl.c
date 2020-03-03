@@ -7,15 +7,15 @@ const MENUITEMS homeItems = {
 LABEL_HOME,
 // icon                       label
  {
-  {ICON_HOME_ALL,             LABEL_HOME_ALL}, // 0
-  {ICON_X_HOME,               LABEL_X_HOME},
-  {ICON_Y_HOME,               LABEL_Y_HOME},
-  {ICON_Z_HOME,               LABEL_Z_HOME},
+  {ICON_Home,                 LABEL_HOME_ALL}, // 0
+  {ICON_Home_X,               LABEL_X_HOME},
+  {ICON_Home_Y,               LABEL_Y_HOME},
+  {ICON_Home_Z,               LABEL_Z_HOME},
 
-  {ICON_Z_DEC,                LABEL_LOWER_BED}, // 4
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+  {ICON_Dec_Z,                LABEL_LOWER_BED}, // 4
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 void menuHoming(void)

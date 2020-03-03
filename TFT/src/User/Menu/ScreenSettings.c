@@ -5,14 +5,14 @@ MENUITEMS screenSettingsItems = {
 // title
 LABEL_SCREEN_SETTINGS,
 // icon                       label
- {{ICON_ROTATE_UI,            LABEL_ROTATE_UI},
-  {ICON_TOUCHSCREEN_ADJUST,   LABEL_TOUCHSCREEN_ADJUST},
-  {ICON_LANGUAGE,             LABEL_LANGUAGE}, 
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_Rotate,               LABEL_ROTATE_UI},
+  {ICON_TP_Adjust,            LABEL_TOUCHSCREEN_ADJUST},
+  {ICON_Language,             LABEL_LANGUAGE}, 
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 #ifdef BUZZER_PIN // Speaker
@@ -21,8 +21,8 @@ LABEL_SCREEN_SETTINGS,
   #define ITEM_SILENT_NUM 2
   const ITEM itemSilent[ITEM_SILENT_NUM] = {
   // icon                       label
-    {ICON_SILENT_OFF,           LABEL_SILENT_OFF},
-    {ICON_SILENT_ON,            LABEL_SILENT_ON},
+    {ICON_SilentOff,           LABEL_SILENT_OFF},
+    {ICON_SilentOn,            LABEL_SILENT_ON},
   };
   const  u8 item_silent[ITEM_SILENT_NUM] = {0, 1};
   static u8 item_silent_i = 0;
@@ -40,28 +40,28 @@ LABEL_SCREEN_SETTINGS,
   #define ITEM_COLOR_NUM 9
   const ITEM itemBGcolor[ITEM_COLOR_NUM] = {
   // icon                      label
-    {ICON_BKCOLOR,             LABEL_WHITE},
-    {ICON_BKCOLOR,             LABEL_BLACK},
-    {ICON_BKCOLOR,             LABEL_BLUE},
-    {ICON_BKCOLOR,             LABEL_RED},
-    {ICON_BKCOLOR,             LABEL_GREEN},
-    {ICON_BKCOLOR,             LABEL_CYAN},
-    {ICON_BKCOLOR,             LABEL_YELLOW},
-    {ICON_BKCOLOR,             LABEL_BROWN},
-    {ICON_BKCOLOR,             LABEL_GRAY},
+    {ICON_BackGroundColor,             LABEL_WHITE},
+    {ICON_BackGroundColor,             LABEL_BLACK},
+    {ICON_BackGroundColor,             LABEL_BLUE},
+    {ICON_BackGroundColor,             LABEL_RED},
+    {ICON_BackGroundColor,             LABEL_GREEN},
+    {ICON_BackGroundColor,             LABEL_CYAN},
+    {ICON_BackGroundColor,             LABEL_YELLOW},
+    {ICON_BackGroundColor,             LABEL_BROWN},
+    {ICON_BackGroundColor,             LABEL_GRAY},
   };
 
   const ITEM itemFontcolor[ITEM_COLOR_NUM] = {
   // icon                      label
-    {ICON_FONTCOLOR,           LABEL_WHITE},
-    {ICON_FONTCOLOR,           LABEL_BLACK},
-    {ICON_FONTCOLOR,           LABEL_BLUE},
-    {ICON_FONTCOLOR,           LABEL_RED},
-    {ICON_FONTCOLOR,           LABEL_GREEN},
-    {ICON_FONTCOLOR,           LABEL_CYAN},
-    {ICON_FONTCOLOR,           LABEL_YELLOW},
-    {ICON_FONTCOLOR,           LABEL_BROWN},
-    {ICON_FONTCOLOR,           LABEL_GRAY},
+    {ICON_FontColor,           LABEL_WHITE},
+    {ICON_FontColor,           LABEL_BLACK},
+    {ICON_FontColor,           LABEL_BLUE},
+    {ICON_FontColor,           LABEL_RED},
+    {ICON_FontColor,           LABEL_GREEN},
+    {ICON_FontColor,           LABEL_CYAN},
+    {ICON_FontColor,           LABEL_YELLOW},
+    {ICON_FontColor,           LABEL_BROWN},
+    {ICON_FontColor,           LABEL_GRAY},
   };
   const  u32 item_color[ITEM_COLOR_NUM] = {WHITE, BLACK, BLUE, RED, GREEN, CYAN, YELLOW, BROWN, GRAY};
   static u8  item_bgcolor_i = 0;

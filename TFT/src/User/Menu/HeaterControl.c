@@ -7,34 +7,34 @@ MENUITEMS heatItems = {
 LABEL_HEAT_CTL,
 // icon                       label
  {
-  {ICON_DEC,                  LABEL_DEC},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_INC,                  LABEL_INC},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_5_DEGREE,             LABEL_5_DEGREE},
-  {ICON_STOP,                 LABEL_ISSUE_RESET},
-  {ICON_BACK,                 LABEL_BACK},}
+  {ICON_Dec,                  LABEL_DEC},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Inc,                  LABEL_INC},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Temp_5,             LABEL_5_DEGREE},
+  {ICON_Stop,                 LABEL_ISSUE_RESET},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 
 const ITEM itemTool[] = {
 // icon                       label
-  {ICON_BED,                  LABEL_BED},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
-  {ICON_NOZZLE,               LABEL_NOZZLE},
+  {ICON_Hotbed,                  LABEL_BED},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
+  {ICON_Nozzle,               LABEL_NOZZLE},
 };    
 
 #define ITEM_DEGREE_NUM 3
 const ITEM itemDegree[ITEM_DEGREE_NUM] = {
 // icon                       label
-  {ICON_1_DEGREE,             LABEL_1_DEGREE},
-  {ICON_5_DEGREE,             LABEL_5_DEGREE},
-  {ICON_10_DEGREE,            LABEL_10_DEGREE},
+  {ICON_Temp_1,             LABEL_1_DEGREE},
+  {ICON_Temp_5,             LABEL_5_DEGREE},
+  {ICON_Temp_10,            LABEL_10_DEGREE},
 };
 const  u8 item_degree[ITEM_DEGREE_NUM] = {1, 5, 10};
 static u8 item_degree_i = 1;

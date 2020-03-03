@@ -225,14 +225,14 @@ MENUITEMS RGBItems = {
 // title
 LABEL_RGB_SETTINGS,
 // icon                       label
- {{ICON_RGB_RED,              LABEL_RED},
-  {ICON_RGB_GREEN,            LABEL_GREEN},
-  {ICON_RGB_BLUE,             LABEL_BLUE},
-  {ICON_RGB_WHITE,            LABEL_WHITE},
-  {ICON_RGB_OFF,              LABEL_OFF},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_RGB_Red,              LABEL_RED},
+  {ICON_RGB_Green,            LABEL_GREEN},
+  {ICON_RGB_Blue,             LABEL_BLUE},
+  {ICON_RGB_White,            LABEL_WHITE},
+  {ICON_RGB_Off,              LABEL_OFF},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 void menuRGBSettings(void)
@@ -282,14 +282,14 @@ MENUITEMS machineSettingsItems = {
 // title
 LABEL_MACHINE_SETTINGS,
 // icon                       label
- {{ICON_CUSTOM,               LABEL_CUSTOM},
-  {ICON_RGB_SETTINGS,         LABEL_RGB_SETTINGS},
-  {ICON_GCODE,                LABEL_GCODE},
-  {ICON_SHUT_DOWN,            LABEL_SHUT_DOWN},
-  {ICON_PARAMETER,            LABEL_SETTING_PARAMETER},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_Custom,               LABEL_CUSTOM},
+  {ICON_RGB_Settings,         LABEL_RGB_SETTINGS},
+  {ICON_Gcode,                LABEL_GCODE},
+  {ICON_ShutDown,             LABEL_SHUT_DOWN},
+  {ICON_parametersetting,     LABEL_SETTING_PARAMETER},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 void menuMachineSettings(void)

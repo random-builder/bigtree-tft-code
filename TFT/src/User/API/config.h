@@ -6,8 +6,9 @@
 
 // define the config struct type
 typedef struct {
-#define ENTRY(SECTION, NAME, DEFAULT_VALUE) char * SECTION##_##NAME ;
-#include "config.meta"
+#define X_ENTRY(SECTION, NAME, DEFAULT_VALUE) char * SECTION##_##NAME ;
+#include "config.x"
+#undef  X_ENTRY
 } SYSTEM_CONFIG;
 
 // expose global config

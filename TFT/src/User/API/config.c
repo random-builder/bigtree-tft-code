@@ -12,8 +12,9 @@
 
 // declare global instance and populate with default values
 SYSTEM_CONFIG system_config = {
-#define ENTRY(SECTION, NAME, DEFAULT_VALUE) DEFAULT_VALUE ,
-#include "config.meta"
+#define X_ENTRY(SECTION, NAME, DEFAULT_VALUE) DEFAULT_VALUE ,
+#include "config.x"
+#undef  X_ENTRY
         };
 
 // generate config parser events reactor
@@ -21,9 +22,10 @@ int config_handler(void *user, const char *section, const char *name, const char
     SYSTEM_CONFIG *config = (SYSTEM_CONFIG*) user;
     if (0) {
     }
-#define ENTRY(SECTION, NAME, DEF_VAL) else if \
+#define X_ENTRY(SECTION, NAME, DEF_VAL) else if \
     (strcmp(section, #SECTION)==0 && strcmp(name, #NAME)==0) { config->SECTION##_##NAME = strdup(value); }
-#include "config.meta"
+#include "config.x"
+#undef  X_ENTRY
     else {
         return -1; // failure: wrong section/name
     }

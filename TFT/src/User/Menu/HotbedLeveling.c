@@ -10,14 +10,14 @@ const MENUITEMS autoLevelingItems = {
 LABEL_AUTO_LEVEL,
 // icon                        label
  {
-  {ICON_BLTOUCH_DEPLOY,        LABEL_BLTOUCH_DEPLOY}, //0
-  {ICON_BLTOUCH_STOW,          LABEL_BLTOUCH_STOW},
-  {ICON_BLTOUCH_TEST,          LABEL_BLTOUCH_TEST},
-  {ICON_BLTOUCH,               LABEL_AUTO_PROBE},     // 3
-  {ICON_BLTOUCH_REPEAT,        LABEL_BLTOUCH_REPEAT},
-  {ICON_PROBE_OFFSET,          LABEL_PROBE_OFFSET},
-  {ICON_BABYSTEP,              LABEL_BABYSTEP},
-  {ICON_BACK,                  LABEL_BACK},}
+  {ICON_BLTouchDeploy,        LABEL_BLTOUCH_DEPLOY}, //0
+  {ICON_BLTouchStow,          LABEL_BLTOUCH_STOW},
+  {ICON_BLTouchTest,          LABEL_BLTOUCH_TEST},
+  {ICON_BLTouch,              LABEL_AUTO_PROBE},     // 3
+  {ICON_BLTouchRepeat,        LABEL_BLTOUCH_REPEAT},
+  {ICON_ProbeOffset,          LABEL_PROBE_OFFSET},
+  {ICON_BabyStep,             LABEL_BABYSTEP},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 void menuAutoLeveling(void)
@@ -69,14 +69,14 @@ const MENUITEMS manualLevelingItems = {
 LABEL_HAND_LEVEL,
 // icon                        label
  {
-  {ICON_POINT_4,               LABEL_POINT_4},    // 0
-  {ICON_BACKGROUND,            LABEL_BACKGROUND},
-  {ICON_POINT_3,               LABEL_POINT_3},    // 2
-  {ICON_HOME_ALL,              LABEL_HOME_ALL},   // 3
-  {ICON_BACKGROUND,            LABEL_BACKGROUND},
-  {ICON_POINT_5,               LABEL_POINT_5},    // 5
-  {ICON_BACKGROUND,            LABEL_BACKGROUND},
-  {ICON_BACK,                  LABEL_BACK},}      // 7
+  {ICON_Point_4,               LABEL_POINT_4},    // 0
+  {ICON_EMPTY,            LABEL_BACKGROUND},
+  {ICON_Point_3,               LABEL_POINT_3},    // 2
+  {ICON_Home,                  LABEL_HOME_ALL},   // 3
+  {ICON_EMPTY,            LABEL_BACKGROUND},
+  {ICON_Point_5,               LABEL_POINT_5},    // 5
+  {ICON_EMPTY,            LABEL_BACKGROUND},
+  {ICON_Back,                  LABEL_BACK},}      // 7
 };
 
 void moveToLevelingPoint(u8 point)

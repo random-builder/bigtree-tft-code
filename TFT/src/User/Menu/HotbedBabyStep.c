@@ -11,14 +11,14 @@ MENUITEMS babyStepItems = {
   LABEL_BABYSTEP,
 //icon                        label
  {
-  {ICON_DEC,                  LABEL_DEC},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_INC,                  LABEL_INC},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_EEPROM_SAVE,          LABEL_EEPROM_SAVE},
-  {ICON_01_MM,                LABEL_01_MM},
-  {ICON_NORMAL_SPEED,         LABEL_VALUE_ZERO},
-  {ICON_BACK,                 LABEL_BACK},
+  {ICON_Dec,                  LABEL_DEC},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Inc,                  LABEL_INC},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EEPROMSave,          LABEL_EEPROM_SAVE},
+  {ICON_Mmm_01,                LABEL_01_MM},
+  {ICON_Normal,         LABEL_VALUE_ZERO},
+  {ICON_Back,                 LABEL_BACK},
  }
 };
 
@@ -33,9 +33,9 @@ typedef struct
 #define ITEM_BABYSTEP_UNIT_NUM 3
 const ITEM itemBabyStepUnit[ITEM_BABYSTEP_UNIT_NUM] = {
 // icon                       label
-  {ICON_001_MM,               LABEL_001_MM},
-  {ICON_01_MM,                LABEL_01_MM},
-  {ICON_1_MM,                 LABEL_1_MM},
+  {ICON_Mmm_001,               LABEL_001_MM},
+  {ICON_Mmm_01,                LABEL_01_MM},
+  {ICON_Mmm_1,                 LABEL_1_MM},
 };
 const float item_babystep_unit[ITEM_BABYSTEP_UNIT_NUM] = {0.01f, 0.1f, 1};
 

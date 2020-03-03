@@ -11,14 +11,14 @@ const MENUITEMS fanItems = {
 //   title
 LABEL_FAN,
 // icon                       label
- {{ICON_DEC,                  LABEL_DEC},        // 0
-  {ICON_BACKGROUND,           LABEL_BACKGROUND}, // 1
-  {ICON_INC,                  LABEL_INC},        // 2
-  {ICON_BACKGROUND,           LABEL_BACKGROUND}, // 3
-  {ICON_FAN ,                 LABEL_FAN},
-  {ICON_FAN_FULL_SPEED,       LABEL_FAN_FULL_SPEED},
-  {ICON_STOP,                 LABEL_ISSUE_RESET},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_Dec,                  LABEL_DEC},        // 0
+  {ICON_EMPTY,           LABEL_BACKGROUND}, // 1
+  {ICON_Inc,                  LABEL_INC},        // 2
+  {ICON_EMPTY,           LABEL_BACKGROUND}, // 3
+  {ICON_Fan ,                 LABEL_FAN},
+  {ICON_Full,       LABEL_FAN_FULL_SPEED},
+  {ICON_Stop,                 LABEL_ISSUE_RESET},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 const char* fanID[] = FAN_ID;

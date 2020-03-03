@@ -20,23 +20,23 @@ LABEL_MOVE,
 // icon                       label
  { 
   #ifdef ALTERNATIVE_MOVE_MENU 
-      {ICON_Z_DEC,                LABEL_Z_DEC},
-      {ICON_Y_INC,                LABEL_Y_INC},
-      {ICON_Z_INC,                LABEL_Z_INC},
-      {ICON_1_MM,                 LABEL_1_MM},
-      {ICON_X_DEC,                LABEL_X_DEC},
-      {ICON_Y_DEC,                LABEL_Y_DEC},
-      {ICON_X_INC,                LABEL_X_INC},
-      {ICON_BACK,                 LABEL_BACK},
+      {ICON_Dec_Z,                LABEL_Z_DEC},
+      {ICON_Inc_Y,                LABEL_Y_INC},
+      {ICON_Inc_Z,                LABEL_Z_INC},
+      {ICON_Mmm_1,                LABEL_1_MM},
+      {ICON_Dec_X,                LABEL_X_DEC},
+      {ICON_Dec_Y,                LABEL_Y_DEC},
+      {ICON_Inc_X,                LABEL_X_INC},
+      {ICON_Back,                 LABEL_BACK},
   #else
-    {ICON_X_INC,                LABEL_X_INC},
-    {ICON_Y_INC,                LABEL_Y_INC},
-    {ICON_Z_INC,                LABEL_Z_INC},
-    {ICON_1_MM,                 LABEL_1_MM},
-    {ICON_X_DEC,                LABEL_X_DEC},
-    {ICON_Y_DEC,                LABEL_Y_DEC},
-    {ICON_Z_DEC,                LABEL_Z_DEC},
-    {ICON_BACK,                 LABEL_BACK},
+    {ICON_Inc_X,                LABEL_X_INC},
+    {ICON_Inc_Y,                LABEL_Y_INC},
+    {ICON_Inc_Z,                LABEL_Z_INC},
+    {ICON_Mmm_1,                LABEL_1_MM},
+    {ICON_Dec_X,                LABEL_X_DEC},
+    {ICON_Dec_Y,                LABEL_Y_DEC},
+    {ICON_Dec_Z,                LABEL_Z_DEC},
+    {ICON_Back,                 LABEL_BACK},
   #endif
  }
 };
@@ -45,9 +45,9 @@ LABEL_MOVE,
 #define ITEM_MOVE_LEN_NUM 3
 const ITEM itemMoveLen[ITEM_MOVE_LEN_NUM] = {
 // icon                       label
-  {ICON_01_MM,                LABEL_01_MM},
-  {ICON_1_MM,                 LABEL_1_MM},
-  {ICON_10_MM,                LABEL_10_MM},
+  {ICON_Mmm_01,                LABEL_01_MM},
+  {ICON_Mmm_1,                 LABEL_1_MM},
+  {ICON_Mmm_10,                LABEL_10_MM},
 };
 const  float item_move_len[ITEM_MOVE_LEN_NUM] = {0.1f, 1, 10};
 static u8    item_move_len_i = 1;

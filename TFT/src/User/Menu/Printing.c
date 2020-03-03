@@ -6,20 +6,20 @@ MENUITEMS printingItems = {
 //  title
 LABEL_BACKGROUND,
 // icon                       label
- {{ICON_PAUSE,                LABEL_PAUSE},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_STOP,                 LABEL_STOP},
-  {ICON_HEAT,                 LABEL_HEAT_CTL},
-  {ICON_PERCENTAGE,           LABEL_PERCENTAGE},
-  {ICON_BABYSTEP,             LABEL_BABYSTEP},
-  {ICON_MORE,                 LABEL_MORE},}
+ {{ICON_Pause,                LABEL_PAUSE},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Stop,                 LABEL_STOP},
+  {ICON_Heat,                 LABEL_HEAT_CTL},
+  {ICON_Percentage,           LABEL_PERCENTAGE},
+  {ICON_BabyStep,             LABEL_BABYSTEP},
+  {ICON_More,                 LABEL_MORE},}
 };
 
 const ITEM itemIsPause[2] = {
 // icon                       label
-  {ICON_PAUSE,                LABEL_PAUSE},
-  {ICON_RESUME,               LABEL_RESUME},
+  {ICON_Pause,                LABEL_PAUSE},
+  {ICON_Resume,               LABEL_RESUME},
 };
 
 #ifndef M27_WATCH_OTHER_SOURCES
@@ -361,7 +361,7 @@ void printingDrawPage(void)
   GUI_DispString(BED_X,TIME_Y-BYTE_HEIGHT, (u8* )"Z:");
 
   i = get_Pre_Icon((char *)getCurGcodeName(infoFile.title));
-  if(i != ICON_BACKGROUND)
+  if(i != ICON_EMPTY)
   lcd_frame_display(1*ICON_WIDTH+1*SPACE_X+START_X,  0*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y,ICON_WIDTH,ICON_HEIGHT,ICON_ADDR(i));
 }
 

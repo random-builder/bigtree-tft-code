@@ -7,14 +7,14 @@ const MENUITEMS UnifiedMoveItems = {
 LABEL_UNI_MOVE,
 // icon                       label
  {
-  {ICON_HOME,                 LABEL_HOME},       // 0
-  {ICON_MOVE,                 LABEL_MOVE},
-  {ICON_LEVELING,             LABEL_AUTO_LEVEL},
-  {ICON_MANUAL_LEVEL,         LABEL_HAND_LEVEL},
-  {ICON_MOTION_STOP,          LABEL_MOTION_STOP}, // 4
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+  {ICON_Home,                 LABEL_HOME},       // 0
+  {ICON_Move,                 LABEL_MOVE},
+  {ICON_Leveling,             LABEL_AUTO_LEVEL},
+  {ICON_ManualLevel,          LABEL_HAND_LEVEL},
+  {ICON_Stop,                 LABEL_MOTION_STOP}, // 4
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {ICON_Back,                 LABEL_BACK},}
 };
 
 void menuUniMotion(void)
