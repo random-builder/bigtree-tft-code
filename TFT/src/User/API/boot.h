@@ -7,11 +7,12 @@
 #include "variants.h"
 #include "stdbool.h"
 
-#define W25QXX_PAGE_SIZE      256 // BY25Q64AS spec
-#define W25QXX_SECTOR_SIZE 0x1000 // BY25Q64AS spec, 4K
+#define FLASH_PAGE_SIZE      256  // BY25Q64AS spec
+
+#define FLASH_SECTOR_SIZE 0x1000  // BY25Q64AS spec, 4K
 
 #ifndef FLASH_TOTAL_SIZE
-#define FLASH_TOTAL_SIZE 0x800000 // BY25Q64AS spec
+#define FLASH_TOTAL_SIZE 0x800000 // BY25Q64AS spec, 8M
 #endif
 
 // native image uses 2 bytes per pixel
@@ -19,8 +20,8 @@
     ( (image_width) * (image_height) * 2 )
 
 // native image size, rounded to sector boundary
-#define FLASH_IMAGE_BLOCK(image_width, image_height) \
-    ( ( ( (FLASH_IMAGE_SIZE(image_width, image_height)) / W25QXX_SECTOR_SIZE) + 1) * W25QXX_SECTOR_SIZE )
+#define FLASH_IMAGE_UNIT(image_width, image_height) \
+    ( ( ( (FLASH_IMAGE_SIZE(image_width, image_height)) / FLASH_SECTOR_SIZE) + 1) * FLASH_SECTOR_SIZE )
 
 //
 // address in spiflash W25Qxx, rounded to sector boundary
@@ -32,7 +33,7 @@
 #define BYTE_ASCII_ADDR         BASE_ADDR
 #define BYTE_ASCII_TAIL         BYTE_ASCII_ADDR + BYTE_ASCII_SIZE
 
-#define CONFIG_FILE_SIZE        0x3000 // allow 12k
+#define CONFIG_FILE_SIZE        0x3000 // allow up to 12k
 #define CONFIG_FILE_ADDR        BYTE_ASCII_TAIL
 #define CONFIG_FILE_TAIL        CONFIG_FILE_ADDR + CONFIG_FILE_SIZE
 
@@ -41,18 +42,18 @@
 #define WORD_UNICODE_TAIL       WORD_UNICODE_ADDR + WORD_UNICODE_SIZE
 
 #ifdef  SHOW_LOGO
-#define LOGO_SIZE               FLASH_IMAGE_BLOCK(LCD_WIDTH,LCD_HEIGHT)
+#define LOGO_SIZE               FLASH_IMAGE_UNIT(LCD_WIDTH,LCD_HEIGHT)
 #else
 #define LOGO_SIZE               0
 #endif
 #define LOGO_ADDR               WORD_UNICODE_TAIL
 #define LOGO_TAIL               LOGO_ADDR + LOGO_SIZE
 
-#define INFOBOX_SIZE            FLASH_IMAGE_BLOCK(INFOBOX_WIDTH,INFOBOX_HEIGHT)
+#define INFOBOX_SIZE            FLASH_IMAGE_UNIT(INFOBOX_WIDTH,INFOBOX_HEIGHT)
 #define INFOBOX_ADDR            LOGO_TAIL
 #define INFOBOX_TAIL            INFOBOX_ADDR + INFOBOX_SIZE
 
-#define ICON_SIZE               FLASH_IMAGE_BLOCK(ICON_WIDTH,ICON_HEIGHT)
+#define ICON_SIZE               FLASH_IMAGE_UNIT(ICON_WIDTH,ICON_HEIGHT)
 #define ICON_ADDR(index)        INFOBOX_TAIL + (ICON_SIZE * index)
 
 //

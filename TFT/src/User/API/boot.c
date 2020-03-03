@@ -50,7 +50,7 @@ bool bmpDecode(char *file_path, const u32 base_addr) {
     int image_offset;
     u32 flash_addr;
     u32 flash_offset;
-    u8 flash_buff[W25QXX_PAGE_SIZE];
+    u8 flash_buff[FLASH_PAGE_SIZE];
     u8 image_pixel[4];
     GUI_PIXEL screen_pixel;
 
@@ -80,10 +80,10 @@ bool bmpDecode(char *file_path, const u32 base_addr) {
     if (bytePerLine % 4 != 0)
         bytePerLine = (bytePerLine / 4 + 1) * 4;
 
-    const int flash_sector_max = (image_width * image_height * 2 + W25QXX_SECTOR_SIZE - 1) / W25QXX_SECTOR_SIZE;
+    const int flash_sector_max = (image_width * image_height * 2 + FLASH_SECTOR_SIZE - 1) / FLASH_SECTOR_SIZE;
 
     for (int flash_sector = 0; flash_sector < flash_sector_max; flash_sector++) {
-        flash_addr = base_addr + flash_sector * W25QXX_SECTOR_SIZE;
+        flash_addr = base_addr + flash_sector * FLASH_SECTOR_SIZE;
         W25Qxx_EraseSector(flash_addr);
     }
 
@@ -102,9 +102,9 @@ bool bmpDecode(char *file_path, const u32 base_addr) {
             flash_buff[flash_offset++] = (u8) (screen_pixel.color >> 8);
             flash_buff[flash_offset++] = (u8) (screen_pixel.color & 0xFF);
 
-            if (flash_offset == W25QXX_PAGE_SIZE) {
-                W25Qxx_WritePage(flash_buff, flash_addr, W25QXX_PAGE_SIZE);
-                flash_addr += W25QXX_PAGE_SIZE;
+            if (flash_offset == FLASH_PAGE_SIZE) {
+                W25Qxx_WritePage(flash_buff, flash_addr, FLASH_PAGE_SIZE);
+                flash_addr += FLASH_PAGE_SIZE;
                 flash_offset = 0;
             }
         }
@@ -208,7 +208,7 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
         return;
     }
 
-    flash_buff = malloc(W25QXX_SECTOR_SIZE);
+    flash_buff = malloc(FLASH_SECTOR_SIZE);
     if (flash_buff == NULL) {
         report_error("Failure: no memory for buffer");
         return;
@@ -222,13 +222,13 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
     GUI_DispString(0, 140, (u8*) "Progress:   %");
 
     while (!f_eof(&file_data)) {
-        if (f_read(&file_data, flash_buff, W25QXX_SECTOR_SIZE, &read_size) != FR_OK) {
+        if (f_read(&file_data, flash_buff, FLASH_SECTOR_SIZE, &read_size) != FR_OK) {
             report_error("Failure: can not read file");
             break;
         }
         flash_addr = base_addr + flash_offset;
         W25Qxx_EraseSector(flash_addr);
-        W25Qxx_WriteBuffer(flash_buff, flash_addr, W25QXX_SECTOR_SIZE);
+        W25Qxx_WriteBuffer(flash_buff, flash_addr, FLASH_SECTOR_SIZE);
         flash_offset += read_size;
         // flash usage
         flash_unit = flash_addr * 100 / FLASH_TOTAL_SIZE;
@@ -242,7 +242,7 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
             progress_info = progress_unit;
             GUI_DispDec(0 + BYTE_WIDTH * 9, 140, progress_info, 3, RIGHT);
         }
-        if (read_size != W25QXX_SECTOR_SIZE) {
+        if (read_size != FLASH_SECTOR_SIZE) {
             break; // final sector
         }
     }
