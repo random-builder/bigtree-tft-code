@@ -51,12 +51,13 @@ print('------------------------------------')
 # print(env.Dump())
 
 root_dir = env['PROJECT_DIR']
-this_dir = os.path.join(root_dir, "buildroot/user")
-setup_disk = os.path.join(this_dir, "setup_disk.py")
+this_dir = f"{root_dir}/buildroot/user"
+setup_disk = f"{this_dir}/setup_disk.py"
+config_path = f"{root_dir}/DISK/config.ini"
 
 setup_target = env.Alias("setup",
     "${BUILD_DIR}/${PROGNAME}.bin",
-    f"{setup_disk} --firmware_path $SOURCE.abspath"
+    f"{setup_disk} --config_path={config_path} --firmware_path=$SOURCE.abspath"
     )
 
 env.AlwaysBuild(setup_target)

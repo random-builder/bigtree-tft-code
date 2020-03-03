@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# copy firmware to remote octopi host
+# copy fresource to remote octopi host
 #
 
 import os
@@ -25,6 +25,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--user_name', dest="user_name", default="user0")
 parser.add_argument('--host_name', dest="host_name", default="localhost")
 parser.add_argument('--disk_label', dest="disk_label", default="BTT_TFT")
+parser.add_argument('--config_path', dest="config_path", required=True)
 parser.add_argument('--firmware_path', dest="firmware_path", required=True)
 
 params = parser.parse_args()
@@ -102,13 +103,14 @@ def disk_point_unmount(disk_point:str) -> None:
 
 
 @trace
-def disk_setup(disk_name:str, firmware_path:str) -> None:
+def disk_setup(disk_name:str, params:object) -> None:
     disk_path = f"/dev/{disk_name}"
     disk_point = f"/tmp/disk-point/{disk_name}"
     disk_point_unmount(disk_point)
     disk_point_create(disk_point)
     disk_point_mount(disk_point, disk_path)
-    disk_file_copy(firmware_path, disk_point)
+    disk_file_copy(params.config_path, disk_point)
+    disk_file_copy(params.firmware_path, disk_point)
     disk_point_unmount(disk_point)
     disk_point_delete(disk_point)
 
@@ -163,4 +165,4 @@ if disk_name is None:
     logger.info(f"missing disk={params.disk_label}")
     sys.exit()
 
-disk_setup(disk_name, params.firmware_path)
+disk_setup(disk_name, params)

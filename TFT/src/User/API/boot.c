@@ -54,19 +54,25 @@ const char icon_file_list[][32]={
 u8 scanUpdateFile(void)
 {
   DIR dir;
-  u8 rst = 0;
+  FIL file;
+  u8 result = 0;
   
-  if (f_opendir(&dir, BMP_ROOT_DIR) == FR_OK)
-  {
-    rst |= HAS_BMP;  
+  if (f_opendir(&dir, TFT_BMP_DIR) == FR_OK) {
+    result |= HAS_BMP;  
     f_closedir(&dir);
   }
-  if (f_opendir(&dir, FONT_ROOT_DIR) == FR_OK)
-  {
-    rst |= HAS_FONT;  
+
+  if (f_opendir(&dir, TFT_FONT_DIR) == FR_OK) {
+    result |= HAS_FONT;
     f_closedir(&dir);
   }
-  return rst;
+
+  if(f_open(&file,TFT_CONFIG_FILE,FA_OPEN_EXISTING | FA_READ) == FR_OK) {
+    result |= HAS_CONFIG;
+    f_close(&file);
+  }
+
+  return result;
 }
 
 //
@@ -156,24 +162,32 @@ bool bmpDecode(char *file_path, const u32 base_addr)
 void report_flash(u8 flash_info) {
     char text_buff[64];
     my_sprintf((void *)text_buff,"Flash used: %d %%   ", flash_info);
-    GUI_DispString(0, 50, (u8*)text_buff);
+    GUI_DispString(0, 50, (u8*) text_buff);
 }
 
-void updateLogo(void) {
+//
+// report resource operation failue
+//
+void report_error(const char *message) {
+    GUI_DispString(0, 60, (u8*) message);
+    Delay_ms(3*1000); // preview time
+}
+
+void updateLogoImage(void) {
 
     GUI_Clear(BACKGROUND_COLOR);
     GUI_DispString(100, 5, (u8*)"Logo Update...");
 
-    if(bmpDecode(BMP_ROOT_DIR"/Logo.bmp", LOGO_ADDR))
+    if(bmpDecode(TFT_BMP_DIR"/Logo.bmp", LOGO_ADDR))
     {
       LOGO_ReadDisplay();
-      Delay_ms(2*1000); // preview time
+      Delay_ms(3*1000); // preview time
     }
 
 }
 
 
-void updateIcon(void)
+void updateIconImageSet(void)
 {
   char file_path[64];  
   u32  flash_addr = 0;
@@ -185,7 +199,7 @@ void updateIcon(void)
 
   for(int icon_index=0; icon_index<COUNT(icon_file_list); icon_index++)
   {
-    my_sprintf(file_path, BMP_ROOT_DIR"/%s.bmp", icon_file_list[icon_index]);
+    my_sprintf(file_path, TFT_BMP_DIR"/%s.bmp", icon_file_list[icon_index]);
     flash_addr = ICON_ADDR(icon_index);
     if(bmpDecode(file_path, flash_addr))
     {
@@ -200,7 +214,7 @@ void updateIcon(void)
     }
   }
 
-  if(bmpDecode(BMP_ROOT_DIR"/InfoBox.bmp", INFOBOX_ADDR))
+  if(bmpDecode(TFT_BMP_DIR"/InfoBox.bmp", INFOBOX_ADDR))
   {
     ICON_CustomReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, INFOBOX_WIDTH, INFOBOX_HEIGHT,INFOBOX_ADDR);
   }
@@ -209,7 +223,10 @@ void updateIcon(void)
 
 }
 
-void updateFont(char *file_path, const u32 base_addr)
+//
+// persist external file from disk into spi flash memory
+//
+void updateResource(char *file_path, const u32 base_addr, const u32 base_size, const char *window_title)
 {
 
   FIL  file_data;
@@ -223,15 +240,25 @@ void updateFont(char *file_path, const u32 base_addr)
   u8   progress_unit = 0;
   char text_buff[128];
 
-  if (f_open(&file_data, file_path, FA_OPEN_EXISTING|FA_READ) != FR_OK)  return;
+  if (f_open(&file_data, file_path, FA_OPEN_EXISTING|FA_READ) != FR_OK) {
+      report_error("Failure: can not open file");
+      return;
+  }
 
   FSIZE_t file_size = f_size(&file_data);
+  if (file_size > base_size) {
+      report_error("Failure: file is too big");
+      return;
+  }
 
   flash_buff = malloc(W25QXX_SECTOR_SIZE);
-  if (flash_buff == NULL)  return;
+  if (flash_buff == NULL)  {
+      report_error("Failure: no memory for buffer");
+      return;
+  }
 
   GUI_Clear(BACKGROUND_COLOR);
-  GUI_DispString(100, 5, (u8*)"Font Update...");
+  GUI_DispString(100, 5, (u8*) window_title);
 
   my_sprintf((void *)text_buff,"%s Size=%dK",file_path, (u32)file_size>>10);
   GUI_DispString(0, 100, (u8*)text_buff);
@@ -239,7 +266,10 @@ void updateFont(char *file_path, const u32 base_addr)
 
   while(!f_eof(&file_data))
   {
-    if (f_read(&file_data, flash_buff, W25QXX_SECTOR_SIZE, &read_size) != FR_OK) break;
+    if (f_read(&file_data, flash_buff, W25QXX_SECTOR_SIZE, &read_size) != FR_OK) {
+        report_error("Failure: can not read file");
+        break;
+    }
     flash_addr = base_addr + flash_offset;
     W25Qxx_EraseSector(flash_addr);
     W25Qxx_WriteBuffer(flash_buff, flash_addr, W25QXX_SECTOR_SIZE);
@@ -257,7 +287,9 @@ void updateFont(char *file_path, const u32 base_addr)
       progress_info = progress_unit;
       GUI_DispDec(0 + BYTE_WIDTH*9, 140, progress_info, 3, RIGHT);
     }
-    if(read_size !=W25QXX_SECTOR_SIZE) break;
+    if(read_size != W25QXX_SECTOR_SIZE) {
+        break; // final sector
+    }
   }
 
   f_close(&file_data);
@@ -277,25 +309,50 @@ void scanResetFile(void)
   }
 }
 
+void updateConfigFile() {
+    updateResource(TFT_CONFIG_FILE, CONFIG_FILE_ADDR, CONFIG_FILE_SIZE, "Config Update...");
+}
+
+void updateFontAscii() {
+    updateResource(TFT_FONT_DIR"/byte_ascii.fon", BYTE_ASCII_ADDR, BYTE_ASCII_SIZE, "Ascii Font Update...");
+}
+
+void updateFontUnicode() {
+    updateResource(TFT_FONT_DIR"/word_unicode.fon", WORD_UNICODE_ADDR, WORD_UNICODE_SIZE, "Unicode Font Update...");
+}
+
 void scanUpdates(void)
 {
   volatile u8 result = 0;   // must use volatile
   if(mountSDCard())
   {
     result = scanUpdateFile();
-    if (result & HAS_FONT)
-    {
-      updateFont(FONT_ROOT_DIR"/byte_ascii.fon", BYTE_ASCII_ADDR);
-      updateFont(FONT_ROOT_DIR"/word_unicode.fon", WORD_UNICODE_ADDR);
+    if (result & HAS_FONT) {
+      updateFontAscii();
     }
-    if (result & HAS_BMP) //bmp
+    if (result & HAS_CONFIG) {
+        updateConfigFile();
+    }
+    if (result & HAS_FONT) {
+      updateFontUnicode();
+    }
+    if (result & HAS_BMP)
     {
 #ifdef SHOW_LOGO
-      updateLogo();
+      updateLogoImage();
 #endif
-      updateIcon();
+      updateIconImageSet();
     }
-    //if (result) f_rename(ROOT_DIR, ROOT_DIR".CUR");
+
+    if ((result & HAS_FONT) | (result & HAS_BMP)) {
+        f_rename(RESOURCE_DIR, RESOURCE_DIR".CUR");
+    }
+
+    if (result & HAS_CONFIG) {
+        f_rename(TFT_CONFIG_FILE, TFT_CONFIG_FILE".CUR");
+    }
+
     scanResetFile();
+
   }
 }

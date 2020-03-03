@@ -18,34 +18,34 @@
 #define FLASH_IMAGE_SIZE(image_width, image_height) \
     ( (image_width) * (image_height) * 2 )
 
-// native image size, round to sector boundary
+// native image size, rounded to sector boundary
 #define FLASH_IMAGE_BLOCK(image_width, image_height) \
     ( ( ( (FLASH_IMAGE_SIZE(image_width, image_height)) / W25QXX_SECTOR_SIZE) + 1) * W25QXX_SECTOR_SIZE )
 
 //
-// address in spiflash W25Qxx, round to sector boundary
+// address in spiflash W25Qxx, rounded to sector boundary
 //
 
 #define BASE_ADDR               0x0 // memory start
 
-#define CONFIG_SIZE             0x0
-#define CONFIG_ADDR             BASE_ADDR
-#define CONFIG_TAIL             CONFIG_ADDR + CONFIG_SIZE
+#define BYTE_ASCII_SIZE         0x1000 // byte_ascii.fon exact size 3420<=0x1000
+#define BYTE_ASCII_ADDR         BASE_ADDR
+#define BYTE_ASCII_TAIL         BYTE_ASCII_ADDR + BYTE_ASCII_SIZE
+
+#define CONFIG_FILE_SIZE        0x3000 // allow 12k
+#define CONFIG_FILE_ADDR        BYTE_ASCII_TAIL
+#define CONFIG_FILE_TAIL        CONFIG_FILE_ADDR + CONFIG_FILE_SIZE
 
 #define WORD_UNICODE_SIZE       0x480000  // word_unicode.fon exact size 4718592==0x480000
-#define WORD_UNICODE_ADDR       CONFIG_TAIL
+#define WORD_UNICODE_ADDR       CONFIG_FILE_TAIL
 #define WORD_UNICODE_TAIL       WORD_UNICODE_ADDR + WORD_UNICODE_SIZE
-
-#define BYTE_ASCII_SIZE         0x1000 // byte_ascii.fon exact size 3420<=0x1000
-#define BYTE_ASCII_ADDR         WORD_UNICODE_TAIL
-#define BYTE_ASCII_TAIL         BYTE_ASCII_ADDR + BYTE_ASCII_SIZE
 
 #ifdef SHOW_LOGO
 #define LOGO_SIZE               FLASH_IMAGE_BLOCK(LCD_WIDTH,LCD_HEIGHT)
 #else
 #define LOGO_SIZE               0
 #endif
-#define LOGO_ADDR               BYTE_ASCII_TAIL
+#define LOGO_ADDR               WORD_UNICODE_TAIL
 #define LOGO_TAIL               LOGO_ADDR + LOGO_SIZE
 
 #define INFOBOX_SIZE            FLASH_IMAGE_BLOCK(INFOBOX_WIDTH,INFOBOX_HEIGHT)
@@ -55,17 +55,16 @@
 #define ICON_SIZE               FLASH_IMAGE_BLOCK(ICON_WIDTH,ICON_HEIGHT)
 #define ICON_ADDR(index)        INFOBOX_TAIL + (ICON_SIZE * index)
 
-//#define SMALL_ICON_START_ADDR   (INFOBOX_ADDR+0xA7F8)
-//#define SMALL_ICON_ADDR(num)    ((num)*0x1000+SMALL_ICON_START_ADDR)
-
 //
 
 #define HAS_BMP     (1<<1)
 #define HAS_FONT    (1<<2)
+#define HAS_CONFIG  (1<<3)
 
-#define BMP_ROOT_DIR "0:"ROOT_DIR"/bmp"
-#define FONT_ROOT_DIR "0:"ROOT_DIR"/font"
+#define TFT_BMP_DIR "0:"RESOURCE_DIR"/bmp"
+#define TFT_FONT_DIR "0:"RESOURCE_DIR"/font"
 #define TFT_RESET_FILE "0:reset.txt"
+#define TFT_CONFIG_FILE "0:config.ini"
 
 enum
 {

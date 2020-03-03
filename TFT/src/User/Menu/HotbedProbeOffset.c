@@ -84,6 +84,7 @@ void menuProbeOffset(void)
   showProbeOffset();
   while(infoMenu.menu[infoMenu.cur] == menuProbeOffset)
   {
+    storeCmd("M851\n");
     key_num = menuKeyGetValue();
     switch(key_num)
     {

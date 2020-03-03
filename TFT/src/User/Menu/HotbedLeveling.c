@@ -1,3 +1,7 @@
+//
+//
+//
+
 #include <HotbedLeveling.h>
 #include "includes.h"
 
@@ -20,44 +24,35 @@ void menuAutoLeveling(void)
 {
   KEY_VALUES key_num=KEY_IDLE;
   menuDrawPage(&autoLevelingItems);
+  SYSTEM_CONFIG config = config_instance();
   while(infoMenu.menu[infoMenu.cur] == menuAutoLeveling)
   {
     key_num = menuKeyGetValue();
     switch(key_num)
     {
       case KEY_ICON_0: // Drop
-        storeCmd("M280 P0 S10\n");
+        config_issue_gcode(config.leveling_automatic_command_probe_drop);
         break;
       case KEY_ICON_1: // Stow
-        storeCmd("M280 P0 S90\n");
+          config_issue_gcode(config.leveling_automatic_command_probe_stow);
         break;
       case KEY_ICON_2: // Test
-        storeCmd("M280 P0 S120\n");
+          config_issue_gcode(config.leveling_automatic_command_probe_test);
         break;
 
       case KEY_ICON_3: // Levelingt
-        storeCmd("G28\n"); // home/reset
-        storeCmd("G29 P1\n"); // measure
-        storeCmd("G29 P3.1\n"); // populate
-        storeCmd("G29 P5 C0.75\n"); // adjust
-        storeCmd("G29 T\n"); // report
-        storeCmd("G29 A\n"); // activate
-        #ifdef AUTO_SAVE_LOAD_LEVELING_VALUE
-          storeCmd("M500\n");
-        #endif
+          config_issue_gcode(config.leveling_automatic_command_probe_invoke);
         break;
-
 
       case KEY_ICON_4: // TODO
-        storeCmd("M48\n");
+          config_issue_gcode(config.leveling_automatic_command_probe_repeat);
         break;
       case KEY_ICON_5: // Offset Z
-        storeCmd("M851\n");
         infoMenu.menu[++infoMenu.cur] = menuProbeOffset;
-        break;      
+        break;
       case KEY_ICON_6: // Baby Step
         infoMenu.menu[++infoMenu.cur] = menuBabyStep;
-        break; 
+        break;
 
       case KEY_ICON_7:
         infoMenu.cur--; break;

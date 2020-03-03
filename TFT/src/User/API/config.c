@@ -1,50 +1,52 @@
 //
-// TODO load config from usb disk
+// config file support
 //
 
-#include "config.h"
-#include "ini.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-typedef struct {
-    int version;
-    const char *name;
-    const char *email;
-} CONFIG;
+#include "config.h"
+#include "ini.h"
+#include "interfaceCmd.h"
 
-#define MATCH(s, n) strcmp(section, s) == 0 && strcmp(name, n) == 0
+// declare global instance and populate with default values
+SYSTEM_CONFIG system_config = {
+#define ENTRY(SECTION, NAME, DEFAULT_VALUE) DEFAULT_VALUE ,
+#include "config.meta"
+        };
 
-static int configHandler(void *user, const char *section, const char *name, const char *value) {
-
-    CONFIG *config = (CONFIG*) user;
-
-    if (MATCH("protocol", "version")) {
-        config->version = atoi(value);
-    } else if (MATCH("user", "name")) {
-        config->name = strdup(value);
-    } else if (MATCH("user", "email")) {
-        config->email = strdup(value);
-    } else {
-        return 0; /* error: wrong section/option */
+// generate config parser events reactor
+int config_handler(void *user, const char *section, const char *name, const char *value) {
+    SYSTEM_CONFIG *config = (SYSTEM_CONFIG*) user;
+    if (0) {
     }
-    return 1;
+#define ENTRY(SECTION, NAME, DEF_VAL) else if \
+    (strcmp(section, #SECTION)==0 && strcmp(name, #NAME)==0) { config->SECTION##_##NAME = strdup(value); }
+#include "config.meta"
+    else {
+        return -1; // failure: wrong section/name
+    }
+    return 0; // success: match was found
 }
 
-int configVerify(void) {
-
-    CONFIG config;
-
-    if (ini_parse("test.ini", configHandler, &config) < 0) {
-        printf("Can't load 'test.ini'\n");
-        return 1;
+// apply config entries form config file text
+void config_update(const char *config_text) {
+    if (ini_parse_string(config_text, config_handler, &system_config) < 0) {
+        printf("can not parse config\n");
     }
+}
 
-    printf("Config loaded from 'test.ini': version=%d, name=%s, email=%s\n", config.version, config.name, config.email);
+// expose global config
+SYSTEM_CONFIG config_instance() {
+    return system_config;
+}
 
-    free((void*) config.name);
-    free((void*) config.email);
-
-    return 0;
+// send g-code commands to the printer
+void config_issue_gcode(const char *command_list) {
+    char *command = strtok(command_list, "\n");
+    while (command != NULL) {
+        storeCmd("%s\n", command);
+        command = strtok(NULL, "\n");
+    }
 }

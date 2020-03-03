@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "config.h"
+
 #include <AnyMenu.h>
 #include <AnyPopup.h>
 #include <ArkonGUI.h>

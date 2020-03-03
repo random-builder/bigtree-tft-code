@@ -255,11 +255,11 @@
 
 
 #if defined(TFT35_V1_0) || defined(TFT35_V1_1) || defined(TFT35_V1_2)|| defined(TFT35_V2_0) || defined(TFT35_V3_0)
-  #define ROOT_DIR "TFT35"
+  #define RESOURCE_DIR "TFT35"
 #elif defined(TFT28_V1_0) || defined(TFT28_V3_0)
-  #define ROOT_DIR "TFT28"
+  #define RESOURCE_DIR "TFT28"
 #elif defined(TFT24_V1_1)
-  #define ROOT_DIR "TFT24"
+  #define RESOURCE_DIR "TFT24"
 #endif
 
 //hardware version config
