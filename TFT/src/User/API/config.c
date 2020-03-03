@@ -9,6 +9,7 @@
 #include "config.h"
 #include "ini.h"
 #include "interfaceCmd.h"
+#include "icon_list.h"
 
 // declare global instance and populate with default values
 SYSTEM_CONFIG system_config = {
@@ -17,19 +18,20 @@ SYSTEM_CONFIG system_config = {
 #undef  X_ENTRY
         };
 
-// generate config parser events reactor
+// generate config parser event reactor
 int config_handler(void *user, const char *section, const char *name, const char *value) {
     SYSTEM_CONFIG *config = (SYSTEM_CONFIG*) user;
     if (0) {
     }
-#define X_ENTRY(SECTION, NAME, DEF_VAL) else if \
-    (strcmp(section, #SECTION)==0 && strcmp(name, #NAME)==0) { config->SECTION##_##NAME = strdup(value); }
+    #define X_ENTRY(SECTION, NAME, DEF_VAL) else if \
+    (strcmp(section, #SECTION)==0 && strcmp(name, #NAME)==0) \
+    { config->CONFIG_ENTRY(SECTION,NAME) = strdup(value); }
 #include "config.inc"
 #undef  X_ENTRY
     else {
-        return -1; // failure: wrong section/name
+        return -1;  // failure: wrong section/name
     }
-    return 0; // success: match was found
+    return 0;  // success: match was found
 }
 
 // apply config entries form config file text
@@ -51,4 +53,16 @@ void config_issue_gcode(const char *command_list) {
         storeCmd("%s\n", command);
         command = strtok(NULL, "\n");
     }
+}
+
+bool config_parse_bool(const char *value) {
+    return true;
+}
+
+int config_parse_int(const char *value) {
+    return atoi(value);
+}
+
+int config_find_icon(const char *icon_name) {
+    return icon_find_index(icon_name);
 }

@@ -26,33 +26,97 @@
 #define BOX_ERROR_MESSAGE_X    0
 #define BOX_ERROR_MESSAGE_Y    BOX_BASE_Y + BOX_HEIGHT * 5
 
-const GUI_RECT box_action_title = { //
+const GUI_RECT box_action_title =
+{  //
         BOX_ACTION_TITLE_X, BOX_ACTION_TITLE_Y,
         BOX_ACTION_TITLE_X + LCD_WIDTH, BOX_ACTION_TITLE_Y + BOX_HEIGHT };
 
-const GUI_RECT box_flash_used = { //
+const GUI_RECT box_flash_used =
+{  //
         BOX_FLASH_USED_X, BOX_FLASH_USED_Y,
         BOX_FLASH_USED_X + LCD_WIDTH, BOX_FLASH_USED_Y + BOX_HEIGHT };
 
-const GUI_RECT box_file_progress = { //
+const GUI_RECT box_file_progress =
+{  //
         BOX_FILE_PROGRESS_X, BOX_FILE_PROGRESS_Y,
         BOX_FILE_PROGRESS_X + LCD_WIDTH, BOX_FILE_PROGRESS_Y + BOX_HEIGHT };
 
-const GUI_RECT box_file_path = { //
+const GUI_RECT box_file_path =
+{  //
         BOX_FILE_PATH_X, BOX_FILE_PATH_Y,
         BOX_FILE_PATH_X + LCD_WIDTH, BOX_FILE_PATH_Y + BOX_HEIGHT };
 
-const GUI_RECT box_file_size = { //
+const GUI_RECT box_file_size =
+{  //
         BOX_FILE_SIZE_X, BOX_FILE_SIZE_Y,
         BOX_FILE_SIZE_X + LCD_WIDTH, BOX_FILE_SIZE_Y + BOX_HEIGHT };
 
-const GUI_RECT box_error_message = { //
+const GUI_RECT box_error_message =
+{  //
         BOX_ERROR_MESSAGE_X, BOX_ERROR_MESSAGE_Y,
         BOX_ERROR_MESSAGE_X + LCD_WIDTH, BOX_ERROR_MESSAGE_Y + BOX_HEIGHT };
 
-const GUI_RECT box_icon_view = { //
-        (LCD_WIDTH - ICON_WIDTH) / 2, (LCD_HEIGHT * 5/8) - (ICON_HEIGHT/2),
-        (LCD_WIDTH + ICON_WIDTH) / 2, (LCD_HEIGHT * 5/8) + (ICON_HEIGHT/2) };
+const GUI_RECT box_icon_view =
+{  //
+        (LCD_WIDTH - ICON_WIDTH) / 2, (LCD_HEIGHT * 5 / 8) - (ICON_HEIGHT / 2),
+        (LCD_WIDTH + ICON_WIDTH) / 2, (LCD_HEIGHT * 5 / 8) + (ICON_HEIGHT / 2) };
+
+//
+// report current action
+//
+void render_action_title(const char *title) {
+    GUI_ClearPrect(&box_action_title);
+    GUI_DispString(box_action_title.x0, box_action_title.y0, (u8*) title);
+}
+
+//
+// report flash usage percent
+//
+void render_flash_used(const u8 flash_info) {
+    char text_buff[64];
+    my_sprintf((void*) text_buff, "Flash used: %d %%", flash_info);
+    GUI_ClearPrect(&box_flash_used);
+    GUI_DispString(box_flash_used.x0, box_flash_used.y0, (u8*) text_buff);
+}
+
+//
+// report flash usage percent
+//
+void render_file_progress(const u8 progress_info) {
+    char text_buff[64];
+    my_sprintf((void*) text_buff, "File progress: %d %%", progress_info);
+    GUI_ClearPrect(&box_file_progress);
+    GUI_DispString(box_file_progress.x0, box_file_progress.y0, (u8*) text_buff);
+}
+
+//
+// report file name
+//
+void render_file_path(const char *file_path) {
+    char text_buff[64];
+    my_sprintf((void*) text_buff, "Path: %s", file_path);
+    GUI_ClearPrect(&box_file_path);
+    GUI_DispString(box_file_path.x0, box_file_path.y0, (u8*) text_buff);
+}
+
+//
+// report file size
+//
+void render_file_size(const FSIZE_t file_size) {
+    char text_buff[64];
+    my_sprintf((void*) text_buff, "Size: %d", file_size);
+    GUI_ClearPrect(&box_file_size);
+    GUI_DispString(box_file_size.x0, box_file_size.y0, (u8*) text_buff);
+}
+
+//
+// report operation failure
+//
+void render_error_message(const char *message) {
+    GUI_ClearPrect(&box_error_message);
+    GUI_DispString(box_error_message.x0, box_error_message.y0, (u8*) message);
+    Delay_ms(3000);  // preview time
+}
 
 u8 scanUpdateFile(void) {
     DIR dir;
@@ -168,63 +232,6 @@ bool bmpDecode(char *file_path, const u32 base_addr) {
     return true;
 }
 
-//
-// report current action
-//
-void render_action_title(const char *title) {
-    GUI_ClearPrect(&box_action_title);
-    GUI_DispString(box_action_title.x0, box_action_title.y0, (u8*) title);
-}
-
-//
-// report flash usage percent
-//
-void render_flash_used(const u8 flash_info) {
-    char text_buff[64];
-    my_sprintf((void*) text_buff, "Flash used: %d %%", flash_info);
-    GUI_ClearPrect(&box_flash_used);
-    GUI_DispString(box_flash_used.x0, box_flash_used.y0, (u8*) text_buff);
-}
-
-//
-// report flash usage percent
-//
-void render_file_progress(const u8 progress_info) {
-    char text_buff[64];
-    my_sprintf((void*) text_buff, "File progress: %d %%", progress_info);
-    GUI_ClearPrect(&box_file_progress);
-    GUI_DispString(box_file_progress.x0, box_file_progress.y0, (u8*) text_buff);
-}
-
-//
-// report file name
-//
-void render_file_path(const char *file_path) {
-    char text_buff[64];
-    my_sprintf((void*) text_buff, "Path: %s", file_path);
-    GUI_ClearPrect(&box_file_path);
-    GUI_DispString(box_file_path.x0, box_file_path.y0, (u8*) text_buff);
-}
-
-//
-// report file size
-//
-void render_file_size(const FSIZE_t file_size) {
-    char text_buff[64];
-    my_sprintf((void*) text_buff, "Size: %d", file_size);
-    GUI_ClearPrect(&box_file_size);
-    GUI_DispString(box_file_size.x0, box_file_size.y0, (u8*) text_buff);
-}
-
-//
-// report operation failure
-//
-void render_error_message(const char *message) {
-    GUI_ClearPrect(&box_error_message);
-    GUI_DispString(box_error_message.x0, box_error_message.y0, (u8*) message);
-    Delay_ms(3000); // preview time
-}
-
 void updateLogoImage(void) {
 
     GUI_Clear(BACKGROUND_COLOR);
@@ -232,7 +239,7 @@ void updateLogoImage(void) {
 
     if (bmpDecode(TFT_BMP_DIR"/Logo.bmp", LOGO_ADDR)) {
         LOGO_ReadDisplay();
-        Delay_ms(3000); // preview time
+        Delay_ms(3000);  // preview time
     }
 
 }
@@ -275,7 +282,7 @@ void updateIconImageSet(void) {
         ICON_CustomReadDisplay(box_icon_view.x0, box_icon_view.y0, INFOBOX_WIDTH, INFOBOX_HEIGHT, INFOBOX_ADDR);
     }
 
-    Delay_ms(3000); // preview time
+    Delay_ms(3000);  // preview time
 
 }
 
@@ -293,7 +300,6 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
     u8 flash_unit = 0;
     u8 progress_info = 0;
     u8 progress_unit = 0;
-    char text_buff[128];
 
     if (f_open(&file_data, file_path, FA_OPEN_EXISTING | FA_READ) != FR_OK) {
         render_error_message("Failure: can not open file");
@@ -339,14 +345,14 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
             render_file_progress(progress_info);
         }
         if (read_size != FLASH_SECTOR_SIZE) {
-            break; // final sector
+            break;  // final sector
         }
     }
 
     f_close(&file_data);
     free(flash_buff);
 
-    Delay_ms(3000); // preview time
+    Delay_ms(3000);  // preview time
 }
 
 void scanResetFile(void) {
