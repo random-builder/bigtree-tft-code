@@ -1,18 +1,58 @@
 //
-//
+// boot update actions
 //
 
 #include "boot.h"
 #include "includes.h"
 
-const GUI_RECT iconUpdateRect = { //
-        (LCD_WIDTH - ICON_WIDTH) / 2, (LCD_HEIGHT - ICON_HEIGHT) / 2, //
-        (LCD_WIDTH - ICON_WIDTH) / 2 + ICON_WIDTH, (LCD_HEIGHT - ICON_HEIGHT) / 2 + ICON_HEIGHT //
-        };
+#define BOX_BASE_Y             BYTE_HEIGHT / 4
+#define BOX_HEIGHT             BYTE_HEIGHT
 
-const GUI_RECT labelUpdateRect = { //
-        0, (LCD_HEIGHT - ICON_HEIGHT) / 2 + ICON_HEIGHT,
-        LCD_WIDTH, (LCD_HEIGHT - ICON_HEIGHT) / 2 + ICON_HEIGHT + BYTE_HEIGHT };
+#define BOX_ACTION_TITLE_X     0
+#define BOX_ACTION_TITLE_Y     BOX_BASE_Y + BOX_HEIGHT * 0
+
+#define BOX_FLASH_USED_X       0
+#define BOX_FLASH_USED_Y       BOX_BASE_Y + BOX_HEIGHT * 1
+
+#define BOX_FILE_PROGRESS_X    0
+#define BOX_FILE_PROGRESS_Y    BOX_BASE_Y + BOX_HEIGHT * 2
+
+#define BOX_FILE_PATH_X        0
+#define BOX_FILE_PATH_Y        BOX_BASE_Y + BOX_HEIGHT * 3
+
+#define BOX_FILE_SIZE_X        0
+#define BOX_FILE_SIZE_Y        BOX_BASE_Y + BOX_HEIGHT * 4
+
+#define BOX_ERROR_MESSAGE_X    0
+#define BOX_ERROR_MESSAGE_Y    BOX_BASE_Y + BOX_HEIGHT * 5
+
+const GUI_RECT box_action_title = { //
+        BOX_ACTION_TITLE_X, BOX_ACTION_TITLE_Y,
+        BOX_ACTION_TITLE_X + LCD_WIDTH, BOX_ACTION_TITLE_Y + BOX_HEIGHT };
+
+const GUI_RECT box_flash_used = { //
+        BOX_FLASH_USED_X, BOX_FLASH_USED_Y,
+        BOX_FLASH_USED_X + LCD_WIDTH, BOX_FLASH_USED_Y + BOX_HEIGHT };
+
+const GUI_RECT box_file_progress = { //
+        BOX_FILE_PROGRESS_X, BOX_FILE_PROGRESS_Y,
+        BOX_FILE_PROGRESS_X + LCD_WIDTH, BOX_FILE_PROGRESS_Y + BOX_HEIGHT };
+
+const GUI_RECT box_file_path = { //
+        BOX_FILE_PATH_X, BOX_FILE_PATH_Y,
+        BOX_FILE_PATH_X + LCD_WIDTH, BOX_FILE_PATH_Y + BOX_HEIGHT };
+
+const GUI_RECT box_file_size = { //
+        BOX_FILE_SIZE_X, BOX_FILE_SIZE_Y,
+        BOX_FILE_SIZE_X + LCD_WIDTH, BOX_FILE_SIZE_Y + BOX_HEIGHT };
+
+const GUI_RECT box_error_message = { //
+        BOX_ERROR_MESSAGE_X, BOX_ERROR_MESSAGE_Y,
+        BOX_ERROR_MESSAGE_X + LCD_WIDTH, BOX_ERROR_MESSAGE_Y + BOX_HEIGHT };
+
+const GUI_RECT box_icon_view = { //
+        (LCD_WIDTH - ICON_WIDTH) / 2, (LCD_HEIGHT * 5/8) - (ICON_HEIGHT/2),
+        (LCD_WIDTH + ICON_WIDTH) / 2, (LCD_HEIGHT * 5/8) + (ICON_HEIGHT/2) };
 
 u8 scanUpdateFile(void) {
     DIR dir;
@@ -27,6 +67,11 @@ u8 scanUpdateFile(void) {
     if (f_opendir(&dir, TFT_FONT_DIR) == FR_OK) {
         result |= HAS_FONT;
         f_closedir(&dir);
+    }
+
+    if (f_open(&file, TFT_RESET_FILE, FA_OPEN_EXISTING | FA_READ) == FR_OK) {
+        result |= HAS_RESET;
+        f_close(&file);
     }
 
     if (f_open(&file, TFT_CONFIG_FILE, FA_OPEN_EXISTING | FA_READ) == FR_OK) {
@@ -54,8 +99,14 @@ bool bmpDecode(char *file_path, const u32 base_addr) {
     u8 image_pixel[4];
     GUI_PIXEL screen_pixel;
 
-    if (f_open(&image_file, file_path, FA_OPEN_EXISTING | FA_READ) != FR_OK)
+    render_file_path(file_path);
+
+    if (f_open(&image_file, file_path, FA_OPEN_EXISTING | FA_READ) != FR_OK) {
         return false;
+    }
+
+    FSIZE_t file_size = f_size(&image_file);
+    render_file_size(file_size);
 
     f_read(&image_file, image_magic, 2, &read_size);
     if (memcmp(image_magic, "BM", 2)) {
@@ -118,26 +169,66 @@ bool bmpDecode(char *file_path, const u32 base_addr) {
 }
 
 //
-// report flash usage percent
+// report current action
 //
-void report_flash(u8 flash_info) {
-    char text_buff[64];
-    my_sprintf((void*) text_buff, "Flash used: %d %%   ", flash_info);
-    GUI_DispString(0, 50, (u8*) text_buff);
+void render_action_title(const char *title) {
+    GUI_ClearPrect(&box_action_title);
+    GUI_DispString(box_action_title.x0, box_action_title.y0, (u8*) title);
 }
 
 //
-// report resource operation failue
+// report flash usage percent
 //
-void report_error(const char *message) {
-    GUI_DispString(0, 60, (u8*) message);
+void render_flash_used(const u8 flash_info) {
+    char text_buff[64];
+    my_sprintf((void*) text_buff, "Flash used: %d %%", flash_info);
+    GUI_ClearPrect(&box_flash_used);
+    GUI_DispString(box_flash_used.x0, box_flash_used.y0, (u8*) text_buff);
+}
+
+//
+// report flash usage percent
+//
+void render_file_progress(const u8 progress_info) {
+    char text_buff[64];
+    my_sprintf((void*) text_buff, "File progress: %d %%", progress_info);
+    GUI_ClearPrect(&box_file_progress);
+    GUI_DispString(box_file_progress.x0, box_file_progress.y0, (u8*) text_buff);
+}
+
+//
+// report file name
+//
+void render_file_path(const char *file_path) {
+    char text_buff[64];
+    my_sprintf((void*) text_buff, "Path: %s", file_path);
+    GUI_ClearPrect(&box_file_path);
+    GUI_DispString(box_file_path.x0, box_file_path.y0, (u8*) text_buff);
+}
+
+//
+// report file size
+//
+void render_file_size(const FSIZE_t file_size) {
+    char text_buff[64];
+    my_sprintf((void*) text_buff, "Size: %d", file_size);
+    GUI_ClearPrect(&box_file_size);
+    GUI_DispString(box_file_size.x0, box_file_size.y0, (u8*) text_buff);
+}
+
+//
+// report operation failure
+//
+void render_error_message(const char *message) {
+    GUI_ClearPrect(&box_error_message);
+    GUI_DispString(box_error_message.x0, box_error_message.y0, (u8*) message);
     Delay_ms(3000); // preview time
 }
 
 void updateLogoImage(void) {
 
     GUI_Clear(BACKGROUND_COLOR);
-    GUI_DispString(100, 5, (u8*) "Logo Update...");
+    render_action_title("Logo Update...");
 
     if (bmpDecode(TFT_BMP_DIR"/Logo.bmp", LOGO_ADDR)) {
         LOGO_ReadDisplay();
@@ -151,9 +242,11 @@ void updateIconImageSet(void) {
     u32 flash_addr = 0;
     u8 flash_info = 0;
     u8 flash_unit = 0;
+    u8 progress_info = 0;
+    u8 progress_unit = 0;
 
     GUI_Clear(BACKGROUND_COLOR);
-    GUI_DispString(100, 5, (u8*) "Icon Update...");
+    render_action_title("Icon Update...");
 
     const int icon_count = icon_list_size();
     const char (*icon_name_list)[FILE_NAME_SIZE] = icon_file_list();
@@ -162,19 +255,24 @@ void updateIconImageSet(void) {
         my_sprintf(file_path, TFT_BMP_DIR"/%s.bmp", icon_name_list[icon_index]);
         flash_addr = ICON_ADDR(icon_index);
         if (bmpDecode(file_path, flash_addr)) {
-            GUI_ClearRect(labelUpdateRect.x0, labelUpdateRect.y0, labelUpdateRect.x1, labelUpdateRect.y1);
-            GUI_DispStringInPrect(&labelUpdateRect, (u8*) file_path);
-            ICON_ReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, icon_index);
+            ICON_ReadDisplay(box_icon_view.x0, box_icon_view.y0, icon_index);
         }
+        // flash usage
         flash_unit = flash_addr * 100 / FLASH_TOTAL_SIZE;
         if (flash_info != flash_unit) {
             flash_info = flash_unit;
-            report_flash(flash_info);
+            render_flash_used(flash_info);
+        }
+        // file progress
+        progress_unit = icon_index * 100 / icon_count;
+        if (progress_info != progress_unit) {
+            progress_info = progress_unit;
+            render_file_progress(progress_info);
         }
     }
 
     if (bmpDecode(TFT_BMP_DIR"/InfoBox.bmp", INFOBOX_ADDR)) {
-        ICON_CustomReadDisplay(iconUpdateRect.x0, iconUpdateRect.y0, INFOBOX_WIDTH, INFOBOX_HEIGHT, INFOBOX_ADDR);
+        ICON_CustomReadDisplay(box_icon_view.x0, box_icon_view.y0, INFOBOX_WIDTH, INFOBOX_HEIGHT, INFOBOX_ADDR);
     }
 
     Delay_ms(3000); // preview time
@@ -198,32 +296,30 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
     char text_buff[128];
 
     if (f_open(&file_data, file_path, FA_OPEN_EXISTING | FA_READ) != FR_OK) {
-        report_error("Failure: can not open file");
+        render_error_message("Failure: can not open file");
         return;
     }
 
     FSIZE_t file_size = f_size(&file_data);
     if (file_size > base_size) {
-        report_error("Failure: file is too big");
+        render_error_message("Failure: file is too big");
         return;
     }
 
     flash_buff = malloc(FLASH_SECTOR_SIZE);
     if (flash_buff == NULL) {
-        report_error("Failure: no memory for buffer");
+        render_error_message("Failure: no memory for buffer");
         return;
     }
 
     GUI_Clear(BACKGROUND_COLOR);
-    GUI_DispString(100, 5, (u8*) window_title);
-
-    my_sprintf((void*) text_buff, "%s Size=%dK", file_path, (u32) file_size >> 10);
-    GUI_DispString(0, 100, (u8*) text_buff);
-    GUI_DispString(0, 140, (u8*) "Progress:   %");
+    render_action_title(window_title);
+    render_file_path(file_path);
+    render_file_size(file_size);
 
     while (!f_eof(&file_data)) {
         if (f_read(&file_data, flash_buff, FLASH_SECTOR_SIZE, &read_size) != FR_OK) {
-            report_error("Failure: can not read file");
+            render_error_message("Failure: can not read file");
             break;
         }
         flash_addr = base_addr + flash_offset;
@@ -234,13 +330,13 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
         flash_unit = flash_addr * 100 / FLASH_TOTAL_SIZE;
         if (flash_info != flash_unit) {
             flash_info = flash_unit;
-            report_flash(flash_info);
+            render_flash_used(flash_info);
         }
         // file progress
         progress_unit = flash_offset * 100 / file_size;
         if (progress_info != progress_unit) {
             progress_info = progress_unit;
-            GUI_DispDec(0 + BYTE_WIDTH * 9, 140, progress_info, 3, RIGHT);
+            render_file_progress(progress_info);
         }
         if (read_size != FLASH_SECTOR_SIZE) {
             break; // final sector
@@ -278,6 +374,7 @@ void updateFontUnicode() {
 
 void scanUpdates(void) {
     volatile u8 result = 0;   // must use volatile
+
     if (mountSDCard()) {
         result = scanUpdateFile();
         if (result & HAS_FONT) {
@@ -296,7 +393,7 @@ void scanUpdates(void) {
             updateIconImageSet();
         }
 
-        if ((result & HAS_FONT) | (result & HAS_BMP)) {
+        if ((result & HAS_FONT) || (result & HAS_BMP)) {
             //f_rename(RESOURCE_DIR, RESOURCE_DIR".CUR");
         }
 

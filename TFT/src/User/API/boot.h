@@ -1,5 +1,5 @@
 //
-//
+// boot update actions
 //
 
 #pragma once
@@ -60,7 +60,8 @@
 
 #define HAS_BMP     (1<<1)
 #define HAS_FONT    (1<<2)
-#define HAS_CONFIG  (1<<3)
+#define HAS_RESET   (1<<3)
+#define HAS_CONFIG  (1<<4)
 
 #define TFT_BMP_DIR "0:"RESOURCE_DIR"/bmp"
 #define TFT_FONT_DIR "0:"RESOURCE_DIR"/font"
