@@ -5,17 +5,18 @@ char dmaL2Cache[ACK_MAX_SIZE];
 static u16 ack_index=0;
 static u8 ack_cur_src = SERIAL_PORT;
 int MODEselect;
-
 // Ignore reply "echo:" message (don't display in popup menu)
 const char *const ignoreEcho[] = {
   "Now fresh file:",
   "Probe Z Offset:",
-  "Active Extruder:",
 };
+
+bool portSeen[_USART_CNT] = {false, false, false, false, false, false};
 
 void setCurrentAckSrc(uint8_t src)
 {
   ack_cur_src = src;
+  portSeen[src] = true;
 }
 
 static char ack_seen(const char *str)
@@ -101,6 +102,7 @@ void parseACK(void)
   if(infoHost.connected == false) //not connected to Marlin
   {
     if((!ack_seen("T:") && !ack_seen("T0:")) || !ack_seen("ok"))  goto parse_end;  //the first response should be such as "T:25/50 ok\n"
+    updateLastHeatCheckTime();
     infoHost.connected = true;
     #ifdef AUTO_SAVE_LOAD_LEVELING_VALUE
       storeCmd("M420 S1\n");
@@ -180,12 +182,14 @@ void parseACK(void)
         }      
       }
       avoid_terminal = infoSettings.terminalACK;
+      updateLastHeatCheckTime();
     }
     else if(ack_seen("B:"))		
     {
-      heatSetCurrentTemp(TOOL_HOTBED,ack_value()+0.5);
+      heatSetCurrentTemp(TOOL_HOTBED, ack_value()+0.5);
       heatSyncTargetTemp(TOOL_HOTBED, ack_second_value()+0.5);
       avoid_terminal = infoSettings.terminalACK;
+      updateLastHeatCheckTime();
     }
     else if(ack_seen("Mean:"))
     {
@@ -280,6 +284,19 @@ parse_end:
   {
     Serial_Puts(ack_cur_src, dmaL2Cache);
   }
+  else if (!ack_seen("ok"))
+  {
+    // make sure we pass on spontaneous messages to all connected ports (since these can come unrequested)
+    for (int port = 0; port < _USART_CNT; port++)
+    {
+      if (port != SERIAL_PORT && portSeen[port])
+      {
+        // pass on this one to anyone else who might be listening
+        Serial_Puts(port, dmaL2Cache);
+      }
+    }        
+  }
+
   if (avoid_terminal != true){
     sendGcodeTerminalCache(dmaL2Cache, TERMINAL_ACK);
   }

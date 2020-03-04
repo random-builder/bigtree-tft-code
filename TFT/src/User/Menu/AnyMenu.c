@@ -127,6 +127,14 @@ void menuRefreshListPage(void){
  for (uint8_t i = 0; i < ITEM_PER_PAGE; i++)
     {
       menuDrawListItem(&curListItems->items[i], i);
+      #ifdef RAPID_SERIAL_COMM
+        #ifndef CLEAN_MODE_SWITCHING_SUPPORT
+          if(isPrinting() == true)
+        #endif
+        {
+          loopBackEnd();	 //perform backend printing loop between drawing icons to avoid printer idling
+        }
+      #endif      
     }
 
 }
@@ -273,6 +281,14 @@ void menuDrawPage(const MENUITEMS *menuItems)
   for (i = 0; i < ITEM_PER_PAGE; i++)
   {
     menuDrawItem(&menuItems->items[i], i);
+    #ifdef RAPID_SERIAL_COMM
+      #ifndef CLEAN_MODE_SWITCHING_SUPPORT
+        if(isPrinting() == true)
+      #endif
+      {
+        loopBackEnd();	 //perform backend printing loop between drawing icons to avoid printer idling
+      }
+    #endif
   }
 }
 
@@ -297,6 +313,14 @@ void menuDrawListPage(const LISTITEMS *listItems)
     //const GUI_RECT *rect = rect_of_keyListView + i;
    if (curListItems->items[i].icon != ICONCHAR_BACKGROUND)    
      menuDrawListItem(&curListItems->items[i], i);
+    #ifdef RAPID_SERIAL_COMM
+      #ifndef CLEAN_MODE_SWITCHING_SUPPORT
+        if(isPrinting() == true)
+      #endif
+      {
+        loopBackEnd();	 //perform backend printing loop between drawing icons to avoid printer idling
+      }
+    #endif
   }    
 //  show_globalinfo();
 }

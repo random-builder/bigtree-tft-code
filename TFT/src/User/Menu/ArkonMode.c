@@ -5,9 +5,12 @@
 #include <ArkonMode.h>
 #include "includes.h"
 
+bool serialHasBeenInitialized = false;
 
 void Serial_ReSourceDeInit(void)
 {
+  if (!serialHasBeenInitialized) return;
+  serialHasBeenInitialized = false;
   memset(&infoHost, 0, sizeof(infoHost));
   resetInfoFile();
   SD_DeInit();
@@ -19,6 +22,9 @@ void Serial_ReSourceDeInit(void)
 
 void Serial_ReSourceInit(void)
 {
+  if (serialHasBeenInitialized) return;
+  serialHasBeenInitialized = true;
+  
 #ifdef BUZZER_PIN
   Buzzer_Config();
 #endif
@@ -31,6 +37,9 @@ void Serial_ReSourceInit(void)
 
 void infoMenuSelect(void)
 {
+  #ifdef CLEAN_MODE_SWITCHING_SUPPORT
+    Serial_ReSourceInit();
+  #endif
   infoMenu.cur = 0;
   switch(infoSettings.mode)
   {
@@ -100,7 +109,9 @@ void menuMode(void)
   
   GUI_Clear(BACKGROUND_COLOR);
   //RADIO_Create(&modeRadio);
-  Serial_ReSourceDeInit();
+  #ifndef CLEAN_MODE_SWITCHING_SUPPORT  
+    Serial_ReSourceDeInit();
+  #endif
 
   show_selectICON();
   TSC_ReDrawIcon = NULL; // Disable icon redraw callback function
@@ -132,7 +143,10 @@ void menuMode(void)
     }
     
     LCD_LoopEncoder();
-    
+    #ifdef CLEAN_MODE_SWITCHING_SUPPORT
+      loopBackEnd();
+    #endif
+
     if(key_num==MKEY_1)
 		{	
 			Touch_Sw(2);

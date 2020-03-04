@@ -19,13 +19,22 @@
 // Marlin Mode Background & Font Color Options
 // Current color options from lcd.h: BLACK, BLUE, BROWN, BRRED, CYAN, GBLUE, GRAY, GREEN, MAGENTA, RED, WHITE, YELLOW
 #define ST7920_BKCOLOR BLACK
-#define ST7920_FNCOLOR GREEN
+#define ST7920_FNCOLOR YELLOW
 
 // Text displayed at the top of the LCD in Marlin Mode.
 //#define ST7920_BANNER_TEXT "LCD12864 Simulator"
 
 // Run Marlin Mode fullscreen. Not recommended for TFT24.
 //#define ST7920_FULLSCREEN
+
+/**
+ * CLEAN MODE SWITCHING SUPPORT
+ * Support for keeping UART(Serial communication) alive in Marlin Mode
+ * Gives the ability to connect Octoprint over UART to the TFT UART/serial 
+ * expansion port and have it work seamlessly no matter which mode the TFT is in. 
+ * Only for TFT24 V1.1, TFT35 V3.0 or TFT28 V3.0
+*/ 
+//#define CLEAN_MODE_SWITCHING_SUPPORT  // Enable CLEAN MODE SWITCHING SUPPORT
 
 //===========================================================================
 //============================ TFT Mode Settings ============================
@@ -170,7 +179,26 @@
 #define EXTRUDE_STEPS  100.0f
 
 /**
+<<<<<<< HEAD
  * CUSTOM GCODE COMMANDS (defaults for config.ini)
+=======
+ * Rapid Serial Communication:More frequent Serial communicaiton while printing.
+ * The controller will send and parse  gcodes more frequently  while drawing on 
+ * screen to prevent printer idling and stuttering  due to empty printer buffer.
+ * Note: this might make the  graphics slow when switching menus while printing.
+*/
+#define RAPID_SERIAL_COMM
+
+/**
+ * Enable list mode in Custom G-Code menu
+ * 7 codes in icon mode, 15 items in list mode
+ */
+#define CUSTOM_GCODE_LIST_MODE
+
+/** CUSTOM GCODE COMMANDS
+ * Support up to 7 custom gcodes in Icon mode and 15 in List Mode.
+ * Uncomment CUSTOM_X_LABEL and CUSTOM_X_GCODE to enable custom gcode.
+>>>>>>> 920e06b... Improved UART handling (#5)
  * CUSTOM_X_LABEL is the name of the custom button, CUSTOM_X_GCODE
  * CUSTOM_X_GCODE is the gcode to be sent by the custom button, separator: '\n'
  */
