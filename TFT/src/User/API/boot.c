@@ -3,6 +3,7 @@
 //
 
 #include "boot.h"
+#include "config.h"
 #include "includes.h"
 
 #define BOX_BASE_Y             BYTE_HEIGHT / 4
@@ -27,37 +28,37 @@
 #define BOX_ERROR_MESSAGE_Y    BOX_BASE_Y + BOX_HEIGHT * 5
 
 const GUI_RECT box_action_title =
-{  //
+        {  //
         BOX_ACTION_TITLE_X, BOX_ACTION_TITLE_Y,
         BOX_ACTION_TITLE_X + LCD_WIDTH, BOX_ACTION_TITLE_Y + BOX_HEIGHT };
 
 const GUI_RECT box_flash_used =
-{  //
+        {  //
         BOX_FLASH_USED_X, BOX_FLASH_USED_Y,
         BOX_FLASH_USED_X + LCD_WIDTH, BOX_FLASH_USED_Y + BOX_HEIGHT };
 
 const GUI_RECT box_file_progress =
-{  //
+        {  //
         BOX_FILE_PROGRESS_X, BOX_FILE_PROGRESS_Y,
         BOX_FILE_PROGRESS_X + LCD_WIDTH, BOX_FILE_PROGRESS_Y + BOX_HEIGHT };
 
 const GUI_RECT box_file_path =
-{  //
+        {  //
         BOX_FILE_PATH_X, BOX_FILE_PATH_Y,
         BOX_FILE_PATH_X + LCD_WIDTH, BOX_FILE_PATH_Y + BOX_HEIGHT };
 
 const GUI_RECT box_file_size =
-{  //
+        {  //
         BOX_FILE_SIZE_X, BOX_FILE_SIZE_Y,
         BOX_FILE_SIZE_X + LCD_WIDTH, BOX_FILE_SIZE_Y + BOX_HEIGHT };
 
 const GUI_RECT box_error_message =
-{  //
+        {  //
         BOX_ERROR_MESSAGE_X, BOX_ERROR_MESSAGE_Y,
         BOX_ERROR_MESSAGE_X + LCD_WIDTH, BOX_ERROR_MESSAGE_Y + BOX_HEIGHT };
 
 const GUI_RECT box_icon_view =
-{  //
+        {  //
         (LCD_WIDTH - ICON_WIDTH) / 2, (LCD_HEIGHT * 5 / 8) - (ICON_HEIGHT / 2),
         (LCD_WIDTH + ICON_WIDTH) / 2, (LCD_HEIGHT * 5 / 8) + (ICON_HEIGHT / 2) };
 
@@ -72,7 +73,7 @@ void render_action_title(const char *title) {
 //
 // report flash usage percent
 //
-void render_flash_used(const u8 flash_info) {
+void render_flash_used(const u16 flash_info) {
     char text_buff[64];
     my_sprintf((void*) text_buff, "Flash used: %d %%", flash_info);
     GUI_ClearPrect(&box_flash_used);
@@ -82,7 +83,7 @@ void render_flash_used(const u8 flash_info) {
 //
 // report flash usage percent
 //
-void render_file_progress(const u8 progress_info) {
+void render_file_progress(const u16 progress_info) {
     char text_buff[64];
     my_sprintf((void*) text_buff, "File progress: %d %%", progress_info);
     GUI_ClearPrect(&box_file_progress);
@@ -116,6 +117,19 @@ void render_error_message(const char *message) {
     GUI_ClearPrect(&box_error_message);
     GUI_DispString(box_error_message.x0, box_error_message.y0, (u8*) message);
     Delay_ms(3000);  // preview time
+}
+
+//
+// render system config for debugging
+//
+void render_config_debug() {
+    SYSTEM_CONFIG config = config_instance();
+    char text_buff[256];
+#define X_ENTRY(SECTION, NAME, DEF_VAL) \
+    my_sprintf((void*) text_buff, "%s/%s::%s", #SECTION, #NAME, config.CONFIG_ENTRY(SECTION,NAME)); \
+    render_error_message(text_buff);
+#include "config.inc"
+#undef  X_ENTRY
 }
 
 u8 scanUpdateFile(void) {
@@ -355,6 +369,31 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
     Delay_ms(3000);  // preview time
 }
 
+//
+// apply config entries form config.ini flash file into the memory struct
+//
+void parseSystemConfig() {
+    FLASH_STREAM flash_stream;
+
+    flash_stream.flash_addr = CONFIG_FILE_ADDR;
+    flash_stream.flash_tail = CONFIG_FILE_TAIL;
+    flash_stream.buff_size = FLASH_PAGE_SIZE;
+    flash_stream.text_point = NULL;  // declare empty
+
+    flash_stream.text_buffer = malloc(flash_stream.buff_size);
+    if (flash_stream.text_buffer == NULL) {
+        render_error_message("Failure: no memory for buffer");
+        return;
+    }
+
+    if (config_parse_stream(&flash_stream) < 0) {
+        render_error_message("Failure: can not parse config.ini");
+    }
+
+    free(flash_stream.text_buffer);
+
+}
+
 void scanResetFile(void) {
     FIL resetfile;
     if (f_open(&resetfile, TFT_RESET_FILE, FA_OPEN_EXISTING | FA_READ) == FR_OK) {
@@ -412,4 +451,9 @@ void scanUpdates(void) {
         scanResetFile();
 
     }
+
+    parseSystemConfig();
+
+//    render_config_debug();
+
 }

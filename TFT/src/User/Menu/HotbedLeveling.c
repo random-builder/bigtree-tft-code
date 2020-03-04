@@ -37,12 +37,10 @@ void menuAutoLeveling(void) {
         case KEY_ICON_2:  // Test
             config_issue_gcode(config.leveling_auto__command_probe_test);
             break;
-
         case KEY_ICON_3:  // Invoke
             config_issue_gcode(config.leveling_auto__command_probe_invoke);
             break;
-
-        case KEY_ICON_4:  // TODO
+        case KEY_ICON_4:  // Repeat
             config_issue_gcode(config.leveling_auto__command_probe_repeat);
             break;
         case KEY_ICON_5:  // Offset Z
@@ -51,7 +49,6 @@ void menuAutoLeveling(void) {
         case KEY_ICON_6:  // Baby Step
             infoMenu.menu[++infoMenu.cur] = menuBabyStep;
             break;
-
         case KEY_ICON_7:
             infoMenu.cur--;
             break;
