@@ -33,7 +33,7 @@
 #define BYTE_ASCII_ADDR         BASE_ADDR
 #define BYTE_ASCII_TAIL         BYTE_ASCII_ADDR + BYTE_ASCII_SIZE
 
-#define CONFIG_FILE_SIZE        0x3000 // allow up to 12k
+#define CONFIG_FILE_SIZE        0x4000 // config.ini: permit up to 16K
 #define CONFIG_FILE_ADDR        BYTE_ASCII_TAIL
 #define CONFIG_FILE_TAIL        CONFIG_FILE_ADDR + CONFIG_FILE_SIZE
 
@@ -56,17 +56,19 @@
 #define ICON_SIZE               FLASH_IMAGE_UNIT(ICON_WIDTH,ICON_HEIGHT)
 #define ICON_ADDR(index)        INFOBOX_TAIL + (ICON_SIZE * index)
 
-//
-
+// file detection mask
 #define HAS_BMP     (1<<1)
 #define HAS_FONT    (1<<2)
 #define HAS_RESET   (1<<3)
 #define HAS_CONFIG  (1<<4)
 
-#define TFT_BMP_DIR "0:"RESOURCE_DIR"/bmp"
-#define TFT_FONT_DIR "0:"RESOURCE_DIR"/font"
-#define TFT_RESET_FILE "0:reset.txt"
-#define TFT_CONFIG_FILE "0:config.ini"
+// resource file path
+#define TFT_BMP_DIR         "0:"RESOURCE_DIR"/bmp"
+#define TFT_FONT_DIR        "0:"RESOURCE_DIR"/font"
+#define TFT_ASCII_FILE      TFT_FONT_DIR"/byte_ascii.fon"
+#define TFT_UNICODE_FILE    TFT_FONT_DIR"/word_unicode.fon"
+#define TFT_RESET_FILE      "0:reset.txt"
+#define TFT_CONFIG_FILE     "0:config.ini"
 
 typedef union {
     u16 color;

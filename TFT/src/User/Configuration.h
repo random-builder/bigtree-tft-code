@@ -1,4 +1,8 @@
-# pragma once
+//
+//
+//
+
+#pragma once
 
 //===========================================================================
 //=========================== Marlin Mode Settings ===========================
@@ -36,7 +40,6 @@
 #define FONT_COLOR                  WHITE  // Font foreground color
 #define REMINDER_FONT_COLOR         RED    // Reminder font color, such as: "No print attached", "Busy process", etc...
 #define VOLUME_REMINDER_FONT_COLOR  GBLUE  // Volume reminder font color,such as: "Card inserted", "Card removed"
-
 
 #define TOOL_NUM     1    // set in 1~6
 #define EXTRUDER_NUM 1    // set in 1~6
@@ -92,9 +95,9 @@
 // Send G29 for auto bed leveling
 #define AUTO_BED_LEVELING
 #ifdef AUTO_BED_LEVELING
-  // Enable this will send "M500" after "G29" to store leveling value
-  // and send "M420 S1" to enable leveling state after startup
-  #define AUTO_SAVE_LOAD_LEVELING_VALUE
+// Enable this will send "M500" after "G29" to store leveling value
+// and send "M420 S1" to enable leveling state after startup
+#define AUTO_SAVE_LOAD_LEVELING_VALUE
 #endif
 
 // Move to four corner points to Leveling manually (Point 1, Point 2, Point 3, Point 4)
@@ -134,17 +137,15 @@
 // this does not work if LIST MODE is enabled. To invert z axis in LIST MODE go to setting->feature settings
 //#define INVERT_ZAXIS
 
-
 //-------RESET SETTINGS & TOUCH SCREEN CALIBRATION------||
 // To reset the touch screen create a text file with name 'reset.txt' in root folder of the sd card and press reset button.
-
 
 // SD support
 #define ONBOARD_SD_SUPPORT
 #ifdef ONBOARD_SD_SUPPORT
-  #define M27_AUTOREPORT                      // Disable M27 polling if you enable enable AUTO_REPORT_SD_STATUS in Marlin
-  #define M27_REFRESH                3        // Time in sec for M27 command
-  #define M27_WATCH_OTHER_SOURCES    true     // if true the polling on M27 report is always active. Case: SD print started not from TFT35
+#define M27_AUTOREPORT                      // Disable M27 polling if you enable enable AUTO_REPORT_SD_STATUS in Marlin
+#define M27_REFRESH                3        // Time in sec for M27 command
+#define M27_WATCH_OTHER_SOURCES    true     // if true the polling on M27 report is always active. Case: SD print started not from TFT35
 #endif
 
 /**
@@ -156,33 +157,31 @@
 //#define BTT_MINI_UPS // Backup power / UPS to move the Z axis steppers on power loss
 #define POWER_LOSS_ZRAISE 10 // (mm) Z axis raise on resume (on power loss with UPS)
 
-
 // Prevent extrusion if the temperature is below set temperature
 #define PREVENT_COLD_EXTRUSION_MINTEMP 170
 
 /**
-  * Maximum hotend temperature of automatic shut down after printing.
-  * When enable automatic shutdown(Auto Power), when the hotend temperature is higher than this value
-  * turn on the fan to cool down, wait for the hotend temperature to be lower than this value, then turn off the power automatically
-  */
+ * Maximum hotend temperature of automatic shut down after printing.
+ * When enable automatic shutdown(Auto Power), when the hotend temperature is higher than this value
+ * turn on the fan to cool down, wait for the hotend temperature to be lower than this value, then turn off the power automatically
+ */
 #define AUTO_SHUT_DOWN_MAXTEMP 50
 
 #define EXTRUDE_STEPS  100.0f
 
-/** CUSTOM GCODE COMMANDS
- * Support up to 7 custom gcodes in Icon mode and 15 in List Mode.
- * Uncomment CUSTOM_X_LABEL and CUSTOM_X_GCODE to enable custom gcode.
+/**
+ * CUSTOM GCODE COMMANDS (defaults for config.ini)
  * CUSTOM_X_LABEL is the name of the custom button, CUSTOM_X_GCODE
- * CUSTOM_X_GCODE is the gcode to be sent by the custom button, end with '\n'
- * Copy your custom icon to the SD card to be updated, such as:"TFT35/bmp/Custom0.bmp", "TFT24/bmp/Custom1.bmp", etc...
- * The format of the custom icon is as follows
- * Bit depth: 24 / 32 bit, Pixel size: 95*95(for TFT35), 70*70(for TFT28/TFT24)
+ * CUSTOM_X_GCODE is the gcode to be sent by the custom button, separator: '\n'
  */
+//
+#define CUSTOM_ENTRY_COUNT 20
+//
 #define CUSTOM_0_LABEL "Restore EEPROM"
 #define CUSTOM_0_GCODE "M501\n"
 #define CUSTOM_1_LABEL "Disable Steppers"
 #define CUSTOM_1_GCODE "M84\n"
-#define CUSTOM_2_LABEL "init SD Card"
+#define CUSTOM_2_LABEL "Init SD Card"
 #define CUSTOM_2_GCODE "M21\n"
 #define CUSTOM_3_LABEL "Release Sd Card"
 #define CUSTOM_3_GCODE "M22\n"
@@ -208,6 +207,16 @@
 #define CUSTOM_13_GCODE "M105\n"
 #define CUSTOM_14_LABEL "Custom14"
 #define CUSTOM_14_GCODE "M105\n"
+#define CUSTOM_15_LABEL "Custom15"
+#define CUSTOM_15_GCODE "M105\n"
+#define CUSTOM_16_LABEL "Custom16"
+#define CUSTOM_16_GCODE "M105\n"
+#define CUSTOM_17_LABEL "Custom17"
+#define CUSTOM_17_GCODE "M105\n"
+#define CUSTOM_18_LABEL "Custom18"
+#define CUSTOM_18_GCODE "M105\n"
+#define CUSTOM_19_LABEL "Custom19"
+#define CUSTOM_19_GCODE "M105\n"
 
 #define CANCEL_PRINT_GCODE "G28 X0 Y0\n"
 

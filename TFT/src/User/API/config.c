@@ -7,11 +7,13 @@
 #define INI_MAX_LINE 256
 #include "ini.h"
 
+#include "config.h"
 #include "includes.h"
+#include "Configuration.h"
 
 // declare global instance and populate with default values
 SYSTEM_CONFIG system_config = {
-#define X_ENTRY(SECTION, NAME, DEFAULT_VALUE) DEFAULT_VALUE ,
+#define X_ENTRY(SECTION, NAME, DEFAULT_VALUE)   DEFAULT_VALUE,
 #include "config.inc"
 #undef  X_ENTRY
         };
@@ -21,7 +23,7 @@ int config_handler(void *user, const char *section, const char *name, const char
     SYSTEM_CONFIG *config = (SYSTEM_CONFIG*) user;
     if (0) {
     }
-    #define X_ENTRY(SECTION, NAME, DEF_VAL) else if \
+    #define X_ENTRY(SECTION, NAME, DEFAULT_VALUE) else if \
     (strcmp(section, #SECTION)==0 && strcmp(name, #NAME)==0) \
     { config->CONFIG_ENTRY(SECTION,NAME) = strdup(value); }
 #include "config.inc"

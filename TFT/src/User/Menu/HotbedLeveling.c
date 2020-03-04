@@ -76,7 +76,7 @@ void menuAutoLeveling(void) {
           }
         };
 
-// single tune point
+// a tune point
 typedef struct {
     bool use;
     u16 key;
@@ -88,11 +88,7 @@ typedef struct {
 // parsed tune plane configuration
 POINT_ENTRY point_list[POINT_COUNT] =
         {
-          { 0, 0, 0, 0, 0 },
-          { 0, 0, 0, 0, 0 },
-          { 0, 0, 0, 0, 0 },
-          { 0, 0, 0, 0, 0 },
-          { 0, 0, 0, 0, 0 },
+          { 0 },
         };
 
 void moveToLevelingPoint(u8 point) {

@@ -59,8 +59,8 @@ const GUI_RECT box_error_message =
 
 const GUI_RECT box_icon_view =
         {  //
-        (LCD_WIDTH - ICON_WIDTH) / 2, (LCD_HEIGHT * 5 / 8) - (ICON_HEIGHT / 2),
-        (LCD_WIDTH + ICON_WIDTH) / 2, (LCD_HEIGHT * 5 / 8) + (ICON_HEIGHT / 2) };
+        (LCD_WIDTH - ICON_WIDTH) / 2, (LCD_HEIGHT * 3 / 4) - (ICON_HEIGHT / 2),
+        (LCD_WIDTH + ICON_WIDTH) / 2, (LCD_HEIGHT * 3 / 4) + (ICON_HEIGHT / 2) };
 
 //
 // report current action
@@ -114,8 +114,10 @@ void render_file_size(const FSIZE_t file_size) {
 // report operation failure
 //
 void render_error_message(const char *message) {
+    char text_buff[64];
+    my_sprintf((void*) text_buff, "Error: %s", message);
     GUI_ClearPrect(&box_error_message);
-    GUI_DispString(box_error_message.x0, box_error_message.y0, (u8*) message);
+    GUI_DispString(box_error_message.x0, box_error_message.y0, (u8*) text_buff);
     Delay_ms(3000);  // preview time
 }
 
@@ -136,27 +138,22 @@ u8 scanUpdateFile(void) {
     DIR dir;
     FIL file;
     u8 result = 0;
-
     if (f_opendir(&dir, TFT_BMP_DIR) == FR_OK) {
         result |= HAS_BMP;
         f_closedir(&dir);
     }
-
     if (f_opendir(&dir, TFT_FONT_DIR) == FR_OK) {
         result |= HAS_FONT;
         f_closedir(&dir);
     }
-
     if (f_open(&file, TFT_RESET_FILE, FA_OPEN_EXISTING | FA_READ) == FR_OK) {
         result |= HAS_RESET;
         f_close(&file);
     }
-
     if (f_open(&file, TFT_CONFIG_FILE, FA_OPEN_EXISTING | FA_READ) == FR_OK) {
         result |= HAS_CONFIG;
         f_close(&file);
     }
-
     return result;
 }
 
@@ -249,7 +246,7 @@ bool bmpDecode(char *file_path, const u32 base_addr) {
 void updateLogoImage(void) {
 
     GUI_Clear(BACKGROUND_COLOR);
-    render_action_title("Logo Update...");
+    render_action_title("Logo Image Update...");
 
     if (bmpDecode(TFT_BMP_DIR"/Logo.bmp", LOGO_ADDR)) {
         LOGO_ReadDisplay();
@@ -267,7 +264,7 @@ void updateIconImageSet(void) {
     u8 progress_unit = 0;
 
     GUI_Clear(BACKGROUND_COLOR);
-    render_action_title("Icon Update...");
+    render_action_title("Icon Image Update...");
 
     const int icon_count = icon_list_size();
     const char (*icon_name_list)[FILE_NAME_SIZE] = icon_file_list();
@@ -316,19 +313,19 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
     u8 progress_unit = 0;
 
     if (f_open(&file_data, file_path, FA_OPEN_EXISTING | FA_READ) != FR_OK) {
-        render_error_message("Failure: can not open file");
+        render_error_message("can not open file");
         return;
     }
 
     FSIZE_t file_size = f_size(&file_data);
     if (file_size > base_size) {
-        render_error_message("Failure: file is too big");
+        render_error_message("file is too big");
         return;
     }
 
     flash_buff = malloc(FLASH_SECTOR_SIZE);
     if (flash_buff == NULL) {
-        render_error_message("Failure: no memory for buffer");
+        render_error_message("no memory for buffer");
         return;
     }
 
@@ -339,7 +336,7 @@ void updateResource(char *file_path, const u32 base_addr, const u32 base_size, c
 
     while (!f_eof(&file_data)) {
         if (f_read(&file_data, flash_buff, FLASH_SECTOR_SIZE, &read_size) != FR_OK) {
-            render_error_message("Failure: can not read file");
+            render_error_message("can not read file");
             break;
         }
         flash_addr = base_addr + flash_offset;
@@ -382,12 +379,12 @@ void parseSystemConfig() {
 
     flash_stream.text_buffer = malloc(flash_stream.buff_size);
     if (flash_stream.text_buffer == NULL) {
-        render_error_message("Failure: no memory for buffer");
+        render_error_message("no memory for buffer");
         return;
     }
 
     if (config_parse_stream(&flash_stream) < 0) {
-        render_error_message("Failure: can not parse config.ini");
+        render_error_message("can not parse config.ini");
     }
 
     free(flash_stream.text_buffer);
@@ -406,15 +403,15 @@ void scanResetFile(void) {
 }
 
 void updateConfigFile() {
-    updateResource(TFT_CONFIG_FILE, CONFIG_FILE_ADDR, CONFIG_FILE_SIZE, "Config Update...");
+    updateResource(TFT_CONFIG_FILE, CONFIG_FILE_ADDR, CONFIG_FILE_SIZE, "Config File Update...");
 }
 
 void updateFontAscii() {
-    updateResource(TFT_FONT_DIR"/byte_ascii.fon", BYTE_ASCII_ADDR, BYTE_ASCII_SIZE, "Ascii Font Update...");
+    updateResource(TFT_ASCII_FILE, BYTE_ASCII_ADDR, BYTE_ASCII_SIZE, "Ascii Font Update...");
 }
 
 void updateFontUnicode() {
-    updateResource(TFT_FONT_DIR"/word_unicode.fon", WORD_UNICODE_ADDR, WORD_UNICODE_SIZE, "Unicode Font Update...");
+    updateResource(TFT_UNICODE_FILE, WORD_UNICODE_ADDR, WORD_UNICODE_SIZE, "Unicode Font Update...");
 }
 
 void scanUpdates(void) {
@@ -454,6 +451,11 @@ void scanUpdates(void) {
 
     parseSystemConfig();
 
-//    render_config_debug();
+#ifdef SHOW_CONFIG_DEBUG
+    render_config_debug();
+#endif
+#ifdef SHOW_ERROR_VERIFY
+    render_error_message("verify error message");
+#endif
 
 }
