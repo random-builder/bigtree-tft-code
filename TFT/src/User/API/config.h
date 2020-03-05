@@ -46,3 +46,6 @@ float config_parse_expr(const char *value);
 
 // find icon index by file name (no suffix)
 int config_find_icon(const char *icon_name);
+
+//
+int config_find_label(const char *label_name);

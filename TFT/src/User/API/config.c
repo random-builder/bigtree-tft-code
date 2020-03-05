@@ -22,7 +22,7 @@ SYSTEM_CONFIG system_config = {
         };
 
 // remember last collected config entry
-char **private_collect_entry = NULL;
+static char **private_collect_entry = NULL;
 
 // collect multi-line config entries into one
 void private_config_collect(char **entry, const char *value) {
@@ -33,14 +33,14 @@ void private_config_collect(char **entry, const char *value) {
     } else {
         // following visit, concat with existing
         char text_buff[INI_MAX_LINE];
-        my_sprintf((void*) text_buff, "%s\n%s", *entry, value);  // use \n
+        my_sprintf(text_buff, "%s\n%s", *entry, value);  // use \n
         free(*entry);  // recycle past
         *entry = strdup(text_buff);  // allocate next
     }
 }
 
 // generate config parser event reactor; see ini_handler
-int private_config_handler(const void *user, const char *section, const char *name, const char *value) {
+int private_config_handler(void *user, const char *section, const char *name, const char *value) {
     SYSTEM_CONFIG *config = (SYSTEM_CONFIG*) user;
     if (false) {
     } /* x-macro start */
@@ -166,3 +166,6 @@ int config_find_icon(const char *icon_name) {
     return icon_find_index(icon_name);
 }
 
+int config_find_label(const char *label_name) {
+    return 0;
+}

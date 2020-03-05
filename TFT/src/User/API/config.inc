@@ -168,3 +168,45 @@ X_ENTRY(custom_menu, entry_19_key, "19")
 X_ENTRY(custom_menu, entry_19_use, "yes")
 X_ENTRY(custom_menu, entry_19_label, CUSTOM_19_LABEL)
 X_ENTRY(custom_menu, entry_19_gcode, CUSTOM_19_GCODE)
+
+//
+// HeaterPreset.c
+//
+
+// [heater_preset]
+
+// preheat 1
+X_ENTRY(heater_preset, preheat_1_key, "0")
+X_ENTRY(heater_preset, preheat_1_use, "yes")
+X_ENTRY(heater_preset, preheat_1_icon, "Preheat_1")
+X_ENTRY(heater_preset, preheat_1_label, "PLA")
+X_ENTRY(heater_preset, preheat_1_hotbed, "60")
+X_ENTRY(heater_preset, preheat_1_nozzle, "200")
+// preheat 2
+X_ENTRY(heater_preset, preheat_2_key, "1")
+X_ENTRY(heater_preset, preheat_2_use, "yes")
+X_ENTRY(heater_preset, preheat_2_icon, "Preheat_2")
+X_ENTRY(heater_preset, preheat_2_label, "PET")
+X_ENTRY(heater_preset, preheat_2_hotbed, "70")
+X_ENTRY(heater_preset, preheat_2_nozzle, "250")
+// preheat 3
+X_ENTRY(heater_preset, preheat_3_key, "2")
+X_ENTRY(heater_preset, preheat_3_use, "yes")
+X_ENTRY(heater_preset, preheat_3_icon, "Preheat_3")
+X_ENTRY(heater_preset, preheat_3_label, "ABS")
+X_ENTRY(heater_preset, preheat_3_hotbed, "100")
+X_ENTRY(heater_preset, preheat_3_nozzle, "230")
+// preheat 4
+X_ENTRY(heater_preset, preheat_4_key, "4")
+X_ENTRY(heater_preset, preheat_4_use, "yes")
+X_ENTRY(heater_preset, preheat_4_icon, "Preheat_4")
+X_ENTRY(heater_preset, preheat_4_label, "NYL")
+X_ENTRY(heater_preset, preheat_4_hotbed, "100")
+X_ENTRY(heater_preset, preheat_4_nozzle, "260")
+// preheat 5
+X_ENTRY(heater_preset, preheat_5_key, "5")
+X_ENTRY(heater_preset, preheat_5_use, "yes")
+X_ENTRY(heater_preset, preheat_5_icon, "Preheat_5")
+X_ENTRY(heater_preset, preheat_5_label, "PEK")
+X_ENTRY(heater_preset, preheat_5_hotbed, "120")
+X_ENTRY(heater_preset, preheat_5_nozzle, "280")

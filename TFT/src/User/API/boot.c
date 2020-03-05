@@ -75,7 +75,7 @@ void render_action_title(const char *title) {
 //
 void render_flash_used(const u16 flash_info) {
     char text_buff[64];
-    my_sprintf((void*) text_buff, "Flash used: %d %%", flash_info);
+    my_sprintf(text_buff, "Flash used: %d %%", flash_info);
     GUI_ClearPrect(&box_flash_used);
     GUI_DispString(box_flash_used.x0, box_flash_used.y0, (u8*) text_buff);
 }
@@ -85,7 +85,7 @@ void render_flash_used(const u16 flash_info) {
 //
 void render_file_progress(const u16 progress_info) {
     char text_buff[64];
-    my_sprintf((void*) text_buff, "File progress: %d %%", progress_info);
+    my_sprintf(text_buff, "File progress: %d %%", progress_info);
     GUI_ClearPrect(&box_file_progress);
     GUI_DispString(box_file_progress.x0, box_file_progress.y0, (u8*) text_buff);
 }
@@ -95,7 +95,7 @@ void render_file_progress(const u16 progress_info) {
 //
 void render_file_path(const char *file_path) {
     char text_buff[64];
-    my_sprintf((void*) text_buff, "Path: %s", file_path);
+    my_sprintf(text_buff, "Path: %s", file_path);
     GUI_ClearPrect(&box_file_path);
     GUI_DispString(box_file_path.x0, box_file_path.y0, (u8*) text_buff);
 }
@@ -105,7 +105,7 @@ void render_file_path(const char *file_path) {
 //
 void render_file_size(const FSIZE_t file_size) {
     char text_buff[64];
-    my_sprintf((void*) text_buff, "Size: %d", file_size);
+    my_sprintf(text_buff, "Size: %d", file_size);
     GUI_ClearPrect(&box_file_size);
     GUI_DispString(box_file_size.x0, box_file_size.y0, (u8*) text_buff);
 }
@@ -115,7 +115,7 @@ void render_file_size(const FSIZE_t file_size) {
 //
 void render_error_message(const char *message) {
     char text_buff[64];
-    my_sprintf((void*) text_buff, "Error: %s", message);
+    my_sprintf(text_buff, "Error: %s", message);
     GUI_ClearPrect(&box_error_message);
     GUI_DispString(box_error_message.x0, box_error_message.y0, (u8*) text_buff);
     Delay_ms(3000);  // preview time
@@ -128,7 +128,7 @@ void render_config_debug() {
     SYSTEM_CONFIG config = config_instance();
     char text_buff[256];
 #define X_ENTRY(SECTION, NAME, DEF_VAL) \
-    my_sprintf((void*) text_buff, "%s/%s::%s", #SECTION, #NAME, config.CONFIG_ENTRY(SECTION,NAME)); \
+    my_sprintf( text_buff, "%s/%s::%s", #SECTION, #NAME, config.CONFIG_ENTRY(SECTION,NAME)); \
     render_error_message(text_buff);
 #include "config.inc"
 #undef  X_ENTRY

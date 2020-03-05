@@ -61,7 +61,7 @@ void menuAutoLeveling(void) {
 }
 
 // dynamic tune point menu
-/* vars */MENUITEMS manualLevelingItems =
+MENUITEMS manualLevelingItems =
         {
           LABEL_HAND_LEVEL,
           {
