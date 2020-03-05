@@ -136,7 +136,7 @@ void config_issue_gcode(const char *command_list) {
     free(buffer);
 }
 
-const char boolean_true_list[][8] =
+static const char boolean_true_list[][8] =
         {
           "1", "t", "y", "true", "yes", "on",
         };

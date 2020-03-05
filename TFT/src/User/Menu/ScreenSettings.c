@@ -6,12 +6,12 @@ MENUITEMS screenSettingsItems = {
 LABEL_SCREEN_SETTINGS,
 // icon                       label
  {{ICON_Rotate,               LABEL_ROTATE_UI},
-  {ICON_TP_Adjust,            LABEL_TOUCHSCREEN_ADJUST},
+  {ICON_TP_Adjust,            LABEL_SCREEN_ADJUST},
   {ICON_Language,             LABEL_LANGUAGE}, 
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Back,                 LABEL_BACK},}
 };
 
@@ -123,7 +123,7 @@ void menuScreenSettings(void)
         break;
       
       case KEY_ICON_2: 
-        infoSettings.language = (infoSettings.language + 1) % LANGUAGE_NUM;
+        infoSettings.language = (infoSettings.language + 1) % _LANG_COUNT_;
         menuDrawPage(&screenSettingsItems);
         break;
       

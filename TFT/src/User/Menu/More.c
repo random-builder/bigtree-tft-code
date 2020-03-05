@@ -33,9 +33,9 @@ LABEL_MORE,
   {ICON_RGB_Settings,         LABEL_RGB_SETTINGS},
   {ICON_Extrude,              LABEL_FILAMENT},
   {ICON_FeatureSettings,      LABEL_FEATURE_SETTINGS},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Back,                 LABEL_BACK},}
 };
 

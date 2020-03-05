@@ -7,7 +7,7 @@ SETTINGS infoSettings;
 void infoSettingsReset(void)
 {
   infoSettings.baudrate = 115200;
-  infoSettings.language = ENGLISH;
+  infoSettings.language = LANG_ENGLISH;
   infoSettings.mode = SERIAL_TSC;
   infoSettings.runout = 0;
   infoSettings.rotate_ui = 0;
@@ -71,7 +71,7 @@ LABEL_SETTINGS,
   {ICON_About,               LABEL_SCREEN_INFO},
   {ICON_Disconnect,          LABEL_DISCONNECT},
   {ICON_BaudRate,            LABEL_BAUDRATE_115200},
-  {ICON_EMPTY,          LABEL_BACKGROUND},
+  {_ICON_EMPTY_,          _LABEL_EMPTY_},
   {ICON_Back,                LABEL_BACK},}
 };
 

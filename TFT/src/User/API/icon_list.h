@@ -7,14 +7,14 @@
 // limit file name size
 #define FILE_NAME_SIZE 32
 
-// define index for icon name
+// generate index for icon name
 enum {
 #define X_IMAGE(NAME) ICON_##NAME ,
 #include "icon_list.inc"
 #undef  X_IMAGE
-    // keep last
-    ICON_PREVIEW,
-    ICON_EMPTY,
+    // keep tail
+    _ICON_VIEW_,  // marker
+    _ICON_EMPTY_,  // marker
 };
 
 // report number of icon files

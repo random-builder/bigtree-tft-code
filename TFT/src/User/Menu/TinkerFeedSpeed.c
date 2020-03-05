@@ -10,9 +10,9 @@ MENUITEMS percentageItems = {
 LABEL_PERCENTAGE_SPEED,
 // icon                       label
  {{ICON_Dec,                  LABEL_DEC},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Inc,                  LABEL_INC},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Move,                 LABEL_PERCENTAGE_SPEED},
   {ICON_Emm_5,               LABEL_5_PERCENT},
   {ICON_Normal,         LABEL_NORMAL_SPEED},

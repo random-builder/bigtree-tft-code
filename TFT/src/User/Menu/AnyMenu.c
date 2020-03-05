@@ -80,8 +80,8 @@ static bool isListview;
 
 uint8_t *labelGetAddress(const LABEL *label)
 {
-  if (label->index == LABEL_BACKGROUND) return NULL;  // No content in label
-  if (label->index < LABEL_NUM) // Index of language
+  if (label->index == _LABEL_EMPTY_) return NULL;  // No content in label
+  if (label->index < _LABEL_COUNT_) // Index of language
     return textSelect(label->index);
   else // Address of string
     return label->address;
@@ -91,7 +91,7 @@ void menuDrawItem(const ITEM *item, uint8_t positon)
 {
   uint8_t *content = labelGetAddress(&item->label);
   const GUI_RECT *rect = rect_of_key + positon;
-  if(item->icon != ICON_EMPTY)
+  if(item->icon != _ICON_EMPTY_)
     ICON_ReadDisplay(rect->x0, rect->y0, item->icon);
   else
     GUI_ClearPrect(rect);
@@ -105,7 +105,7 @@ void menuDrawItem(const ITEM *item, uint8_t positon)
 void menuDrawIconOnly(const ITEM *item, uint8_t positon)
 {
   const GUI_RECT *rect = rect_of_key + positon;
-  if(item->icon != ICON_EMPTY)
+  if(item->icon != _ICON_EMPTY_)
     ICON_ReadDisplay(rect->x0, rect->y0, item->icon);
   else
     GUI_ClearPrect(rect);
@@ -140,7 +140,7 @@ void menuRefreshListPage(void){
 }
 
 static REMINDER reminder = {{0, 0, LCD_WIDTH, TITLE_END_Y}, 0, STATUS_UNCONNECT, LABEL_UNCONNECTED};
-static REMINDER volumeReminder = {{0, 0, LCD_WIDTH, TITLE_END_Y}, 0, STATUS_IDLE, LABEL_BACKGROUND};
+static REMINDER volumeReminder = {{0, 0, LCD_WIDTH, TITLE_END_Y}, 0, STATUS_IDLE, _LABEL_EMPTY_};
 static REMINDER busySign = {{LCD_WIDTH - 5, 0, LCD_WIDTH, 5}, 0, STATUS_BUSY, LABEL_BUSY};
 
 
@@ -334,7 +334,7 @@ void itemDrawIconPress(u8 position, u8 is_press)
   if (isListview == false)
   {
     if (curMenuItems == NULL) return;
-    if (curMenuItems->items[position].icon == ICON_EMPTY) return;
+    if (curMenuItems->items[position].icon == _ICON_EMPTY_) return;
     
     const GUI_RECT *rect = rect_of_key + position;
     

@@ -15,7 +15,7 @@ LABEL_READY,
     {ICON_Heat_Fan,             LABEL_UNI_HEAT}, // 1
     {ICON_Extrude,              LABEL_FILAMENT}, // 2
     {ICON_Settings,             LABEL_SETTINGS}, // 3
-    {ICON_EMPTY,           LABEL_BACKGROUND},
+    {_ICON_EMPTY_,           _LABEL_EMPTY_},
     {ICON_Gcode,                LABEL_GCODE},    // 5
     {ICON_Custom,               LABEL_CUSTOM},   // 6
     {ICON_Back,                 LABEL_BACK}      // 7

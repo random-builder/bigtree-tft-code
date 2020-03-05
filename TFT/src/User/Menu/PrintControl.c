@@ -7,17 +7,17 @@
 
   LISTITEMS printItems = {
   // title
-  LABEL_BACKGROUND,
+  _LABEL_EMPTY_,
   // icon                 ItemType      Item Title        item value text(only for custom value)
   {
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACK,       LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},}
+    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {ICONCHAR_BACK,       LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},}
   };
 
 // File list number per page
@@ -50,7 +50,7 @@ int16_t get_Pre_Icon(char * filename)
     if(strcmp(icon_File_Name[i],filename)==0)
     return icon_Enum[i];
   }
-  return ICON_EMPTY;
+  return _ICON_EMPTY_;
 }
 
   void gocdeListDraw(void)
@@ -70,29 +70,29 @@ int16_t get_Pre_Icon(char * filename)
     {
       printItems.items[i].icon = ICONCHAR_FOLDER;
       dynamic_label[i] = infoFile.folder[i + infoFile.cur_page * NUM_PER_PAGE];
-      printItems.items[i].titlelabel.index = LABEL_DYNAMIC;
+      printItems.items[i].titlelabel.index = _LABEL_DYNAMIC_;
       menuDrawListItem(&printItems.items[i], i);
     }
     for (; (i + infoFile.cur_page * NUM_PER_PAGE < infoFile.f_num + infoFile.F_num) && (i < NUM_PER_PAGE); i++) // gcode file
     {
       printItems.items[i].icon = ICONCHAR_FILE;
       dynamic_label[i] = (infoFile.source == BOARD_SD) ? infoFile.Longfile[i + infoFile.cur_page * NUM_PER_PAGE - infoFile.F_num] : infoFile.file[i + infoFile.cur_page * NUM_PER_PAGE - infoFile.F_num];
-      printItems.items[i].titlelabel.index = LABEL_DYNAMIC;
+      printItems.items[i].titlelabel.index = _LABEL_DYNAMIC_;
       menuDrawListItem(&printItems.items[i], i);
 
       k = i + infoFile.cur_page * NUM_PER_PAGE - infoFile.F_num;
       gn = strlen(infoFile.file[k]) - 6; // -6 means ".gcode"
       gnew = malloc(gn + 10);
 
-      if(gnew && get_Pre_Icon(infoFile.file[k]) == ICON_EMPTY)
+      if(gnew && get_Pre_Icon(infoFile.file[k]) == _ICON_EMPTY_)
       {
 
         strcpy(gnew, getCurFileSource());
         strncat(gnew, infoFile.file[k], gn);
-        if(bmpDecode(strcat(gnew, "_"STRINGIFY(ICON_WIDTH)".bmp"), ICON_ADDR(ICON_PREVIEW+show_Num)))
+        if(bmpDecode(strcat(gnew, "_"STRINGIFY(ICON_WIDTH)".bmp"), ICON_ADDR(_ICON_VIEW_+show_Num)))
         {
           icon_File_Name[show_Num]=infoFile.file[k];
-          icon_Enum[show_Num]=ICON_PREVIEW+show_Num;
+          icon_Enum[show_Num]=_ICON_VIEW_+show_Num;
           show_Num++;
         }
         free(gnew);
@@ -102,7 +102,7 @@ int16_t get_Pre_Icon(char * filename)
     for (; (i < NUM_PER_PAGE); i++) //background
     {
       printItems.items[i].icon = ICONCHAR_BACKGROUND;
-      printItems.items[i].titlelabel.index = LABEL_BACKGROUND;
+      printItems.items[i].titlelabel.index = _LABEL_EMPTY_;
       menuDrawListItem(&printItems.items[i], i);
     }
       // set page up down button according to page count and current page
@@ -251,15 +251,15 @@ LABEL_PRINT,
  #ifdef U_DISK_SUPPROT
   {ICON_U_Disk,               LABEL_U_DISK},
  #else
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
  #endif
  #ifndef ONBOARD_SD_SUPPORT
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
  #endif
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Back,                 LABEL_BACK},}
 };
 

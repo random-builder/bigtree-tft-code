@@ -12,27 +12,27 @@ MENUITEMS StatusItems = {
 LABEL_READY,
 // icon                       label
  {
-  {ICON_StatusNozzle,        LABEL_BACKGROUND}, // 0
-  {ICON_StatusBed,           LABEL_BACKGROUND},
-  {ICON_StatusFan,           LABEL_BACKGROUND},
-  {ICON_StatusSpeed,         LABEL_BACKGROUND},
+  {ICON_StatusNozzle,        _LABEL_EMPTY_}, // 0
+  {ICON_StatusBed,           _LABEL_EMPTY_},
+  {ICON_StatusFan,           _LABEL_EMPTY_},
+  {ICON_StatusSpeed,         _LABEL_EMPTY_},
   {ICON_MainMenu,             LABEL_MAINMENU},   // 4
-  {ICON_EMPTY,           LABEL_BACKGROUND}, // status window
-  {ICON_EMPTY,           LABEL_BACKGROUND}, // status window
-  {ICON_EMPTY,           LABEL_BACKGROUND}, // {ICON_PRINT,                LABEL_PRINT},}
+  {_ICON_EMPTY_,           _LABEL_EMPTY_}, // status window
+  {_ICON_EMPTY_,           _LABEL_EMPTY_}, // status window
+  {_ICON_EMPTY_,           _LABEL_EMPTY_}, // {ICON_PRINT,                LABEL_PRINT},}
  }
 };
 
 const ITEM ToolItems[3] = {
 // icon                       label
-  {ICON_StatusNozzle,         LABEL_BACKGROUND},
-  {ICON_StatusBed,            LABEL_BACKGROUND},
-  {ICON_StatusFan,            LABEL_BACKGROUND},
+  {ICON_StatusNozzle,         _LABEL_EMPTY_},
+  {ICON_StatusBed,            _LABEL_EMPTY_},
+  {ICON_StatusFan,            _LABEL_EMPTY_},
 };
 const ITEM SpeedItems[2] = {
 // icon                       label
-  {ICON_StatusSpeed,         LABEL_BACKGROUND},
-  {ICON_StatusFlow,          LABEL_BACKGROUND},
+  {ICON_StatusSpeed,         _LABEL_EMPTY_},
+  {ICON_StatusFlow,          _LABEL_EMPTY_},
 };
 
 static u32 nowTime = 0;

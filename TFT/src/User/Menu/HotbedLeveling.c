@@ -65,13 +65,13 @@ MENUITEMS manualLevelingItems =
         {
           LABEL_HAND_LEVEL,
           {
-            { ICON_EMPTY, LABEL_BACKGROUND },
-            { ICON_EMPTY, LABEL_BACKGROUND },
-            { ICON_EMPTY, LABEL_BACKGROUND },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { ICON_Home, LABEL_HOME_ALL },
-            { ICON_EMPTY, LABEL_BACKGROUND },
-            { ICON_EMPTY, LABEL_BACKGROUND },
-            { ICON_EMPTY, LABEL_BACKGROUND },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { ICON_Back, LABEL_BACK },
           }
         };

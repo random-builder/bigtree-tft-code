@@ -10,9 +10,9 @@ LABEL_UNI_HEAT,
   {ICON_Heat_2,               LABEL_HEAT_CTL},
   {ICON_Fan,                  LABEL_FAN},
   {ICON_CoolDown,             LABEL_COOLDOWN},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Back,                 LABEL_BACK},}
 };
 

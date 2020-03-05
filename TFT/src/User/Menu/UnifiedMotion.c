@@ -12,8 +12,8 @@ LABEL_UNI_MOVE,
   {ICON_Leveling,             LABEL_AUTO_LEVEL},
   {ICON_ManualLevel,          LABEL_HAND_LEVEL},
   {ICON_Stop,                 LABEL_MOTION_STOP}, // 4
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Back,                 LABEL_BACK},}
 };
 

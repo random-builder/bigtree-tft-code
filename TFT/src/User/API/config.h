@@ -12,7 +12,7 @@
 // produce synthetic config entry, uses "__" separator
 #define CONFIG_ENTRY(SECTION,NAME) SECTION##__##NAME
 
-// define the config struct type, linear list of fields
+// generate config struct type: linear list of fields
 typedef struct {
 #define X_ENTRY(SECTION, NAME, DEFAULT_VALUE) char * CONFIG_ENTRY(SECTION,NAME) ;
 #include "config.inc"

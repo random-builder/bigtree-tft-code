@@ -12,9 +12,9 @@ const MENUITEMS fanItems = {
 LABEL_FAN,
 // icon                       label
  {{ICON_Dec,                  LABEL_DEC},        // 0
-  {ICON_EMPTY,           LABEL_BACKGROUND}, // 1
+  {_ICON_EMPTY_,           _LABEL_EMPTY_}, // 1
   {ICON_Inc,                  LABEL_INC},        // 2
-  {ICON_EMPTY,           LABEL_BACKGROUND}, // 3
+  {_ICON_EMPTY_,           _LABEL_EMPTY_}, // 3
   {ICON_Fan ,                 LABEL_FAN},
   {ICON_Full,       LABEL_FAN_FULL_SPEED},
   {ICON_Stop,                 LABEL_ISSUE_RESET},

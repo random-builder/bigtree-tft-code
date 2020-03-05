@@ -12,9 +12,9 @@ MENUITEMS babyStepItems = {
 //icon                        label
  {
   {ICON_Dec,                  LABEL_DEC},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Inc,                  LABEL_INC},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_EEPROMSave,          LABEL_EEPROM_SAVE},
   {ICON_Mmm_01,                LABEL_01_MM},
   {ICON_Normal,         LABEL_VALUE_ZERO},

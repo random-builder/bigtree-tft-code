@@ -459,11 +459,11 @@ void ListItem_Display(const GUI_RECT* rect, uint8_t positon, const LISTITEM * cu
         pos.x += (BYTE_HEIGHT + 1);
        }
         
-        if (curitem->titlelabel.index != LABEL_BACKGROUND)
+        if (curitem->titlelabel.index != _LABEL_EMPTY_)
         {
           textarea_width = LISTITEM_WIDTH - (pos.x + 1); //width after removing the width for icon
 
-          if (curitem->titlelabel.index == LABEL_DYNAMIC)
+          if (curitem->titlelabel.index == _LABEL_DYNAMIC_)
           {
             GUI_DispLenString(pos.x, pos.y, (u8*)dynamic_label[positon],textarea_width);
           }

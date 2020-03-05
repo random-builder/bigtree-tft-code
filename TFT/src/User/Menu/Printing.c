@@ -4,11 +4,11 @@
 //1title, ITEM_PER_PAGE item(icon + label) 
 MENUITEMS printingItems = {
 //  title
-LABEL_BACKGROUND,
+_LABEL_EMPTY_,
 // icon                       label
  {{ICON_Pause,                LABEL_PAUSE},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Stop,                 LABEL_STOP},
   {ICON_Heat,                 LABEL_HEAT_CTL},
   {ICON_Percentage,           LABEL_PERCENTAGE},
@@ -361,7 +361,7 @@ void printingDrawPage(void)
   GUI_DispString(BED_X,TIME_Y-BYTE_HEIGHT, (u8* )"Z:");
 
   i = get_Pre_Icon((char *)getCurGcodeName(infoFile.title));
-  if(i != ICON_EMPTY)
+  if(i != _ICON_EMPTY_)
   lcd_frame_display(1*ICON_WIDTH+1*SPACE_X+START_X,  0*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y,ICON_WIDTH,ICON_HEIGHT,ICON_ADDR(i));
 }
 

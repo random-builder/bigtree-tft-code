@@ -8,9 +8,9 @@ LABEL_HEAT_CTL,
 // icon                       label
  {
   {ICON_Dec,                  LABEL_DEC},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Inc,                  LABEL_INC},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Nozzle,               LABEL_NOZZLE},
   {ICON_Temp_5,             LABEL_5_DEGREE},
   {ICON_Stop,                 LABEL_ISSUE_RESET},

@@ -145,7 +145,7 @@ extern char * dynamic_label[LISTITEM_PER_PAGE];
 #define MAT_LOWWHITE    0xCE79
 #define MATT_PURPLE     0x9135
 
-//#define LABEL_DYNAMIC 12345 //just random number for reference
+//#define _LABEL_DYNAMIC_ 12345 //just random number for reference
 
 
 uint8_t * IconCharSelect(uint8_t sel);

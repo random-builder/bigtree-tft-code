@@ -11,14 +11,14 @@ LISTITEMS customItems =
           LABEL_CUSTOM,
           //  icon                 ItemType      Item Title        item value text
           {
-            { ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND },
-            { ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND },
-            { ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND },
-            { ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND },
-            { ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND },
-            { ICONCHAR_PAGEUP, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND },
-            { ICONCHAR_PAGEDOWN, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND },
-            { ICONCHAR_BACK, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND }, }
+            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { ICONCHAR_PAGEUP, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { ICONCHAR_PAGEDOWN, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { ICONCHAR_BACK, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ }, }
         };
 
 #define CUSTOM_PAGE_COUNT  (CUSTOM_ENTRY_COUNT + LISTITEM_PER_PAGE - 1) / LISTITEM_PER_PAGE
@@ -96,11 +96,11 @@ void setup_custom_menu(void) {
         CUSTOM_ENTRY custom_entry = custom_entry_list[item_index];
         if (custom_entry.use && item_index < CUSTOM_ENTRY_COUNT) {
             customItems.items[line_index].icon = ICONCHAR_CODE;
-            customItems.items[line_index].titlelabel.index = LABEL_DYNAMIC;
+            customItems.items[line_index].titlelabel.index = _LABEL_DYNAMIC_;
             dynamic_label[line_index] = custom_entry.label;
         } else {
             customItems.items[line_index].icon = ICONCHAR_BACKGROUND;
-            customItems.items[line_index].titlelabel.index = LABEL_BACKGROUND;
+            customItems.items[line_index].titlelabel.index = _LABEL_EMPTY_;
             dynamic_label[line_index] = "";
         }
     }
@@ -176,8 +176,8 @@ MENUITEMS RGBItems =
             { ICON_RGB_Blue, LABEL_BLUE },
             { ICON_RGB_White, LABEL_WHITE },
             { ICON_RGB_Off, LABEL_OFF },
-            { ICON_EMPTY, LABEL_BACKGROUND },
-            { ICON_EMPTY, LABEL_BACKGROUND },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { ICON_Back, LABEL_BACK }, }
         };
 
@@ -233,9 +233,9 @@ MENUITEMS machineSettingsItems =
             { ICON_RGB_Settings, LABEL_RGB_SETTINGS },
             { ICON_Gcode, LABEL_GCODE },
             { ICON_ShutDown, LABEL_SHUT_DOWN },
-            { ICON_parametersetting, LABEL_SETTING_PARAMETER },
-            { ICON_EMPTY, LABEL_BACKGROUND },
-            { ICON_EMPTY, LABEL_BACKGROUND },
+            { ICON_parametersetting, LABEL_PARAMETER_SETTING },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { ICON_Back, LABEL_BACK }, }
         };
 

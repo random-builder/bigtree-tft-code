@@ -12,7 +12,7 @@ LABEL_FILAMENT,
 // icon                       label
  {
   {ICON_Unload,               LABEL_UNLOAD},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Load,                 LABEL_LOAD},
   {ICON_Heat,                 LABEL_PREHEAT},
   {ICON_Nozzle,               LABEL_NOZZLE},

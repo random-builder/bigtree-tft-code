@@ -13,8 +13,8 @@ LABEL_HOME,
   {ICON_Home_Z,               LABEL_Z_HOME},
 
   {ICON_Dec_Z,                LABEL_LOWER_BED}, // 4
-  {ICON_EMPTY,           LABEL_BACKGROUND},
-  {ICON_EMPTY,           LABEL_BACKGROUND},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Back,                 LABEL_BACK},}
 };
 

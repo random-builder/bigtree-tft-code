@@ -12,12 +12,12 @@ MENUITEMS preheatItems =
           LABEL_PREHEAT,
           // icon             label
           {
-            { ICON_EMPTY, LABEL_BACKGROUND },
-            { ICON_EMPTY, LABEL_BACKGROUND },
-            { ICON_EMPTY, LABEL_BACKGROUND },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { ICON_Nozzle, LABEL_NOZZLE },
-            { ICON_EMPTY, LABEL_BACKGROUND },
-            { ICON_EMPTY, LABEL_BACKGROUND },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
+            { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { ICON_Stop, LABEL_ISSUE_RESET },
             { ICON_Back, LABEL_BACK },
           }

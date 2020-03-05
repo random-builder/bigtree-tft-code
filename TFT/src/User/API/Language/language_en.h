@@ -1,8 +1,8 @@
 #pragma once
 
 #define EN_LANGUAGE             "English"
-#define EN_HEAT                 "Heater"
-#define EN_MOVE                 "Walking"
+#define EN_HEAT                 "Heat"
+#define EN_MOVE                 "Move"
 #define EN_HOME                 "Homing"
 #define EN_PRINT                "Print"
 #define EN_EXTRUDE              "Filament"
@@ -49,7 +49,7 @@
 #define EN_FAN_FULL_SPEED       "Full"
 #define EN_FAN_HALF_SPEED       "Half"
 #define EN_ROTATE_UI            "Rotate UI"
-#define EN_TOUCHSCREEN_ADJUST   "TSC Adjust"
+#define EN_SCREEN_ADJUST        "TSC Adjust"
 #define EN_MORE                 "More"
 #define EN_SCREEN_INFO          "Info"
 #define EN_WHITE                "White"
@@ -151,7 +151,7 @@
 #define EN_MOVE_SPEED           "Move speed(X Y Z)"
 #define EN_KNOB_LED             "Rotary Knob LED"
 #define EN_M0_PAUSE             "Paused by M0 command"
-//
+
 #define EN_POINT_5              "Frnt/Cntr"
 #define EN_HOME_ALL             "X-Y-Z"
 #define EN_MOTION_STOP          "Drive Off"
@@ -162,3 +162,7 @@
 #define EN_LOWER_BED            "Bed Down"
 #define EN_AUTO_PROBE           "Probe"
 #define EN_ISSUE_RESET          "Reset"
+#define EN_FILAMENT             "Filament"
+#define EN_UNI_HEAT             "Heater"
+#define EN_UNI_MOVE             "Walking"
+#define EN_HEAT_CTL             "Heating"
