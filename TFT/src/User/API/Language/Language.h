@@ -37,4 +37,4 @@ enum {
     _LABEL_DYNAMIC_,  // marker
 };
 
-u8* textSelect(u8 sel);
+u8* language_text(const u8 label_index);

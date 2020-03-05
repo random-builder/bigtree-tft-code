@@ -141,7 +141,7 @@ void menuPrintFromSource(void)
   u8 update=0;
 
   GUI_Clear(BACKGROUND_COLOR);
-  GUI_DispStringInRect(0, 0, LCD_WIDTH, LCD_HEIGHT, textSelect(LABEL_LOADING));
+  GUI_DispStringInRect(0, 0, LCD_WIDTH, LCD_HEIGHT, language_text(LABEL_LOADING));
 
   if (mountFS() == true && scanPrintFiles() == true)
   {
@@ -150,7 +150,7 @@ void menuPrintFromSource(void)
   }
   else
   {
-    GUI_DispStringInRect(0, 0, LCD_WIDTH, LCD_HEIGHT, textSelect(labelVolumeError[infoFile.source]));
+    GUI_DispStringInRect(0, 0, LCD_WIDTH, LCD_HEIGHT, language_text(labelVolumeError[infoFile.source]));
     Delay_ms(1000);
     infoMenu.cur--;
   }

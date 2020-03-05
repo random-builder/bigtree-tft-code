@@ -41,7 +41,7 @@ typedef struct {
     bool use;
     u16 key;
     u16 icon;
-    u16 label;
+    char *label;
     int hotbed;
     int nozzle;
 } PRESET_ENTRY;
@@ -59,7 +59,7 @@ static TOOL_PREHEAT current_heater_tool = PREHEAT_NOZZLE0;
     preset_list[NUM-1].use = config_parse_bool(config.heater_preset__preheat_##NUM##_use); \
     preset_list[NUM-1].key = config_parse_int(config.heater_preset__preheat_##NUM##_key); \
     preset_list[NUM-1].icon = config_find_icon(config.heater_preset__preheat_##NUM##_icon); \
-    preset_list[NUM-1].label = config_find_label(config.heater_preset__preheat_##NUM##_label); \
+    preset_list[NUM-1].label = config.heater_preset__preheat_##NUM##_label; \
     preset_list[NUM-1].hotbed = (int) config_parse_expr(config.heater_preset__preheat_##NUM##_hotbed); \
     preset_list[NUM-1].nozzle = (int) config_parse_expr(config.heater_preset__preheat_##NUM##_nozzle); \
 // PRESET_PARSE
@@ -76,7 +76,7 @@ void parse_preset_data() {
 
 // activate configured point icons
 void setup_preset_menu() {
-    for (int index = 0; index < POINT_COUNT; index++) {
+    for (int index = 0; index < PRESET_COUNT; index++) {
         PRESET_ENTRY preset = preset_list[index];
         if (preset.key == KEY_ICON_3) {
             continue;  // protect Tool
@@ -88,14 +88,16 @@ void setup_preset_menu() {
             continue;  // protect Back
         }
         if (preset.use) {
-            preheatItems.items[preset.key].icon = preset.icon;
+            ITEM *menu_item = &(preheatItems.items[preset.key]);
+            menu_item->icon = preset.icon;
+            menu_item->label.address = (uint8_t*) preset.label;
         }
     }
 }
 
 // perform temperature control only for enabled key
 void perform_preset_apply(const KEY_VALUES key_num) {
-    for (int index = 0; index < POINT_COUNT; index++) {
+    for (int index = 0; index < PRESET_COUNT; index++) {
         PRESET_ENTRY preset = preset_list[index];
         if (preset.use && preset.key == key_num) {
             switch (current_heater_tool) {

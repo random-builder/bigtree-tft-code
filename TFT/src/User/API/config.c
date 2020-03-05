@@ -165,7 +165,3 @@ float config_parse_expr(const char *value) {
 int config_find_icon(const char *icon_name) {
     return icon_find_index(icon_name);
 }
-
-int config_find_label(const char *label_name) {
-    return 0;
-}

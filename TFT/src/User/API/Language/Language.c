@@ -103,7 +103,7 @@ const char *const du_pack[_LABEL_COUNT_] = {
 #undef  X_WORD
         };
 
-u8* textSelect(const u8 label_index) {
+u8* language_text(const u8 label_index) {
     switch (infoSettings.language) {
     case LANG_ENGLISH:
         return (u8*) en_pack[label_index];

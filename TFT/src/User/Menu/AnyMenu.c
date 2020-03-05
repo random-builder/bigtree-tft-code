@@ -80,11 +80,13 @@ static bool isListview;
 
 uint8_t *labelGetAddress(const LABEL *label)
 {
-  if (label->index == _LABEL_EMPTY_) return NULL;  // No content in label
-  if (label->index < _LABEL_COUNT_) // Index of language
-    return textSelect(label->index);
-  else // Address of string
-    return label->address;
+  if (label->index == _LABEL_EMPTY_) {
+      return NULL;  // No content in label
+  } else if (label->index < _LABEL_COUNT_) {
+      return language_text(label->index); // Index of language
+  } else {
+      return label->address; // Address of non-language string
+  }
 }
 
 void menuDrawItem(const ITEM *item, uint8_t positon)
@@ -148,7 +150,7 @@ void reminderMessage(int16_t inf, SYS_STATUS status)
 {
   reminder.inf = inf;
   GUI_SetColor(REMINDER_FONT_COLOR);
-  GUI_DispStringInPrect(&reminder.rect, textSelect(reminder.inf));
+  GUI_DispStringInPrect(&reminder.rect, language_text(reminder.inf));
   GUI_SetColor(FONT_COLOR);
   reminder.status = status;
   reminder.time = OS_GetTime();
@@ -158,7 +160,7 @@ void volumeReminderMessage(int16_t inf, SYS_STATUS status)
 { 
   volumeReminder.inf = inf;
   GUI_SetColor(VOLUME_REMINDER_FONT_COLOR);
-  GUI_DispStringInPrect(&volumeReminder.rect, textSelect(volumeReminder.inf));
+  GUI_DispStringInPrect(&volumeReminder.rect, language_text(volumeReminder.inf));
   GUI_SetColor(FONT_COLOR);
   volumeReminder.status = status;
   volumeReminder.time = OS_GetTime();
@@ -263,14 +265,14 @@ void menuDrawTitle(const uint8_t *content) //(const MENUITEMS * menuItems)
   show_GlobalInfo();
   if(reminder.status == STATUS_IDLE) return;
   GUI_SetColor(RED);
-  GUI_DispStringInPrect(&reminder.rect, textSelect(reminder.inf));
+  GUI_DispStringInPrect(&reminder.rect, language_text(reminder.inf));
   GUI_SetColor(FONT_COLOR);
 }
 
 //Draw the entire interface
 void menuDrawPage(const MENUITEMS *menuItems)
 {
-  u8 i = 0;
+  u8 item_index = 0;
   isListview = false;
   curMenuItems = menuItems;
   TSC_ReDrawIcon = itemDrawIconPress;
@@ -278,9 +280,9 @@ void menuDrawPage(const MENUITEMS *menuItems)
   //GUI_Clear(BLACK);
   menuClearGaps(); //Use this function instead of GUI_Clear to eliminate the splash screen when clearing the screen.
   menuDrawTitle(labelGetAddress(&menuItems->title));
-  for (i = 0; i < ITEM_PER_PAGE; i++)
+  for (item_index = 0; item_index < ITEM_PER_PAGE; item_index++)
   {
-    menuDrawItem(&menuItems->items[i], i);
+    menuDrawItem(&menuItems->items[item_index], item_index);
     #ifdef RAPID_SERIAL_COMM
       #ifndef CLEAN_MODE_SWITCHING_SUPPORT
         if(isPrinting() == true)

@@ -216,7 +216,7 @@ void menuTerminal(void)
   u16 key_num = IDLE_TOUCH;
   
   GUI_ClearRect(0, 0, LCD_WIDTH, CURSOR_START_Y);
-  GUI_DispStringInRect(0, 0, LCD_WIDTH, CURSOR_START_Y, textSelect(LABEL_TOUCH_TO_EXIT));  
+  GUI_DispStringInRect(0, 0, LCD_WIDTH, CURSOR_START_Y, language_text(LABEL_TOUCH_TO_EXIT));  
   GUI_SetColor(BLACK);
   GUI_SetBkColor(GRAY);
   GUI_ClearRect(CURSOR_START_X, CURSOR_START_Y, CURSOR_END_X, CURSOR_END_Y);

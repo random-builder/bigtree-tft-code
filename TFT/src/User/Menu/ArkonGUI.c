@@ -318,10 +318,10 @@ void menuStatus(void)
   {
     if(infoHost.connected != connected_status){
       if(infoHost.connected == false){
-        statusScreen_setMsg(textSelect(LABEL_SCREEN_INFO), textSelect(LABEL_UNCONNECTED));
+        statusScreen_setMsg(language_text(LABEL_SCREEN_INFO), language_text(LABEL_UNCONNECTED));
       }
       else{
-        statusScreen_setMsg(textSelect(LABEL_SCREEN_INFO), textSelect(LABEL_READY));
+        statusScreen_setMsg(language_text(LABEL_SCREEN_INFO), language_text(LABEL_READY));
       }
       connected_status = infoHost.connected;
     }

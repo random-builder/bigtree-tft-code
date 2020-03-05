@@ -140,7 +140,7 @@ void loopFILRunoutDetect(void)
   
   if (setPrintPause(true,false))
   {
-    popupReminder(textSelect(LABEL_WARNING), textSelect(LABEL_FILAMENT_RUNOUT));
+    popupReminder(language_text(LABEL_WARNING), language_text(LABEL_FILAMENT_RUNOUT));
   }
 }
 

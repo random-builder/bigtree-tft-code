@@ -242,7 +242,7 @@ bool setPrintPause(bool is_pause, bool is_m0pause)
         //if pause was triggered through M0/M1 then break
       if(is_m0pause == true) {
         setM0Pause(is_m0pause);
-        popupReminder(textSelect(LABEL_PAUSE), textSelect(LABEL_M0_PAUSE));
+        popupReminder(language_text(LABEL_PAUSE), language_text(LABEL_M0_PAUSE));
         break;
         }
       
@@ -523,7 +523,7 @@ void menuStopPrinting(void)
 {
   u16 key_num = IDLE_TOUCH;
 
-  popupDrawPage(bottomDoubleBtn, textSelect(LABEL_WARNING), textSelect(LABEL_STOP_PRINT), textSelect(LABEL_CONFIRM), textSelect(LABEL_CANNEL));
+  popupDrawPage(bottomDoubleBtn, language_text(LABEL_WARNING), language_text(LABEL_STOP_PRINT), language_text(LABEL_CONFIRM), language_text(LABEL_CANNEL));
  
   while(infoMenu.menu[infoMenu.cur] == menuStopPrinting)
   {
@@ -550,7 +550,7 @@ void menuShutDown(void)
   bool tempIsLower;
   u16 key_num = IDLE_TOUCH;
 
-  popupDrawPage(bottomDoubleBtn, textSelect(LABEL_SHUT_DOWN), textSelect(LABEL_WAIT_TEMP_SHUT_DOWN), textSelect(LABEL_FORCE_SHUT_DOWN), textSelect(LABEL_CANNEL));
+  popupDrawPage(bottomDoubleBtn, language_text(LABEL_SHUT_DOWN), language_text(LABEL_WAIT_TEMP_SHUT_DOWN), language_text(LABEL_FORCE_SHUT_DOWN), language_text(LABEL_CANNEL));
  
   for(u8 i = 0; i < FAN_NUM; i++)
   {
@@ -583,7 +583,7 @@ void menuShutDown(void)
         }
         mustStoreCmd("M81\n");
         infoMenu.cur--;
-        popupReminder(textSelect(LABEL_SHUT_DOWN), textSelect(LABEL_SHUTTING_DOWN));
+        popupReminder(language_text(LABEL_SHUT_DOWN), language_text(LABEL_SHUTTING_DOWN));
     }
     loopProcess();
   }

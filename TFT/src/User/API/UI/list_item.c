@@ -469,7 +469,7 @@ void ListItem_Display(const GUI_RECT* rect, uint8_t positon, const LISTITEM * cu
           }
           else
           {
-            GUI_DispLenString(pos.x, pos.y, textSelect(curitem->titlelabel.index),textarea_width);
+            GUI_DispLenString(pos.x, pos.y, language_text(curitem->titlelabel.index),textarea_width);
           }
         }
       DrawListItemPress(rect, pressed);
@@ -480,7 +480,7 @@ void ListItem_Display(const GUI_RECT* rect, uint8_t positon, const LISTITEM * cu
       GUI_ClearRect(rect->x0, rect->y0, rect->x1 - wy, rect->y1);                     // clear only tect area
       textarea_width = LISTITEM_WIDTH - (pos.x + wy);                                 //width after removing the width for icon
       
-      GUI_DispLenString(pos.x , pos.y, textSelect(curitem->titlelabel.index),textarea_width);
+      GUI_DispLenString(pos.x , pos.y, language_text(curitem->titlelabel.index),textarea_width);
       pos = getTextStartPoint(rect->x0, rect->y0, rect->x1,rect->y1,RIGHT_CENTER,GET_ICONCHAR[ICONCHAR_TOGGLE_BODY]);
       GUI_ClearRect(rect->x1-wy,rect->y0,rect->x1,rect->y1);
       ListItem_DisplayToggle(pos.x, pos.y, curitem->icon);
@@ -497,7 +497,7 @@ void ListItem_Display(const GUI_RECT* rect, uint8_t positon, const LISTITEM * cu
        }
         textarea_width = LISTITEM_WIDTH - (pos.x + BYTE_HEIGHT + 2);  //width after removing the width for icon
 
-        GUI_DispLenString(pos.x, pos.y, textSelect(curitem->titlelabel.index),textarea_width);
+        GUI_DispLenString(pos.x, pos.y, language_text(curitem->titlelabel.index),textarea_width);
 
         pos = getTextStartPoint(rect->x0, rect->y0, rect->x1,rect->y1,RIGHT_CENTER,GET_ICONCHAR[ICONCHAR_DETAIL]);
         GUI_SetColor(ICON_COLOR[ICONCHAR_DETAIL]);
@@ -512,9 +512,9 @@ void ListItem_Display(const GUI_RECT* rect, uint8_t positon, const LISTITEM * cu
         ListDrawIcon(rect,LEFT_CENTER,curitem->icon,BLACK);
         pos.x += (BYTE_HEIGHT + 3);
       }
-      GUI_DispString(pos.x, pos.y, textSelect(curitem->titlelabel.index));
+      GUI_DispString(pos.x, pos.y, language_text(curitem->titlelabel.index));
         
-      ListItem_DisplayCustomValue(rect,textSelect(curitem->valueLabel.index));
+      ListItem_DisplayCustomValue(rect,language_text(curitem->valueLabel.index));
 
       DrawListItemPress(rect,pressed);
       break;

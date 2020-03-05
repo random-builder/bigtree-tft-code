@@ -65,16 +65,16 @@ u8 calibrationEnsure(u16 x,u16 y)
 
   if(lcd_x < x+TS_ERR_RANGE && lcd_x>x-TS_ERR_RANGE  && lcd_y > y-TS_ERR_RANGE && lcd_y<y+TS_ERR_RANGE)
   {		
-    x_offset=(LCD_WIDTH - GUI_StrPixelWidth(textSelect(LABEL_ADJUST_OK))) >> 1;
-    GUI_DispString(x_offset, LCD_HEIGHT-40, textSelect(LABEL_ADJUST_OK));
+    x_offset=(LCD_WIDTH - GUI_StrPixelWidth(language_text(LABEL_ADJUST_OK))) >> 1;
+    GUI_DispString(x_offset, LCD_HEIGHT-40, language_text(LABEL_ADJUST_OK));
     Delay_ms(1000);
   }
   else
   {
     while(isPress());
     GUI_SetColor(RED);
-    x_offset=(LCD_WIDTH - GUI_StrPixelWidth(textSelect(LABEL_ADJUST_FAILED))) >> 1;
-    GUI_DispString(x_offset, LCD_HEIGHT-40, textSelect(LABEL_ADJUST_FAILED));
+    x_offset=(LCD_WIDTH - GUI_StrPixelWidth(language_text(LABEL_ADJUST_FAILED))) >> 1;
+    GUI_DispString(x_offset, LCD_HEIGHT-40, language_text(LABEL_ADJUST_FAILED));
     GUI_DispDec(0,0,lcd_x,3,0);
     GUI_DispDec(0,20,lcd_y,3,0);
     Delay_ms(1000);
@@ -97,10 +97,10 @@ void TSC_Calibration(void)
     GUI_Clear(WHITE);
     GUI_SetColor(BLACK);
     GUI_SetBkColor(WHITE);
-    x_offset=(LCD_WIDTH - GUI_StrPixelWidth(textSelect(LABEL_ADJUST_TITLE))) >> 1;
-    GUI_DispString(x_offset, 5, textSelect(LABEL_ADJUST_TITLE));
-    x_offset=(LCD_WIDTH - GUI_StrPixelWidth(textSelect(LABEL_ADJUST_INFO))) >> 1;
-    GUI_DispString(x_offset, 25, textSelect(LABEL_ADJUST_INFO));
+    x_offset=(LCD_WIDTH - GUI_StrPixelWidth(language_text(LABEL_ADJUST_TITLE))) >> 1;
+    GUI_DispString(x_offset, 5, language_text(LABEL_ADJUST_TITLE));
+    x_offset=(LCD_WIDTH - GUI_StrPixelWidth(language_text(LABEL_ADJUST_INFO))) >> 1;
+    GUI_DispString(x_offset, 25, language_text(LABEL_ADJUST_INFO));
     GUI_SetColor(RED);
     for(tp_num = 0;tp_num<3;tp_num++)
     {
