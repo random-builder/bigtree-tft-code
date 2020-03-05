@@ -34,9 +34,15 @@ int config_parse_stream(FLASH_STREAM *flash_stream);
 // expose global config
 SYSTEM_CONFIG config_instance();
 
-// send g-code commands to the printer
+// tokenize and send g-code commands to the printer
 void config_issue_gcode(const char *command_text);
 
+// scalar value parser
 bool config_parse_bool(const char *value);
 int config_parse_int(const char *value);
+
+// math expression parser
+float config_parse_expr(const char *value);
+
+// find icon index by file name (no suffix)
 int config_find_icon(const char *icon_name);

@@ -2,10 +2,13 @@
 // config file support
 //
 
-// configure parser
+// config parser
 #define INI_USE_STACK 0
 #define INI_MAX_LINE 256
 #include "ini.h"
+
+// expression calculator
+#include "tinyexpr.h"
 
 #include "config.h"
 #include "includes.h"
@@ -18,25 +21,44 @@ SYSTEM_CONFIG system_config = {
 #undef  X_ENTRY
         };
 
-// generate config parser event reactor; see ini_handler
-int config_handler(void *user, const char *section, const char *name, const char *value) {
-    SYSTEM_CONFIG *config = (SYSTEM_CONFIG*) user;
-    if (0) {
+// remember last collected config entry
+char **private_collect_entry = NULL;
+
+// collect multi-line config entries into one
+void private_config_collect(char **entry, const char *value) {
+    if (entry != private_collect_entry) {
+        // first visit, overwrite default
+        private_collect_entry = entry;  // memento
+        *entry = strdup(value);  // allocate first
+    } else {
+        // following visit, concat with existing
+        char text_buff[INI_MAX_LINE];
+        my_sprintf((void*) text_buff, "%s\n%s", *entry, value);  // use \n
+        free(*entry);  // recycle past
+        *entry = strdup(text_buff);  // allocate next
     }
-    #define X_ENTRY(SECTION, NAME, DEFAULT_VALUE) else if \
-    (strcmp(section, #SECTION)==0 && strcmp(name, #NAME)==0) \
-    { config->CONFIG_ENTRY(SECTION,NAME) = strdup(value); }
+}
+
+// generate config parser event reactor; see ini_handler
+int private_config_handler(const void *user, const char *section, const char *name, const char *value) {
+    SYSTEM_CONFIG *config = (SYSTEM_CONFIG*) user;
+    if (false) {
+    } /* x-macro start */
+#define X_ENTRY(SECTION, NAME, DEFAULT_VALUE)   \
+    else if (strcmp(section, #SECTION)==0 && strcmp(name, #NAME)==0) {  \
+        private_config_collect(&(config->CONFIG_ENTRY(SECTION,NAME)), value); \
+        return 1; /*success: found secion/name */ \
+    } \
+      /* x-macro finish */
 #include "config.inc"
 #undef  X_ENTRY
     else {
-        return 0;  // failure: wrong section/name
+        return 0; /* failure: missing section/name */
     }
-    return 1;  // success: match was found
 }
 
 // fgets-style flash stream buffer reader; see ini_reader
-// https://en.wikibooks.org/wiki/C_Programming/stdio.h/fgets
-char* config_reader(char *string, int length, void *stream) {
+char* private_config_reader(char *string, int length, void *stream) {
     FLASH_STREAM *flask = (FLASH_STREAM*) stream;
     char *buffer = string;  // mutable pointer
     char letter;  // current character
@@ -93,9 +115,9 @@ char* config_reader(char *string, int length, void *stream) {
 
 }
 
-// parse flash-stored config.ini into memory struct
+// parse flash-stored config.ini file into memory struct
 int config_parse_stream(FLASH_STREAM *flash_stream) {
-    return ini_parse_stream(config_reader, flash_stream, config_handler, &system_config);
+    return ini_parse_stream(private_config_reader, flash_stream, private_config_handler, &system_config);
 }
 
 // expose global config
@@ -103,13 +125,15 @@ SYSTEM_CONFIG config_instance() {
     return system_config;
 }
 
-// send g-code commands to the printer
+// tokenize and send g-code commands to the printer
 void config_issue_gcode(const char *command_list) {
-//    char *command = strtok(command_list, "\n");
-//    while (command != NULL) {
-//        storeCmd("%s\n", command);
-//        command = strtok(NULL, "\n");
-//    }
+    char *buffer = strdup(command_list);  // mutable
+    char *command = strtok(buffer, "\n");
+    while (command != NULL) {
+        storeCmd("%s\n", command);
+        command = strtok(NULL, "\n");
+    }
+    free(buffer);
 }
 
 const char boolean_true_list[][8] =
@@ -130,6 +154,15 @@ int config_parse_int(const char *value) {
     return atoi(value);
 }
 
+float config_parse_expr(const char *value) {
+    int error = 0;
+    float result = te_interp(value, &error);
+    // TODO error trace
+    return result;
+}
+
+// find icon index by name (no suffix)
 int config_find_icon(const char *icon_name) {
     return icon_find_index(icon_name);
 }
+

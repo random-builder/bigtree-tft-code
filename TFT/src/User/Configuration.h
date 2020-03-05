@@ -4,6 +4,8 @@
 
 #pragma once
 
+//#define SHOW_CONFIG_DEBUG
+
 //===========================================================================
 //=========================== Marlin Mode Settings ===========================
 //===========================================================================
@@ -33,16 +35,13 @@
  * Gives the ability to connect Octoprint over UART to the TFT UART/serial 
  * expansion port and have it work seamlessly no matter which mode the TFT is in. 
  * Only for TFT24 V1.1, TFT35 V3.0 or TFT28 V3.0
-*/ 
+ */
 //#define CLEAN_MODE_SWITCHING_SUPPORT  // Enable CLEAN MODE SWITCHING SUPPORT
-
 //===========================================================================
 //============================ TFT Mode Settings ============================
 //===========================================================================
-
 // Show BTT bootscreen when starting up
 //#define SHOW_LOGO
-
 // TFT mode color
 #define TITLE_BACKGROUND_COLOR      BLACK  // Title background color // 0xD928
 #define BACKGROUND_COLOR            BLACK  // Background color // 0x0A29
@@ -88,6 +87,7 @@
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
 #define X_MAX_POS 235
+
 #define Y_MAX_POS 235
 #define Z_MAX_POS 250
 
@@ -109,19 +109,38 @@
 #define AUTO_SAVE_LOAD_LEVELING_VALUE
 #endif
 
-// Move to four corner points to Leveling manually (Point 1, Point 2, Point 3, Point 4)
-#define LEVELING_POINT_1_X         (X_MIN_POS + 20)
-#define LEVELING_POINT_1_Y         (Y_MIN_POS + 20)
-#define LEVELING_POINT_2_X         (X_MAX_POS - 20)
-#define LEVELING_POINT_2_Y         (Y_MIN_POS + 20)
-#define LEVELING_POINT_3_X         (X_MAX_POS - 20)
-#define LEVELING_POINT_3_Y         (Y_MAX_POS - 20)
-#define LEVELING_POINT_4_X         (X_MIN_POS + 20)
-#define LEVELING_POINT_4_Y         (Y_MAX_POS - 20)
-#define LEVELING_POINT_Z           0.2f  // Z-axis position when nozzle stays for leveling
-#define LEVELING_POINT_MOVE_Z      10.0f // Z-axis position when nozzle move to next point
-#define LEVELING_POINT_XY_FEEDRATE 6000  // (mm/min) X and Y axes move feedrate
-#define LEVELING_POINT_Z_FEEDRATE  600   // (mm/min) Z axis move feedrate
+//
+// Tuning points for manual leveling (defaults for config.ini)
+//
+
+#define LEVELING_MARGIN            10
+
+// front/left
+#define LEVELING_POINT_1_X         (X_MIN_POS + LEVELING_MARGIN)
+#define LEVELING_POINT_1_Y         (Y_MIN_POS + LEVELING_MARGIN)
+#define LEVELING_POINT_1_icon      "Point_1"
+// front/rite
+#define LEVELING_POINT_2_X         (X_MAX_POS - LEVELING_MARGIN)
+#define LEVELING_POINT_2_Y         (Y_MIN_POS + LEVELING_MARGIN)
+#define LEVELING_POINT_2_icon      "Point_2"
+// rear/left
+#define LEVELING_POINT_3_X         (X_MAX_POS - LEVELING_MARGIN)
+#define LEVELING_POINT_3_Y         (Y_MAX_POS - LEVELING_MARGIN)
+#define LEVELING_POINT_3_icon      "Point_3"
+// rear/rite
+#define LEVELING_POINT_4_X         (X_MIN_POS + LEVELING_MARGIN)
+#define LEVELING_POINT_4_Y         (Y_MAX_POS - LEVELING_MARGIN)
+#define LEVELING_POINT_4_icon      "Point_4"
+// front/center
+#define LEVELING_POINT_5_X         (X_MIN_POS + X_MAX_POS)/2
+#define LEVELING_POINT_5_Y         (Y_MIN_POS + LEVELING_MARGIN)
+#define LEVELING_POINT_5_icon      "Point_5"
+
+#define LEVELING_POINT_Z_UPPER      0.2   // Z-axis position when nozzle stays for leveling
+#define LEVELING_POINT_Z_LOWER      9.0   // Z-axis position when nozzle move to next point
+
+#define LEVELING_FEEDRATE_XY        6000  // (mm/min) X and Y axes move feedrate
+#define LEVELING_FEEDRATE_ZZ        600   // (mm/min) Z axis move feedrate
 
 // Power Supply
 #define PS_ON_ACTIVE_HIGH    true   // Set 'false' for ATX (1), 'true' for X-Box (2)
@@ -179,14 +198,11 @@
 #define EXTRUDE_STEPS  100.0f
 
 /**
-<<<<<<< HEAD
- * CUSTOM GCODE COMMANDS (defaults for config.ini)
-=======
  * Rapid Serial Communication:More frequent Serial communicaiton while printing.
  * The controller will send and parse  gcodes more frequently  while drawing on 
  * screen to prevent printer idling and stuttering  due to empty printer buffer.
  * Note: this might make the  graphics slow when switching menus while printing.
-*/
+ */
 #define RAPID_SERIAL_COMM
 
 /**
@@ -195,10 +211,8 @@
  */
 #define CUSTOM_GCODE_LIST_MODE
 
-/** CUSTOM GCODE COMMANDS
- * Support up to 7 custom gcodes in Icon mode and 15 in List Mode.
- * Uncomment CUSTOM_X_LABEL and CUSTOM_X_GCODE to enable custom gcode.
->>>>>>> 920e06b... Improved UART handling (#5)
+/**
+ * CUSTOM GCODE COMMANDS (defaults for config.ini)
  * CUSTOM_X_LABEL is the name of the custom button, CUSTOM_X_GCODE
  * CUSTOM_X_GCODE is the gcode to be sent by the custom button, separator: '\n'
  */

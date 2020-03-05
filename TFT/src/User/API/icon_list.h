@@ -9,7 +9,7 @@
 
 // define index for icon name
 enum {
-#define X_IMAGE(NAME) ICON_##NAME,
+#define X_IMAGE(NAME) ICON_##NAME ,
 #include "icon_list.inc"
 #undef  X_IMAGE
     // keep last
@@ -25,4 +25,3 @@ const char (* icon_file_list())[FILE_NAME_SIZE];
 
 // find icon index by name (no suffix)
 int icon_find_index(const char *icon_name);
-

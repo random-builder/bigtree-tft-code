@@ -9,6 +9,7 @@ int MODEselect;
 const char *const ignoreEcho[] = {
   "Now fresh file:",
   "Probe Z Offset:",
+  "Active Extruder:",
 };
 
 bool portSeen[_USART_CNT] = {false, false, false, false, false, false};

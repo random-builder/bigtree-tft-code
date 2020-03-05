@@ -6,53 +6,67 @@
 //
 // usage:
 // https://en.wikipedia.org/wiki/X_Macro
+//
+// note: config values can be only strings
+//
 
 //
 // HotbedLeveling.c
 //
 
+// [leveling_auto]
+
 X_ENTRY(leveling_auto, command_probe_drop, "M280 P0 S10\n")
 X_ENTRY(leveling_auto, command_probe_stow, "M280 P0 S90\n")
 X_ENTRY(leveling_auto, command_probe_test, "M280 P0 S120\n")
+X_ENTRY(leveling_auto, command_probe_reset, "M280 P0 S160\n")
 X_ENTRY(leveling_auto, command_probe_invoke, "G28\n G29\n")
-X_ENTRY(leveling_auto, command_probe_repeat, "G48\n")
+
+// [leveling_manual]
+
+X_ENTRY(leveling_manual, feed_rate_XY, STRINGIFY(LEVELING_FEEDRATE_XY))
+X_ENTRY(leveling_manual, feed_rate_ZZ, STRINGIFY(LEVELING_FEEDRATE_ZZ))
+X_ENTRY(leveling_manual, point_Z_upper, STRINGIFY(LEVELING_POINT_Z_UPPER))
+X_ENTRY(leveling_manual, point_Z_lower, STRINGIFY(LEVELING_POINT_Z_LOWER))
 
 // front/left
 X_ENTRY(leveling_manual, point_1_key, "0")
 X_ENTRY(leveling_manual, point_1_use, "yes")
-X_ENTRY(leveling_manual, point_1_X, "10")
-X_ENTRY(leveling_manual, point_1_Y, "10")
-X_ENTRY(leveling_manual, point_1_icon, "Point_1")
+X_ENTRY(leveling_manual, point_1_X, STRINGIFY(LEVELING_POINT_1_X))
+X_ENTRY(leveling_manual, point_1_Y, STRINGIFY(LEVELING_POINT_1_Y))
+X_ENTRY(leveling_manual, point_1_icon, LEVELING_POINT_1_icon)
 // front/rite
 X_ENTRY(leveling_manual, point_2_key, "1")
 X_ENTRY(leveling_manual, point_2_use, "yes")
-X_ENTRY(leveling_manual, point_2_X, "190")
-X_ENTRY(leveling_manual, point_2_Y, "10")
-X_ENTRY(leveling_manual, point_2_icon, "Point_2")
+X_ENTRY(leveling_manual, point_2_X, STRINGIFY(LEVELING_POINT_2_X))
+X_ENTRY(leveling_manual, point_2_Y, STRINGIFY(LEVELING_POINT_2_Y))
+X_ENTRY(leveling_manual, point_2_icon, LEVELING_POINT_2_icon)
 // rear/left
 X_ENTRY(leveling_manual, point_3_key, "2")
 X_ENTRY(leveling_manual, point_3_use, "yes")
-X_ENTRY(leveling_manual, point_3_X, "10")
-X_ENTRY(leveling_manual, point_3_Y, "190")
-X_ENTRY(leveling_manual, point_3_icon, "Point_3")
+X_ENTRY(leveling_manual, point_3_X, STRINGIFY(LEVELING_POINT_3_X))
+X_ENTRY(leveling_manual, point_3_Y, STRINGIFY(LEVELING_POINT_3_Y))
+X_ENTRY(leveling_manual, point_3_icon, LEVELING_POINT_3_icon)
 // rear/rite
 X_ENTRY(leveling_manual, point_4_key, "4")
 X_ENTRY(leveling_manual, point_4_use, "yes")
-X_ENTRY(leveling_manual, point_4_X, "190")
-X_ENTRY(leveling_manual, point_4_Y, "190")
-X_ENTRY(leveling_manual, point_4_icon, "Point_4")
+X_ENTRY(leveling_manual, point_4_X, STRINGIFY(LEVELING_POINT_4_X))
+X_ENTRY(leveling_manual, point_4_Y, STRINGIFY(LEVELING_POINT_4_Y))
+X_ENTRY(leveling_manual, point_4_icon, LEVELING_POINT_4_icon)
 // front/center
 X_ENTRY(leveling_manual, point_5_key, "5")
 X_ENTRY(leveling_manual, point_5_use, "yes")
-X_ENTRY(leveling_manual, point_5_X, "100")
-X_ENTRY(leveling_manual, point_5_Y, "10")
-X_ENTRY(leveling_manual, point_5_icon, "Point_5")
+X_ENTRY(leveling_manual, point_5_X, STRINGIFY(LEVELING_POINT_5_X))
+X_ENTRY(leveling_manual, point_5_Y, STRINGIFY(LEVELING_POINT_5_Y))
+X_ENTRY(leveling_manual, point_5_icon, LEVELING_POINT_5_icon)
 
 X_ENTRY(leveling_manual, command_reset_home, "G28\n")
 
 //
 // MachineSettings.c
 //
+
+// [custom_menu]
 
 // custom 0
 X_ENTRY(custom_menu, entry_0_key, "0")
