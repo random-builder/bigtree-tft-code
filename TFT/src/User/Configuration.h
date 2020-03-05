@@ -113,23 +113,28 @@
 // front/left
 #define LEVELING_POINT_1_X         (X_MIN_POS + LEVELING_MARGIN)
 #define LEVELING_POINT_1_Y         (Y_MIN_POS + LEVELING_MARGIN)
-#define LEVELING_POINT_1_icon      "Point_1"
+#define LEVELING_POINT_1_ICON      "Point_1" // icon-name
+#define LEVELING_POINT_1_LABEL     "1" // label-code
 // front/rite
 #define LEVELING_POINT_2_X         (X_MAX_POS - LEVELING_MARGIN)
 #define LEVELING_POINT_2_Y         (Y_MIN_POS + LEVELING_MARGIN)
-#define LEVELING_POINT_2_icon      "Point_2"
-// rear/left
+#define LEVELING_POINT_2_ICON      "Point_2" // icon-name
+#define LEVELING_POINT_2_LABEL     "2" // label-code
+// rear/rite
 #define LEVELING_POINT_3_X         (X_MAX_POS - LEVELING_MARGIN)
 #define LEVELING_POINT_3_Y         (Y_MAX_POS - LEVELING_MARGIN)
-#define LEVELING_POINT_3_icon      "Point_3"
-// rear/rite
+#define LEVELING_POINT_3_ICON      "Point_3" // icon-name
+#define LEVELING_POINT_3_LABEL     "3" // label-code
+// rear/left
 #define LEVELING_POINT_4_X         (X_MIN_POS + LEVELING_MARGIN)
 #define LEVELING_POINT_4_Y         (Y_MAX_POS - LEVELING_MARGIN)
-#define LEVELING_POINT_4_icon      "Point_4"
+#define LEVELING_POINT_4_ICON      "Point_4" // icon-name
+#define LEVELING_POINT_4_LABEL     "4" // label-code
 // front/center
 #define LEVELING_POINT_5_X         (X_MIN_POS + X_MAX_POS)/2
 #define LEVELING_POINT_5_Y         (Y_MIN_POS + LEVELING_MARGIN)
-#define LEVELING_POINT_5_icon      "Point_5"
+#define LEVELING_POINT_5_ICON      "Point_5" // icon-name
+#define LEVELING_POINT_5_LABEL     "5" // label-code
 
 #define LEVELING_POINT_Z_UPPER      0.2   // Z-axis position when nozzle stays for leveling
 #define LEVELING_POINT_Z_LOWER      9.0   // Z-axis position when nozzle move to next point

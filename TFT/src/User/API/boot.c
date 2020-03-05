@@ -440,7 +440,7 @@ void scanUpdates(void) {
         }
 
         if (result & HAS_CONFIG) {
-            const char *config_backup = TFT_CONFIG_FILE".CUR";
+            //const char *config_backup = TFT_CONFIG_FILE".CUR";
             //f_unlink(config_backup);
             //f_rename(TFT_CONFIG_FILE, config_backup);
         }

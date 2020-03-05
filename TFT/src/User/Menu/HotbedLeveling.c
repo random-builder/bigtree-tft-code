@@ -52,7 +52,6 @@ void menuAutoLeveling(void) {
         case KEY_ICON_7:
             infoMenu.cur--;
             break;
-
         default:
             break;
         }
@@ -80,7 +79,8 @@ MENUITEMS manualLevelingItems =
 typedef struct {
     bool use;
     u16 key;
-    u16 icon;
+    u32 icon;
+    char *label;
     int X;
     int Y;
 } POINT_ENTRY;
@@ -96,6 +96,7 @@ POINT_ENTRY point_list[POINT_COUNT] =
     point_list[NUM-1].use = config_parse_bool(config.leveling_manual__point_##NUM##_use); \
     point_list[NUM-1].key = config_parse_int(config.leveling_manual__point_##NUM##_key); \
     point_list[NUM-1].icon = config_find_icon(config.leveling_manual__point_##NUM##_icon); \
+    point_list[NUM-1].label = config.leveling_manual__point_##NUM##_label; \
     point_list[NUM-1].X = (int) config_parse_expr(config.leveling_manual__point_##NUM##_X); \
     point_list[NUM-1].Y = (int) config_parse_expr(config.leveling_manual__point_##NUM##_Y); \
 // POINT_PARSE
@@ -110,6 +111,17 @@ void parse_point_data() {
     POINT_PARSE(5)
 }
 
+// find language label-index by user label-code
+static const u32 lookup_label_list[POINT_COUNT + 1] =
+        {
+          0,
+          LABEL_POINT_1,
+          LABEL_POINT_2,
+          LABEL_POINT_3,
+          LABEL_POINT_4,
+          LABEL_POINT_5,
+        };
+
 // activate configured point icons
 void setup_point_menu() {
     for (int index = 0; index < POINT_COUNT; index++) {
@@ -121,7 +133,19 @@ void setup_point_menu() {
             continue;  // protect Back
         }
         if (point.use) {
-            manualLevelingItems.items[point.key].icon = point.icon;
+            ITEM *menu_item = &(manualLevelingItems.items[point.key]);
+            menu_item->icon = point.icon;
+            const int label_code = config_parse_int(point.label);  // 0 for non-number
+            if (label_code == 0) {
+                // has text: custom user label from config.ini
+                menu_item->label.address = (uint8_t*) point.label;
+            } else if (0 < label_code && label_code < POINT_COUNT + 1) {
+                // has number: lookup label index for the language
+                const uint32_t label_index = lookup_label_list[label_code];
+                menu_item->label.index = (uint32_t) label_index;
+            } else {
+                // FIXME: render error
+            }
         }
     }
 }
