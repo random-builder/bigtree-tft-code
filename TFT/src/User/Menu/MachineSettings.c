@@ -55,15 +55,15 @@ void sendCustomGcode(int key_num) {
 
 // custom entry config parser
 #define ENTRY_PARSE(NUM) \
-    custom_entry_list[NUM].use = config_parse_bool(config.custom_menu__entry_##NUM##_use); \
-    custom_entry_list[NUM].key = config_parse_int(config.custom_menu__entry_##NUM##_key); \
-    custom_entry_list[NUM].label = config.custom_menu__entry_##NUM##_label; \
-    custom_entry_list[NUM].gcode = config.custom_menu__entry_##NUM##_gcode; \
+    custom_entry_list[NUM].use = config_parse_bool(config->custom_menu__entry_##NUM##_use); \
+    custom_entry_list[NUM].key = config_parse_int(config->custom_menu__entry_##NUM##_key); \
+    custom_entry_list[NUM].label = config->custom_menu__entry_##NUM##_label; \
+    custom_entry_list[NUM].gcode = config->custom_menu__entry_##NUM##_gcode; \
 // ENTRY_PARSE
 
 // extract manual leveling points from config.ini
 void parse_custom_data() {
-    SYSTEM_CONFIG config = config_instance();
+    const SYSTEM_CONFIG *config = config_instance();
     ENTRY_PARSE(0)
     ENTRY_PARSE(1)
     ENTRY_PARSE(2)

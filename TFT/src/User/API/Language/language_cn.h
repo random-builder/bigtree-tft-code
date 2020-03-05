@@ -166,6 +166,7 @@
 #define CN_ISSUE_RESET          "Reset"
 #define CN_FILAMENT             "Filament"
 #define CN_UNI_HEAT             "Heater"
-#define CN_UNI_MOVE             "Walking"
-#define CN_HEAT_CTL             "Heating"
-
+#define CN_UNI_MOVE             "Moving"
+#define CN_HEAT_CTL             "XXX"
+#define CN_WALKING              "Walking"
+#define CN_HOMING               "Homing"

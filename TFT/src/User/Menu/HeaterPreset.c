@@ -56,17 +56,17 @@ static TOOL_PREHEAT current_heater_tool = PREHEAT_NOZZLE0;
 
 // preset entry config parser
 #define PRESET_PARSE(NUM) \
-    preset_list[NUM-1].use = config_parse_bool(config.heater_preset__preheat_##NUM##_use); \
-    preset_list[NUM-1].key = config_parse_int(config.heater_preset__preheat_##NUM##_key); \
-    preset_list[NUM-1].icon = config_find_icon(config.heater_preset__preheat_##NUM##_icon); \
-    preset_list[NUM-1].label = config.heater_preset__preheat_##NUM##_label; \
-    preset_list[NUM-1].hotbed = (int) config_parse_expr(config.heater_preset__preheat_##NUM##_hotbed); \
-    preset_list[NUM-1].nozzle = (int) config_parse_expr(config.heater_preset__preheat_##NUM##_nozzle); \
+    preset_list[NUM-1].use = config_parse_bool(config->heater_preset__preheat_##NUM##_use); \
+    preset_list[NUM-1].key = config_parse_int(config->heater_preset__preheat_##NUM##_key); \
+    preset_list[NUM-1].icon = config_find_icon(config->heater_preset__preheat_##NUM##_icon); \
+    preset_list[NUM-1].label = config->heater_preset__preheat_##NUM##_label; \
+    preset_list[NUM-1].hotbed = (int) config_parse_expr(config->heater_preset__preheat_##NUM##_hotbed); \
+    preset_list[NUM-1].nozzle = (int) config_parse_expr(config->heater_preset__preheat_##NUM##_nozzle); \
 // PRESET_PARSE
 
 // extract preheat temps from config.ini
 void parse_preset_data() {
-    SYSTEM_CONFIG config = config_instance();
+    const SYSTEM_CONFIG *config = config_instance();
     PRESET_PARSE(1)
     PRESET_PARSE(2)
     PRESET_PARSE(3)

@@ -32,7 +32,7 @@ typedef struct {
 int config_parse_stream(FLASH_STREAM *flash_stream);
 
 // expose global config
-SYSTEM_CONFIG config_instance();
+const SYSTEM_CONFIG* config_instance();
 
 // tokenize and send g-code commands to the printer
 void config_issue_gcode(const char *command_text);

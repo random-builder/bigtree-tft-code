@@ -21,7 +21,7 @@ const MENUITEMS autoLevelingItems =
 
 void menuAutoLeveling(void) {
     KEY_VALUES key_num = KEY_IDLE;
-    SYSTEM_CONFIG config = config_instance();
+    const SYSTEM_CONFIG *config = config_instance();
 
     menuDrawPage(&autoLevelingItems);
 
@@ -29,19 +29,19 @@ void menuAutoLeveling(void) {
         key_num = menuKeyGetValue();
         switch (key_num) {
         case KEY_ICON_0:  // Drop
-            config_issue_gcode(config.leveling_auto__command_probe_drop);
+            config_issue_gcode(config->leveling_auto__command_probe_drop);
             break;
         case KEY_ICON_1:  // Stow
-            config_issue_gcode(config.leveling_auto__command_probe_stow);
+            config_issue_gcode(config->leveling_auto__command_probe_stow);
             break;
         case KEY_ICON_2:  // Test
-            config_issue_gcode(config.leveling_auto__command_probe_test);
+            config_issue_gcode(config->leveling_auto__command_probe_test);
             break;
         case KEY_ICON_3:  // Invoke
-            config_issue_gcode(config.leveling_auto__command_probe_invoke);
+            config_issue_gcode(config->leveling_auto__command_probe_invoke);
             break;
         case KEY_ICON_4:  // Reset
-            config_issue_gcode(config.leveling_auto__command_probe_reset);
+            config_issue_gcode(config->leveling_auto__command_probe_reset);
             break;
         case KEY_ICON_5:  // Offset Z
             infoMenu.menu[++infoMenu.cur] = menuProbeOffset;
@@ -93,17 +93,17 @@ POINT_ENTRY point_list[POINT_COUNT] =
 
 // entry point config parser
 #define POINT_PARSE(NUM) \
-    point_list[NUM-1].use = config_parse_bool(config.leveling_manual__point_##NUM##_use); \
-    point_list[NUM-1].key = config_parse_int(config.leveling_manual__point_##NUM##_key); \
-    point_list[NUM-1].icon = config_find_icon(config.leveling_manual__point_##NUM##_icon); \
-    point_list[NUM-1].label = config.leveling_manual__point_##NUM##_label; \
-    point_list[NUM-1].X = (int) config_parse_expr(config.leveling_manual__point_##NUM##_X); \
-    point_list[NUM-1].Y = (int) config_parse_expr(config.leveling_manual__point_##NUM##_Y); \
+    point_list[NUM-1].use = config_parse_bool(config->leveling_manual__point_##NUM##_use); \
+    point_list[NUM-1].key = config_parse_int(config->leveling_manual__point_##NUM##_key); \
+    point_list[NUM-1].icon = config_find_icon(config->leveling_manual__point_##NUM##_icon); \
+    point_list[NUM-1].label = config->leveling_manual__point_##NUM##_label; \
+    point_list[NUM-1].X = (int) config_parse_expr(config->leveling_manual__point_##NUM##_X); \
+    point_list[NUM-1].Y = (int) config_parse_expr(config->leveling_manual__point_##NUM##_Y); \
 // POINT_PARSE
 
 // extract manual leveling points from config.ini
 void parse_point_data() {
-    SYSTEM_CONFIG config = config_instance();
+    const SYSTEM_CONFIG *config = config_instance();
     POINT_PARSE(1)
     POINT_PARSE(2)
     POINT_PARSE(3)
@@ -112,7 +112,7 @@ void parse_point_data() {
 }
 
 // find language label-index by user label-code
-static const u32 lookup_label_list[POINT_COUNT + 1] =
+static const u16 lookup_label_list[POINT_COUNT + 1] =
         {
           0,
           LABEL_POINT_1,
@@ -152,16 +152,16 @@ void setup_point_menu() {
 
 // perform actual motion sequence
 void invoke_point_move(const POINT_ENTRY point) {
-    SYSTEM_CONFIG config = config_instance();
+    const SYSTEM_CONFIG *config = config_instance();
     // home on demand
     if (coordinateIsClear() == false) {
         storeCmd("G28\n");
     }
     // extract config.ini values
-    int feed_rate_XY = (int) config_parse_expr(config.leveling_manual__feed_rate_XY);
-    int feed_rate_ZZ = (int) config_parse_expr(config.leveling_manual__feed_rate_ZZ);
-    float point_Z_upper = config_parse_expr(config.leveling_manual__point_Z_upper);
-    float point_Z_lower = config_parse_expr(config.leveling_manual__point_Z_lower);
+    int feed_rate_XY = (int) config_parse_expr(config->leveling_manual__feed_rate_XY);
+    int feed_rate_ZZ = (int) config_parse_expr(config->leveling_manual__feed_rate_ZZ);
+    float point_Z_upper = config_parse_expr(config->leveling_manual__point_Z_upper);
+    float point_Z_lower = config_parse_expr(config->leveling_manual__point_Z_lower);
     // lower plate
     storeCmd("G0 Z%.3f     F%d\n", point_Z_lower, feed_rate_ZZ);
     // move to point
@@ -183,7 +183,7 @@ void perform_point_move(const KEY_VALUES key_num) {
 
 void menuManualLeveling(void) {
     KEY_VALUES key_num = KEY_IDLE;
-    SYSTEM_CONFIG config = config_instance();
+    const SYSTEM_CONFIG *config = config_instance();
 
     parse_point_data();
     setup_point_menu();
@@ -193,7 +193,7 @@ void menuManualLeveling(void) {
         key_num = menuKeyGetValue();
         switch (key_num) {
         case KEY_ICON_3:
-            config_issue_gcode(config.leveling_manual__command_reset_home);
+            config_issue_gcode(config->leveling_manual__command_reset_home);
             break;
         case KEY_ICON_7:
             infoMenu.cur--;

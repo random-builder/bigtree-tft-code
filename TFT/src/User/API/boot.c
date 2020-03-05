@@ -52,7 +52,7 @@ const GUI_RECT box_file_size =
         BOX_FILE_SIZE_X, BOX_FILE_SIZE_Y,
         BOX_FILE_SIZE_X + LCD_WIDTH, BOX_FILE_SIZE_Y + BOX_HEIGHT };
 
-const GUI_RECT box_error_message =
+const GUI_RECT box_common_message =
         {  //
         BOX_ERROR_MESSAGE_X, BOX_ERROR_MESSAGE_Y,
         BOX_ERROR_MESSAGE_X + LCD_WIDTH, BOX_ERROR_MESSAGE_Y + BOX_HEIGHT };
@@ -111,13 +111,24 @@ void render_file_size(const FSIZE_t file_size) {
 }
 
 //
+// report operation success
+//
+void render_plain_message(const char *message) {
+    char text_buff[64];
+    my_sprintf(text_buff, "%s", message);
+    GUI_ClearPrect(&box_common_message);
+    GUI_DispString(box_common_message.x0, box_common_message.y0, (u8*) text_buff);
+    Delay_ms(3000);  // preview time
+}
+
+//
 // report operation failure
 //
 void render_error_message(const char *message) {
     char text_buff[64];
     my_sprintf(text_buff, "Error: %s", message);
-    GUI_ClearPrect(&box_error_message);
-    GUI_DispString(box_error_message.x0, box_error_message.y0, (u8*) text_buff);
+    GUI_ClearPrect(&box_common_message);
+    GUI_DispString(box_common_message.x0, box_common_message.y0, (u8*) text_buff);
     Delay_ms(3000);  // preview time
 }
 
@@ -125,10 +136,10 @@ void render_error_message(const char *message) {
 // render system config for debugging
 //
 void render_config_debug() {
-    SYSTEM_CONFIG config = config_instance();
+    const SYSTEM_CONFIG *config = config_instance();
     char text_buff[256];
 #define X_ENTRY(SECTION, NAME, DEF_VAL) \
-    my_sprintf( text_buff, "%s/%s::%s", #SECTION, #NAME, config.CONFIG_ENTRY(SECTION,NAME)); \
+    my_sprintf( text_buff, "%s/%s::%s", #SECTION, #NAME, config->CONFIG_ENTRY(SECTION,NAME)); \
     render_error_message(text_buff);
 #include "config.inc"
 #undef  X_ENTRY
@@ -455,6 +466,7 @@ void scanUpdates(void) {
     render_config_debug();
 #endif
 #ifdef SHOW_ERROR_VERIFY
+    render_plain_message("verify plain message");
     render_error_message("verify error message");
 #endif
 

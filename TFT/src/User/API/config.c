@@ -121,8 +121,8 @@ int config_parse_stream(FLASH_STREAM *flash_stream) {
 }
 
 // expose global config
-SYSTEM_CONFIG config_instance() {
-    return system_config;
+const SYSTEM_CONFIG* config_instance() {
+    return &system_config;
 }
 
 // tokenize and send g-code commands to the printer

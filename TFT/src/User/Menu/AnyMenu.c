@@ -81,11 +81,14 @@ static bool isListview;
 uint8_t *labelGetAddress(const LABEL *label)
 {
   if (label->index == _LABEL_EMPTY_) {
-      return NULL;  // No content in label
+      // no content in label
+      return NULL;
   } else if (label->index < _LABEL_COUNT_) {
-      return language_text(label->index); // Index of language
+      // label index in language
+      return language_text(label->index);
   } else {
-      return label->address; // Address of non-language string
+      // address of non-language string
+      return label->address;
   }
 }
 

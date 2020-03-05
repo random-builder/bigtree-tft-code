@@ -7,8 +7,8 @@ const MENUITEMS UnifiedMoveItems = {
 LABEL_UNI_MOVE,
 // icon                       label
  {
-  {ICON_Home,                 LABEL_HOME},       // 0
-  {ICON_Move,                 LABEL_MOVE},
+  {ICON_Home,                 LABEL_HOMING},       // 0
+  {ICON_Move,                 LABEL_WALKING},
   {ICON_Leveling,             LABEL_AUTO_LEVEL},
   {ICON_ManualLevel,          LABEL_HAND_LEVEL},
   {ICON_Stop,                 LABEL_MOTION_STOP}, // 4
