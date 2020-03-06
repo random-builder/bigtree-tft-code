@@ -13,7 +13,7 @@ LABEL_HEAT_CTL,
   {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Nozzle,               LABEL_NOZZLE},
   {ICON_Temp_5,             LABEL_5_DEGREE},
-  {ICON_Stop,                 LABEL_ISSUE_RESET},
+  {ICON_CoolDown,                 LABEL_ISSUE_RESET},
   {ICON_Back,                 LABEL_BACK},}
 };
 

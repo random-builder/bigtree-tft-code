@@ -5,8 +5,25 @@
 #include <HeaterPreset.h>
 #include "includes.h"
 
+// icon text overlay location
+#define ICON_TEXT_X(COL)   ( (COL) * ICON_WIDTH  + (COL-1) * SPACE_X + START_X - BYTE_WIDTH/2 )
+#define ICON_TEXT_Y(ROW)   ( (ROW) * ICON_HEIGHT + (ROW)   * SPACE_Y - 7       - BYTE_HEIGHT/2 )
+
+// icon text overlay location
+static const GUI_POINT position_icon_text[8] =
+        {
+          { ICON_TEXT_X(1), ICON_TEXT_Y(1) },
+          { ICON_TEXT_X(2), ICON_TEXT_Y(1) },
+          { ICON_TEXT_X(3), ICON_TEXT_Y(1) },
+          { ICON_TEXT_X(4), ICON_TEXT_Y(1) },
+          { ICON_TEXT_X(1), ICON_TEXT_Y(2) },
+          { ICON_TEXT_X(2), ICON_TEXT_Y(2) },
+          { ICON_TEXT_X(3), ICON_TEXT_Y(2) },
+          { ICON_TEXT_X(4), ICON_TEXT_Y(2) },
+        };
+
 // dynamic preheat menu
-MENUITEMS preheatItems =
+static MENUITEMS preheatItems =
         {
           // title
           LABEL_PREHEAT,
@@ -18,12 +35,12 @@ MENUITEMS preheatItems =
             { ICON_Nozzle, LABEL_NOZZLE },
             { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { _ICON_EMPTY_, _LABEL_EMPTY_ },
-            { ICON_Stop, LABEL_ISSUE_RESET },
+            { ICON_CoolDown, LABEL_ISSUE_RESET },
             { ICON_Back, LABEL_BACK },
           }
         };
 
-const ITEM itemToolPreheat[] =
+static const ITEM itemToolPreheat[] =
         {
           // icon              label
           { ICON_Preheat_Both, LABEL_PREHEAT_BOTH },
@@ -47,21 +64,21 @@ typedef struct {
 } PRESET_ENTRY;
 
 // parsed teperature configuration
-PRESET_ENTRY preset_list[PRESET_COUNT] =
+static PRESET_ENTRY preset_entry_list[PRESET_COUNT] =
         {
           { 0 },
         };
 
-static TOOL_PREHEAT current_heater_tool = PREHEAT_NOZZLE0;
+static TOOL_PREHEAT current_heater_tool = PREHEAT_BOTH;
 
 // preset entry config parser
 #define PRESET_PARSE(NUM) \
-    preset_list[NUM-1].use = config_parse_bool(config->heater_preset__preheat_##NUM##_use); \
-    preset_list[NUM-1].key = config_parse_int(config->heater_preset__preheat_##NUM##_key); \
-    preset_list[NUM-1].icon = config_find_icon(config->heater_preset__preheat_##NUM##_icon); \
-    preset_list[NUM-1].label = config->heater_preset__preheat_##NUM##_label; \
-    preset_list[NUM-1].hotbed = (int) config_parse_expr(config->heater_preset__preheat_##NUM##_hotbed); \
-    preset_list[NUM-1].nozzle = (int) config_parse_expr(config->heater_preset__preheat_##NUM##_nozzle); \
+    preset_entry_list[NUM-1].use = config_parse_bool(config->heater_preset__preheat_##NUM##_use); \
+    preset_entry_list[NUM-1].key = config_parse_int(config->heater_preset__preheat_##NUM##_key); \
+    preset_entry_list[NUM-1].icon = config_find_icon(config->heater_preset__preheat_##NUM##_icon); \
+    preset_entry_list[NUM-1].label = config->heater_preset__preheat_##NUM##_label; \
+    preset_entry_list[NUM-1].hotbed = (int) config_parse_expr(config->heater_preset__preheat_##NUM##_hotbed); \
+    preset_entry_list[NUM-1].nozzle = (int) config_parse_expr(config->heater_preset__preheat_##NUM##_nozzle); \
 // PRESET_PARSE
 
 // extract preheat temps from config.ini
@@ -74,23 +91,44 @@ void parse_preset_data() {
     PRESET_PARSE(5)
 }
 
+// show hotend/hotbed values on top of preheat icons
+void render_icon_text(const PRESET_ENTRY *preset_entry) {
+    char icon_text[32];
+    my_sprintf(icon_text, "%d/%d", preset_entry->nozzle, preset_entry->hotbed);
+    const GUI_POINT *position = &(position_icon_text[preset_entry->key]);
+    GUI_SetColor(WHITE);
+    GUI_SetBkColor(RED);
+    GUI_DispStringRight(position->x, position->y, (u8*) icon_text);
+    GUI_RestoreColorDefault();
+}
+
+// show hotend/hotbed values on top of preheat icons
+void render_menu_text_overlay() {
+    for (int index = 0; index < PRESET_COUNT; index++) {
+        const PRESET_ENTRY *preset_entry = &(preset_entry_list[index]);
+        if (preset_entry->use) {
+            render_icon_text(preset_entry);
+        }
+    }
+}
+
 // activate configured point icons
 void setup_preset_menu() {
     for (int index = 0; index < PRESET_COUNT; index++) {
-        PRESET_ENTRY preset = preset_list[index];
-        if (preset.key == KEY_ICON_3) {
-            continue;  // protect Tool
+        const PRESET_ENTRY *preset_entry = &(preset_entry_list[index]);
+        if (preset_entry->key == KEY_ICON_3) {
+            continue;  // protect "Tool"
         }
-        if (preset.key == KEY_ICON_6) {
-            continue;  // protect Stop
+        if (preset_entry->key == KEY_ICON_6) {
+            continue;  // protect "Stop"
         }
-        if (preset.key == KEY_ICON_7) {
-            continue;  // protect Back
+        if (preset_entry->key == KEY_ICON_7) {
+            continue;  // protect "Back"
         }
-        if (preset.use) {
-            ITEM *menu_item = &(preheatItems.items[preset.key]);
-            menu_item->icon = preset.icon;
-            menu_item->label.address = (uint8_t*) preset.label;
+        if (preset_entry->use) {
+            ITEM *menu_item = &(preheatItems.items[preset_entry->key]);
+            menu_item->icon = preset_entry->icon;
+            menu_item->label.address = (uint8_t*) preset_entry->label;
         }
     }
 }
@@ -98,18 +136,19 @@ void setup_preset_menu() {
 // perform temperature control only for enabled key
 void perform_preset_apply(const KEY_VALUES key_num) {
     for (int index = 0; index < PRESET_COUNT; index++) {
-        PRESET_ENTRY preset = preset_list[index];
-        if (preset.use && preset.key == key_num) {
+        const PRESET_ENTRY *preset_entry = &(preset_entry_list[index]);
+        if (preset_entry->use && preset_entry->key == key_num) {
+            render_icon_text(preset_entry);
             switch (current_heater_tool) {
             case PREHEAT_BOTH:
-                heatSetTargetTemp(TOOL_HOTBED, preset.hotbed);
-                heatSetTargetTemp(heatGetCurrentToolNozzle(), preset.nozzle);
+                heatSetTargetTemp(TOOL_HOTBED, preset_entry->hotbed);
+                heatSetTargetTemp(heatGetCurrentToolNozzle(), preset_entry->nozzle);
                 break;
             case PREHEAT_HOTBED:
-                heatSetTargetTemp(TOOL_HOTBED, preset.hotbed);
+                heatSetTargetTemp(TOOL_HOTBED, preset_entry->hotbed);
                 break;
             case PREHEAT_NOZZLE0:
-                heatSetTargetTemp(heatGetCurrentToolNozzle(), preset.nozzle);
+                heatSetTargetTemp(heatGetCurrentToolNozzle(), preset_entry->nozzle);
                 break;
             }
             return;  // use only first match
@@ -146,10 +185,10 @@ void menuHeaterPreset(void) {
     parse_preset_data();
     setup_preset_menu();
     menuDrawPage(&preheatItems);
+    render_menu_text_overlay();
 
     while (infoMenu.menu[infoMenu.cur] == menuHeaterPreset) {
         key_num = menuKeyGetValue();
-
         switch (key_num) {
         case KEY_ICON_0:  //
         case KEY_ICON_1:  //
