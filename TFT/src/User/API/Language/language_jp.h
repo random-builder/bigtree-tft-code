@@ -168,3 +168,4 @@
 #define JP_HEAT_CTL             "XXX"
 #define JP_WALKING              "Walking"
 #define JP_HOMING               "Homing"
+#define JP_CASE_LIGHT           "Case Light"

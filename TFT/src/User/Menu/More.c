@@ -54,7 +54,7 @@ void menuMore(void)
         break;
       
       case KEY_ICON_1:
-        infoMenu.menu[++infoMenu.cur] = menuRGBSettings;
+        infoMenu.menu[++infoMenu.cur] = menuLightControl;
         break;
       
       case KEY_ICON_2:

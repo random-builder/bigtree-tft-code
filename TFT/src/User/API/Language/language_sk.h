@@ -169,3 +169,4 @@
 #define SK_HEAT_CTL             "XXX"
 #define SK_WALKING              "Walking"
 #define SK_HOMING               "Homing"
+#define SK_CASE_LIGHT           "Case Light"

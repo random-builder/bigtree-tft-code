@@ -5,6 +5,7 @@
 #pragma once
 
 //#define SHOW_CONFIG_DEBUG
+//#define SHOW_MESSAGE_VERIFY
 
 //===========================================================================
 //=========================== Marlin Mode Settings ===========================

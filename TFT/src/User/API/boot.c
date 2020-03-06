@@ -114,7 +114,7 @@ void render_file_size(const FSIZE_t file_size) {
 // report operation success
 //
 void render_plain_message(const char *message) {
-    char text_buff[64];
+    char text_buff[256];
     my_sprintf(text_buff, "%s", message);
     GUI_ClearPrect(&box_common_message);
     GUI_DispString(box_common_message.x0, box_common_message.y0, (u8*) text_buff);
@@ -125,7 +125,7 @@ void render_plain_message(const char *message) {
 // report operation failure
 //
 void render_error_message(const char *message) {
-    char text_buff[64];
+    char text_buff[256];
     my_sprintf(text_buff, "Error: %s", message);
     GUI_ClearPrect(&box_common_message);
     GUI_DispString(box_common_message.x0, box_common_message.y0, (u8*) text_buff);
@@ -133,14 +133,17 @@ void render_error_message(const char *message) {
 }
 
 //
-// render system config for debugging
+// render system config for review
 //
 void render_config_debug() {
     const SYSTEM_CONFIG *config = config_instance();
     char text_buff[256];
-#define X_ENTRY(SECTION, NAME, DEF_VAL) \
-    my_sprintf( text_buff, "%s/%s::%s", #SECTION, #NAME, config->CONFIG_ENTRY(SECTION,NAME)); \
-    render_error_message(text_buff);
+    char *config_value;
+#define X_ENTRY(SECTION,NAME,DEFAULT_VALUE) \
+    config_value = config->CONFIG_ENTRY(SECTION,NAME); \
+    my_sprintf(text_buff, "%s/%s=%s", #SECTION, #NAME, config_value); \
+    render_plain_message(text_buff); \
+    // X_ENTRY
 #include "config.inc"
 #undef  X_ENTRY
 }
@@ -465,7 +468,7 @@ void scanUpdates(void) {
 #ifdef SHOW_CONFIG_DEBUG
     render_config_debug();
 #endif
-#ifdef SHOW_ERROR_VERIFY
+#ifdef SHOW_MESSAGE_VERIFY
     render_plain_message("verify plain message");
     render_error_message("verify error message");
 #endif

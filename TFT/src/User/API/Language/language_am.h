@@ -170,3 +170,4 @@
 #define AM_HEAT_CTL             "XXX"
 #define AM_WALKING              "Walking"
 #define AM_HOMING               "Homing"
+#define AM_CASE_LIGHT           "Case Light"

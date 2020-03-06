@@ -39,7 +39,7 @@ void menuMain(void)
         case KEY_ICON_3: infoMenu.menu[++infoMenu.cur] = menuSettings;        break;
         // case KEY_ICON_4:
         case KEY_ICON_5: infoMenu.menu[++infoMenu.cur] = menuInvokeGcode;       break;
-        case KEY_ICON_6: infoMenu.menu[++infoMenu.cur] = menuCustom ;         break;
+        case KEY_ICON_6: infoMenu.menu[++infoMenu.cur] = menuCustomCommand ;         break;
         case KEY_ICON_7: infoMenu.cur--;        break;
         default:break;
     }

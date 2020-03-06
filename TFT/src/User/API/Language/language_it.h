@@ -170,3 +170,4 @@
 #define IT_HEAT_CTL             "XXX"
 #define IT_WALKING              "Walking"
 #define IT_HOMING               "Homing"
+#define IT_CASE_LIGHT           "Case Light"

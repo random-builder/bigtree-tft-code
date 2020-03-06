@@ -168,3 +168,4 @@
 #define RU_HEAT_CTL             "XXX"
 #define RU_WALKING              "Walking"
 #define RU_HOMING               "Homing"
+#define RU_CASE_LIGHT           "Case Light"

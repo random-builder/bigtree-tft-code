@@ -77,44 +77,44 @@ MENUITEMS manualLevelingItems =
 
 // a tune point
 typedef struct {
-    bool use;
-    u16 key;
-    u32 icon;
-    char *label;
-    int X;
-    int Y;
+    bool use;       // value from config.ini
+    u16 key;        // value from config.ini
+    u16 icon;       // icon index from icon_list.inc resolved from icon name in config.ini
+    char *label;    // label-code or user-text from config.ini
+    int X;          // value from config.ini
+    int Y;          // value from config.ini
 } POINT_ENTRY;
 
 // parsed tune plane configuration
-POINT_ENTRY point_list[POINT_COUNT] =
+POINT_ENTRY point_entry_list[POINT_COUNT] =
         {
           { 0 },
         };
 
 // entry point config parser
-#define POINT_PARSE(NUM) \
-    point_list[NUM-1].use = config_parse_bool(config->leveling_manual__point_##NUM##_use); \
-    point_list[NUM-1].key = config_parse_int(config->leveling_manual__point_##NUM##_key); \
-    point_list[NUM-1].icon = config_find_icon(config->leveling_manual__point_##NUM##_icon); \
-    point_list[NUM-1].label = config->leveling_manual__point_##NUM##_label; \
-    point_list[NUM-1].X = (int) config_parse_expr(config->leveling_manual__point_##NUM##_X); \
-    point_list[NUM-1].Y = (int) config_parse_expr(config->leveling_manual__point_##NUM##_Y); \
-// POINT_PARSE
+#define PARSE_POINT(NUM) \
+    point_entry_list[NUM-1].use = config_parse_bool(config->leveling_manual__point_##NUM##_use); \
+    point_entry_list[NUM-1].key = config_parse_int(config->leveling_manual__point_##NUM##_key); \
+    point_entry_list[NUM-1].icon = config_find_icon(config->leveling_manual__point_##NUM##_icon); \
+    point_entry_list[NUM-1].label = config->leveling_manual__point_##NUM##_label; \
+    point_entry_list[NUM-1].X = (int) config_parse_expr(config->leveling_manual__point_##NUM##_X); \
+    point_entry_list[NUM-1].Y = (int) config_parse_expr(config->leveling_manual__point_##NUM##_Y); \
+// PARSE_POINT
 
 // extract manual leveling points from config.ini
 void parse_point_data() {
     const SYSTEM_CONFIG *config = config_instance();
-    POINT_PARSE(1)
-    POINT_PARSE(2)
-    POINT_PARSE(3)
-    POINT_PARSE(4)
-    POINT_PARSE(5)
+    PARSE_POINT(1)
+    PARSE_POINT(2)
+    PARSE_POINT(3)
+    PARSE_POINT(4)
+    PARSE_POINT(5)
 }
 
 // find language label-index by user label-code
-static const u16 lookup_label_list[POINT_COUNT + 1] =
+static const u16 default_point_label_list[POINT_COUNT + 1] =
         {
-          0,
+          0,  // invalid user entry
           LABEL_POINT_1,
           LABEL_POINT_2,
           LABEL_POINT_3,
@@ -125,23 +125,23 @@ static const u16 lookup_label_list[POINT_COUNT + 1] =
 // activate configured point icons
 void setup_point_menu() {
     for (int index = 0; index < POINT_COUNT; index++) {
-        POINT_ENTRY point = point_list[index];
-        if (point.key == KEY_ICON_3) {
-            continue;  // protect Home
+        POINT_ENTRY *point_entry = &(point_entry_list[index]);
+        if (point_entry->key == KEY_ICON_3) {
+            continue;  // protect "Home"
         }
-        if (point.key == KEY_ICON_7) {
-            continue;  // protect Back
+        if (point_entry->key == KEY_ICON_7) {
+            continue;  // protect "Back"
         }
-        if (point.use) {
-            ITEM *menu_item = &(manualLevelingItems.items[point.key]);
-            menu_item->icon = point.icon;
-            const int label_code = config_parse_int(point.label);  // 0 for non-number
+        if (point_entry->use) {
+            ITEM *menu_item = &(manualLevelingItems.items[point_entry->key]);
+            menu_item->icon = point_entry->icon;
+            const int label_code = config_parse_int(point_entry->label);  // 0 for non-number
             if (label_code == 0) {
                 // has text: custom user label from config.ini
-                menu_item->label.address = (uint8_t*) point.label;
+                menu_item->label.address = (uint8_t*) point_entry->label;
             } else if (0 < label_code && label_code < POINT_COUNT + 1) {
                 // has number: lookup label index for the language
-                const uint32_t label_index = lookup_label_list[label_code];
+                const uint32_t label_index = default_point_label_list[label_code];
                 menu_item->label.index = (uint32_t) label_index;
             } else {
                 // FIXME: render error
@@ -151,7 +151,7 @@ void setup_point_menu() {
 }
 
 // perform actual motion sequence
-void invoke_point_move(const POINT_ENTRY point) {
+void invoke_point_move(const POINT_ENTRY *point_entry) {
     const SYSTEM_CONFIG *config = config_instance();
     // home on demand
     if (coordinateIsClear() == false) {
@@ -165,7 +165,7 @@ void invoke_point_move(const POINT_ENTRY point) {
     // lower plate
     storeCmd("G0 Z%.3f     F%d\n", point_Z_lower, feed_rate_ZZ);
     // move to point
-    storeCmd("G0 X%d Y%d   F%d\n", point.X, point.Y, feed_rate_XY);
+    storeCmd("G0 X%d Y%d   F%d\n", point_entry->X, point_entry->Y, feed_rate_XY);
     // raise plate
     storeCmd("G0 Z%.3f     F%d\n", point_Z_upper, feed_rate_ZZ);
 }
@@ -173,9 +173,9 @@ void invoke_point_move(const POINT_ENTRY point) {
 // perform point move only for enabled key
 void perform_point_move(const KEY_VALUES key_num) {
     for (int index = 0; index < POINT_COUNT; index++) {
-        POINT_ENTRY point = point_list[index];
-        if (point.use && point.key == key_num) {
-            invoke_point_move(point);
+        POINT_ENTRY *point_entry = &(point_entry_list[index]);
+        if (point_entry->use && point_entry->key == key_num) {
+            invoke_point_move(point_entry);
             return;  // use only first match
         }
     }

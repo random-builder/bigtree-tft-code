@@ -170,3 +170,4 @@
 #define PT_HEAT_CTL             "XXX"
 #define PT_WALKING              "Walking"
 #define PT_HOMING               "Homing"
+#define PT_CASE_LIGHT           "Case Light"

@@ -170,3 +170,4 @@
 #define CZ_HEAT_CTL             "XXX"
 #define CZ_WALKING              "Walking"
 #define CZ_HOMING               "Homing"
+#define CZ_CASE_LIGHT           "Case Light"

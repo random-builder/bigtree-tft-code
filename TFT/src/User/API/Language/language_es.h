@@ -170,3 +170,4 @@
 #define ES_HEAT_CTL             "XXX"
 #define ES_WALKING              "Walking"
 #define ES_HOMING               "Homing"
+#define ES_CASE_LIGHT           "Case Light"

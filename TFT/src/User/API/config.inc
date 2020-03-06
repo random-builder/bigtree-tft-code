@@ -73,6 +73,53 @@ X_ENTRY(leveling_manual, point_5_Y, STRINGIFY(LEVELING_POINT_5_Y))
 // MachineSettings.c
 //
 
+// [light_control]
+
+// note: icons in this section use icon names from TFT/src/User/API/UI/icon_list.inc
+
+// level 1
+X_ENTRY(light_control, level_1_key, "0")
+X_ENTRY(light_control, level_1_use, "yes")
+X_ENTRY(light_control, level_1_icon, "RGB_Red")
+X_ENTRY(light_control, level_1_label, "1")// label-code or user-text
+X_ENTRY(light_control, level_1_gcode, "M150 R255 U0 B0 P255\n")
+// level 2
+X_ENTRY(light_control, level_2_key, "1")
+X_ENTRY(light_control, level_2_use, "yes")
+X_ENTRY(light_control, level_2_icon, "RGB_Green")
+X_ENTRY(light_control, level_2_label, "2")// label-code or user-text
+X_ENTRY(light_control, level_2_gcode, "M150 R0 U255 B0 P255\n")
+// level 3
+X_ENTRY(light_control, level_3_key, "2")
+X_ENTRY(light_control, level_3_use, "yes")
+X_ENTRY(light_control, level_3_icon, "RGB_Blue")
+X_ENTRY(light_control, level_3_label, "3")// label-code or user-text
+X_ENTRY(light_control, level_3_gcode, "M150 R0 U0 B255 P255\n")
+// level 4
+X_ENTRY(light_control, level_4_key, "3")
+X_ENTRY(light_control, level_4_use, "yes")
+X_ENTRY(light_control, level_4_icon, "RGB_White")
+X_ENTRY(light_control, level_4_label, "4")// label-code or user-text
+X_ENTRY(light_control, level_4_gcode, "M150 R255 U255 B255 P255\n")
+// level 5
+X_ENTRY(light_control, level_5_key, "4")
+X_ENTRY(light_control, level_5_use, "no")
+X_ENTRY(light_control, level_5_icon, "")
+X_ENTRY(light_control, level_5_label, "5")// label-code or user-text
+X_ENTRY(light_control, level_5_gcode, "")
+// level 6
+X_ENTRY(light_control, level_6_key, "5")
+X_ENTRY(light_control, level_6_use, "no")
+X_ENTRY(light_control, level_6_icon, "")
+X_ENTRY(light_control, level_6_label, "6")// label-code or user-text
+X_ENTRY(light_control, level_6_gcode, "")
+// level 7
+X_ENTRY(light_control, level_7_key, "6")
+X_ENTRY(light_control, level_7_use, "yes")
+X_ENTRY(light_control, level_7_icon, "RGB_Off")
+X_ENTRY(light_control, level_7_label, "7")// label-code or user-text
+X_ENTRY(light_control, level_7_gcode, "M150 R0 U0 B0 P0\n")
+
 // [custom_menu]
 
 // note: icons in ths section use symbol names from TFT/src/User/API/UI/symbol.inc

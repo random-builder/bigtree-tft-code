@@ -170,3 +170,4 @@
 #define DU_HEAT_CTL             "XXX"
 #define DU_WALKING              "Walking"
 #define DU_HOMING               "Homing"
+#define DU_CASE_LIGHT           "Case Light"

@@ -134,6 +134,13 @@ X_IMAGE (BigTreeTech)
 
 X_IMAGE (Gcode)
 
+X_IMAGE (RGB_Settings)
+X_IMAGE (RGB_Red)
+X_IMAGE (RGB_Green)
+X_IMAGE (RGB_Blue)
+X_IMAGE (RGB_White)
+X_IMAGE (RGB_Off)
+
 X_IMAGE (TSCSettings)
 X_IMAGE (MachineSettings)
 X_IMAGE (FeatureSettings)
@@ -145,13 +152,6 @@ X_IMAGE (PowerSupply)
 
 X_IMAGE (SilentOn)
 X_IMAGE (SilentOff)
-
-X_IMAGE (RGB_Settings)
-X_IMAGE (RGB_Red)
-X_IMAGE (RGB_Green)
-X_IMAGE (RGB_Blue)
-X_IMAGE (RGB_White)
-X_IMAGE (RGB_Off)
 
 X_IMAGE (Custom)
 

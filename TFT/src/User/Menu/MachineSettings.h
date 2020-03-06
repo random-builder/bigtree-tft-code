@@ -4,6 +4,6 @@
 
 #pragma once
 
-void menuRGBSettings(void);
+void menuLightControl(void);
 void menuMachineSettings(void);
-void menuCustom(void);
+void menuCustomCommand(void);

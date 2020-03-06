@@ -38,3 +38,4 @@ enum {
 };
 
 u8* language_text(const u8 label_index);
+

@@ -168,3 +168,4 @@
 #define FR_HEAT_CTL             "XXX"
 #define FR_WALKING              "Walking"
 #define FR_HOMING               "Homing"
+#define FR_CASE_LIGHT           "Case Light"
