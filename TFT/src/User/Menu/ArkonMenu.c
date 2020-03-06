@@ -11,8 +11,8 @@ const MENUITEMS mainPageItems = {
 LABEL_READY,
 // icon                       label
    {
-    {ICON_Home_Move,            LABEL_UNI_MOVE}, // 0
-    {ICON_Heat_Fan,             LABEL_UNI_HEAT}, // 1
+    {ICON_Home_Move,            LABEL_MOTION}, // 0
+    {ICON_Heat_Fan,             LABEL_HEATING}, // 1
     {ICON_Extrude,              LABEL_FILAMENT}, // 2
     {ICON_Settings,             LABEL_SETTINGS}, // 3
     {_ICON_EMPTY_,           _LABEL_EMPTY_},

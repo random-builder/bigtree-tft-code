@@ -4,7 +4,7 @@
 //1 title, ITEM_PER_PAGE items(icon + label)
 const MENUITEMS UnifiedMoveItems = {
 // title
-LABEL_UNI_MOVE,
+LABEL_MOTION,
 // icon                       label
  {
   {ICON_Home,                 LABEL_HOMING},       // 0
