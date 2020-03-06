@@ -94,31 +94,34 @@ void setup_custom_menu(void) {
     for (int line_index = 0; line_index < LISTITEM_PER_PAGE; line_index++) {
         int item_index = custom_page_now * LISTITEM_PER_PAGE + line_index;
         CUSTOM_ENTRY custom_entry = custom_entry_list[item_index];
+        LISTITEM *menu_item = &(customItems.items[line_index]);
         if (custom_entry.use && item_index < CUSTOM_ENTRY_COUNT) {
-            customItems.items[line_index].icon = SYMBOL_CODE;
-            customItems.items[line_index].titlelabel.index = _LABEL_DYNAMIC_;
+            menu_item->icon = SYMBOL_CODE;
+            menu_item->titlelabel.index = _LABEL_DYNAMIC_;
             dynamic_label[line_index] = custom_entry.label;
         } else {
-            customItems.items[line_index].icon = _SYMBOL_EMPTY_;
-            customItems.items[line_index].titlelabel.index = _LABEL_EMPTY_;
+            menu_item->icon = _SYMBOL_EMPTY_;
+            menu_item->titlelabel.index = _LABEL_EMPTY_;
             dynamic_label[line_index] = "";
         }
     }
     // setup page up/down button
+    LISTITEM *button_page_up = &(customItems.items[KEY_ICON_5]);
+    LISTITEM *button_page_down = &(customItems.items[KEY_ICON_6]);
     if (CUSTOM_ENTRY_COUNT <= LISTITEM_PER_PAGE) {
-        customItems.items[KEY_ICON_5].icon = _SYMBOL_EMPTY_;
-        customItems.items[KEY_ICON_6].icon = _SYMBOL_EMPTY_;
+        button_page_up->icon = _SYMBOL_EMPTY_;
+        button_page_down->icon = _SYMBOL_EMPTY_;
     } else {
         if (custom_page_now == 0) {
-            customItems.items[KEY_ICON_5].icon = _SYMBOL_EMPTY_;
-            customItems.items[KEY_ICON_6].icon = SYMBOL_PAGEDOWN;
+            button_page_up->icon = _SYMBOL_EMPTY_;
+            button_page_down->icon = SYMBOL_PAGEDOWN;
         }
         else if (custom_page_now == (CUSTOM_PAGE_COUNT - 1)) {
-            customItems.items[KEY_ICON_5].icon = SYMBOL_PAGEUP;
-            customItems.items[KEY_ICON_6].icon = _SYMBOL_EMPTY_;
+            button_page_up->icon = SYMBOL_PAGEUP;
+            button_page_down->icon = _SYMBOL_EMPTY_;
         } else {
-            customItems.items[KEY_ICON_5].icon = SYMBOL_PAGEUP;
-            customItems.items[KEY_ICON_6].icon = SYMBOL_PAGEDOWN;
+            button_page_up->icon = SYMBOL_PAGEUP;
+            button_page_down->icon = SYMBOL_PAGEDOWN;
         }
     }
 }
@@ -135,7 +138,7 @@ void menuCustom(void) {
         key_num = menuKeyGetValue();
 
         switch (key_num) {
-        case KEY_ICON_5:  // Page Down
+        case KEY_ICON_5:  // Page Up
             if (CUSTOM_PAGE_COUNT > 1) {
                 if (custom_page_now > 0) {
                     custom_page_now--;
@@ -144,7 +147,7 @@ void menuCustom(void) {
                 }
             }
             break;
-        case KEY_ICON_6:  // Page Up
+        case KEY_ICON_6:  // Page Down
             if (CUSTOM_PAGE_COUNT > 1) {
                 if (custom_page_now < CUSTOM_PAGE_COUNT - 1) {
                     custom_page_now++;
