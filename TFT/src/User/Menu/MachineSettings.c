@@ -30,8 +30,9 @@ int custom_page_now = 0;
 typedef struct {
     bool use;       // value from config
     u16 key;        // value from config
-    char *label;    // pointer to config
-    char *gcode;    // pointer to config
+    char *icon;     // pointer to config, must be icon name from symbol.inc
+    char *label;    // pointer to config, can be any user string
+    char *gcode;    // pointer to config, must be (multi) line of gcode
 } CUSTOM_ENTRY;
 
 // parsed custom menu configuration
@@ -57,11 +58,12 @@ void sendCustomGcode(int key_num) {
 #define ENTRY_PARSE(NUM) \
     custom_entry_list[NUM].use = config_parse_bool(config->custom_menu__entry_##NUM##_use); \
     custom_entry_list[NUM].key = config_parse_int(config->custom_menu__entry_##NUM##_key); \
+    custom_entry_list[NUM].icon = config->custom_menu__entry_##NUM##_icon; \
     custom_entry_list[NUM].label = config->custom_menu__entry_##NUM##_label; \
     custom_entry_list[NUM].gcode = config->custom_menu__entry_##NUM##_gcode; \
 // ENTRY_PARSE
 
-// extract manual leveling points from config.ini
+// extract custom menu entries from config.ini
 void parse_custom_data() {
     const SYSTEM_CONFIG *config = config_instance();
     ENTRY_PARSE(0)
@@ -96,7 +98,7 @@ void setup_custom_menu(void) {
         CUSTOM_ENTRY custom_entry = custom_entry_list[item_index];
         LISTITEM *menu_item = &(customItems.items[line_index]);
         if (custom_entry.use && item_index < CUSTOM_ENTRY_COUNT) {
-            menu_item->icon = SYMBOL_CODE;
+            menu_item->icon = symbol_index_by_name(custom_entry.icon);
             menu_item->titlelabel.index = _LABEL_DYNAMIC_;
             dynamic_label[line_index] = custom_entry.label;
         } else {

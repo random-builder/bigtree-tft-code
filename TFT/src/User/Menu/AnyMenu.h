@@ -77,7 +77,7 @@ typedef enum
 
 typedef struct
 {
-    uint16_t icon;
+    uint16_t icon; // symbol index
     LISTITEM_TYPE itemType;
     LABEL titlelabel;
     LABEL valueLabel;

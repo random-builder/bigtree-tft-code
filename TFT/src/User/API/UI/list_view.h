@@ -45,7 +45,11 @@ extern char *dynamic_label[LISTITEM_PER_PAGE];
 
 //#define _LABEL_DYNAMIC_ 12345 //just random number for reference
 
-uint8_t* IconCharSelect(uint8_t sel);
+// resolve symbol image text from symbol index
+uint8_t* symbol_image_by_index(const uint8_t symbol_index);
+
+// resolve symbol enum index given symbol enum name
+uint16_t symbol_index_by_name(const char *symbol_name);
 
 void ListItem_Display(const GUI_RECT *rect, uint8_t positon, const LISTITEM *curitem, bool pressed);
 
