@@ -10,14 +10,14 @@
   _LABEL_EMPTY_,
   // icon                 ItemType      Item Title        item value text(only for custom value)
   {
-    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
-    {ICONCHAR_BACK,       LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},}
+    {_SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {_SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {_SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {_SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {_SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {_SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {_SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},
+    {SYMBOL_BACK,       LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_},}
   };
 
 // File list number per page
@@ -68,14 +68,14 @@ int16_t get_Pre_Icon(char * filename)
 
     for (i = 0; (i + infoFile.cur_page * NUM_PER_PAGE < infoFile.F_num) && (i < NUM_PER_PAGE); i++) // folder
     {
-      printItems.items[i].icon = ICONCHAR_FOLDER;
+      printItems.items[i].icon = SYMBOL_FOLDER;
       dynamic_label[i] = infoFile.folder[i + infoFile.cur_page * NUM_PER_PAGE];
       printItems.items[i].titlelabel.index = _LABEL_DYNAMIC_;
       menuDrawListItem(&printItems.items[i], i);
     }
     for (; (i + infoFile.cur_page * NUM_PER_PAGE < infoFile.f_num + infoFile.F_num) && (i < NUM_PER_PAGE); i++) // gcode file
     {
-      printItems.items[i].icon = ICONCHAR_FILE;
+      printItems.items[i].icon = SYMBOL_FILE;
       dynamic_label[i] = (infoFile.source == BOARD_SD) ? infoFile.Longfile[i + infoFile.cur_page * NUM_PER_PAGE - infoFile.F_num] : infoFile.file[i + infoFile.cur_page * NUM_PER_PAGE - infoFile.F_num];
       printItems.items[i].titlelabel.index = _LABEL_DYNAMIC_;
       menuDrawListItem(&printItems.items[i], i);
@@ -101,7 +101,7 @@ int16_t get_Pre_Icon(char * filename)
 
     for (; (i < NUM_PER_PAGE); i++) //background
     {
-      printItems.items[i].icon = ICONCHAR_BACKGROUND;
+      printItems.items[i].icon = _SYMBOL_EMPTY_;
       printItems.items[i].titlelabel.index = _LABEL_EMPTY_;
       menuDrawListItem(&printItems.items[i], i);
     }
@@ -109,23 +109,23 @@ int16_t get_Pre_Icon(char * filename)
       int t_pagenum = (infoFile.F_num+infoFile.f_num+(LISTITEM_PER_PAGE-1))/LISTITEM_PER_PAGE;
       if ((infoFile.F_num+infoFile.f_num) <= LISTITEM_PER_PAGE)
       {
-        printItems.items[5].icon = ICONCHAR_BACKGROUND;
-        printItems.items[6].icon = ICONCHAR_BACKGROUND;
+        printItems.items[5].icon = _SYMBOL_EMPTY_;
+        printItems.items[6].icon = _SYMBOL_EMPTY_;
       }
       else
       {
         if(infoFile.cur_page == 0){
-          printItems.items[5].icon = ICONCHAR_BACKGROUND;
-          printItems.items[6].icon = ICONCHAR_PAGEDOWN;
+          printItems.items[5].icon = _SYMBOL_EMPTY_;
+          printItems.items[6].icon = SYMBOL_PAGEDOWN;
         }
         else if(infoFile.cur_page == (t_pagenum-1)){
-          printItems.items[5].icon = ICONCHAR_PAGEUP;
-          printItems.items[6].icon = ICONCHAR_BACKGROUND;
+          printItems.items[5].icon = SYMBOL_PAGEUP;
+          printItems.items[6].icon = _SYMBOL_EMPTY_;
         }
         else
         {
-          printItems.items[5].icon = ICONCHAR_PAGEUP;
-          printItems.items[6].icon = ICONCHAR_PAGEDOWN;
+          printItems.items[5].icon = SYMBOL_PAGEUP;
+          printItems.items[6].icon = SYMBOL_PAGEDOWN;
         }
       }
       menuDrawListItem(&printItems.items[5],5);

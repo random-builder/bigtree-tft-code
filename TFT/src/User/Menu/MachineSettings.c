@@ -11,14 +11,14 @@ LISTITEMS customItems =
           LABEL_CUSTOM,
           //  icon                 ItemType      Item Title        item value text
           {
-            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
-            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
-            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
-            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
-            { ICONCHAR_BACKGROUND, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
-            { ICONCHAR_PAGEUP, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
-            { ICONCHAR_PAGEDOWN, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
-            { ICONCHAR_BACK, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ }, }
+            { _SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { _SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { _SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { _SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { _SYMBOL_EMPTY_, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { SYMBOL_PAGEUP, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { SYMBOL_PAGEDOWN, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ },
+            { SYMBOL_BACK, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ }, }
         };
 
 #define CUSTOM_PAGE_COUNT  (CUSTOM_ENTRY_COUNT + LISTITEM_PER_PAGE - 1) / LISTITEM_PER_PAGE
@@ -95,30 +95,30 @@ void setup_custom_menu(void) {
         int item_index = custom_page_now * LISTITEM_PER_PAGE + line_index;
         CUSTOM_ENTRY custom_entry = custom_entry_list[item_index];
         if (custom_entry.use && item_index < CUSTOM_ENTRY_COUNT) {
-            customItems.items[line_index].icon = ICONCHAR_CODE;
+            customItems.items[line_index].icon = SYMBOL_CODE;
             customItems.items[line_index].titlelabel.index = _LABEL_DYNAMIC_;
             dynamic_label[line_index] = custom_entry.label;
         } else {
-            customItems.items[line_index].icon = ICONCHAR_BACKGROUND;
+            customItems.items[line_index].icon = _SYMBOL_EMPTY_;
             customItems.items[line_index].titlelabel.index = _LABEL_EMPTY_;
             dynamic_label[line_index] = "";
         }
     }
     // setup page up/down button
     if (CUSTOM_ENTRY_COUNT <= LISTITEM_PER_PAGE) {
-        customItems.items[KEY_ICON_5].icon = ICONCHAR_BACKGROUND;
-        customItems.items[KEY_ICON_6].icon = ICONCHAR_BACKGROUND;
+        customItems.items[KEY_ICON_5].icon = _SYMBOL_EMPTY_;
+        customItems.items[KEY_ICON_6].icon = _SYMBOL_EMPTY_;
     } else {
         if (custom_page_now == 0) {
-            customItems.items[KEY_ICON_5].icon = ICONCHAR_BACKGROUND;
-            customItems.items[KEY_ICON_6].icon = ICONCHAR_PAGEDOWN;
+            customItems.items[KEY_ICON_5].icon = _SYMBOL_EMPTY_;
+            customItems.items[KEY_ICON_6].icon = SYMBOL_PAGEDOWN;
         }
         else if (custom_page_now == (CUSTOM_PAGE_COUNT - 1)) {
-            customItems.items[KEY_ICON_5].icon = ICONCHAR_PAGEUP;
-            customItems.items[KEY_ICON_6].icon = ICONCHAR_BACKGROUND;
+            customItems.items[KEY_ICON_5].icon = SYMBOL_PAGEUP;
+            customItems.items[KEY_ICON_6].icon = _SYMBOL_EMPTY_;
         } else {
-            customItems.items[KEY_ICON_5].icon = ICONCHAR_PAGEUP;
-            customItems.items[KEY_ICON_6].icon = ICONCHAR_PAGEDOWN;
+            customItems.items[KEY_ICON_5].icon = SYMBOL_PAGEUP;
+            customItems.items[KEY_ICON_6].icon = SYMBOL_PAGEDOWN;
         }
     }
 }

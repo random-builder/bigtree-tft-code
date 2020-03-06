@@ -3,8 +3,8 @@
 //
 
 #include <AnyMenu.h>
+#include <list_view.h>
 #include "includes.h"
-#include "list_item.h"
 
 // exhibitRect position: [-X--]
 const GUI_RECT exhibitRect = {
@@ -119,7 +119,7 @@ void menuDrawIconOnly(const ITEM *item, uint8_t positon)
  void menuDrawListItem(const LISTITEM *item, uint8_t position)
 {
    const GUI_RECT *rect = rect_of_keyListView + position;
-  if (item->icon == ICONCHAR_BACKGROUND)
+  if (item->icon == _SYMBOL_EMPTY_)
   {
     GUI_ClearPrect(rect);
   }
@@ -316,7 +316,7 @@ void menuDrawListPage(const LISTITEMS *listItems)
   for (i = 0; i < ITEM_PER_PAGE; i++)
   {
     //const GUI_RECT *rect = rect_of_keyListView + i;
-   if (curListItems->items[i].icon != ICONCHAR_BACKGROUND)    
+   if (curListItems->items[i].icon != _SYMBOL_EMPTY_)    
      menuDrawListItem(&curListItems->items[i], i);
     #ifdef RAPID_SERIAL_COMM
       #ifndef CLEAN_MODE_SWITCHING_SUPPORT
@@ -355,7 +355,7 @@ void itemDrawIconPress(u8 position, u8 is_press)
 
     const GUI_RECT *rect = rect_of_keyListView + position;
 
-    if (curListItems->items[position].icon == ICONCHAR_BACKGROUND)
+    if (curListItems->items[position].icon == _SYMBOL_EMPTY_)
     {
     GUI_ClearPrect(rect);
     return;

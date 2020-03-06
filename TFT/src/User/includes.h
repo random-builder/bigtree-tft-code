@@ -21,6 +21,7 @@
 #include <HotbedLeveling.h>
 #include <HotbedProbeOffset.h>
 #include <InvokeGcode.h>
+#include <list_view.h>
 #include <LightingControl.h>
 #include <ParameterControl.h>
 #include <PositionControl.h>
@@ -89,7 +90,6 @@
 #include "FeatureSettings.h"
 #include "PowerFailed.h"
 
-#include "list_item.h"
 
 #define MAX_MENU_DEPTH 10       // max sub menu depth
 typedef void (*FP_MENU)(void); 

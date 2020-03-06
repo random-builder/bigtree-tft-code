@@ -10,28 +10,28 @@ LISTITEMS featureSettingsItems = {
 LABEL_FEATURE_SETTINGS,
 // icon                 ItemType      Item Title        item value text(only for custom value)
 {
-  {ICONCHAR_BACKGROUND, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
-  {ICONCHAR_BACKGROUND, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
-  {ICONCHAR_BACKGROUND, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
-  {ICONCHAR_BACKGROUND, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
-  {ICONCHAR_BACKGROUND, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
-  {ICONCHAR_PAGEUP,     LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
-  {ICONCHAR_PAGEDOWN,   LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
-  {ICONCHAR_BACK,       LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},}
+  {_SYMBOL_EMPTY_, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
+  {_SYMBOL_EMPTY_, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
+  {_SYMBOL_EMPTY_, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
+  {_SYMBOL_EMPTY_, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
+  {_SYMBOL_EMPTY_, LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
+  {SYMBOL_PAGEUP,     LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
+  {SYMBOL_PAGEDOWN,   LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},
+  {SYMBOL_BACK,       LIST_LABEL,  _LABEL_EMPTY_, _LABEL_EMPTY_},}
 };
 
 //
 //setup item states
 //
-const uint16_t toggleitem[2] = {ICONCHAR_TOGGLE_OFF,ICONCHAR_TOGGLE_ON};
+const uint16_t toggleitem[2] = {SYMBOL_TOGGLE_OFF,SYMBOL_TOGGLE_ON};
 const  u8  item_toggleState[2]    = {0, 1};
 
 #ifdef PS_ON_PIN
   #define ITEM_PS_ON_NUM 2
   const LISTITEM itemPowerOff[ITEM_PS_ON_NUM] = {
   // icon                 ItemType      Item Title        item value text(only for custom value)
-    {ICONCHAR_TOGGLE_OFF, LIST_TOGGLE,  LABEL_AUTO_SHUT_DOWN, _LABEL_EMPTY_},
-    {ICONCHAR_TOGGLE_ON,  LIST_TOGGLE,  LABEL_AUTO_SHUT_DOWN, _LABEL_EMPTY_},
+    {SYMBOL_TOGGLE_OFF, LIST_TOGGLE,  LABEL_AUTO_SHUT_DOWN, _LABEL_EMPTY_},
+    {SYMBOL_TOGGLE_ON,  LIST_TOGGLE,  LABEL_AUTO_SHUT_DOWN, _LABEL_EMPTY_},
   };
   const  u8 item_power_off[ITEM_PS_ON_NUM] = {0, 1};
   static u8  item_power_off_i = 0; //for auto power
@@ -41,9 +41,9 @@ const  u8  item_toggleState[2]    = {0, 1};
   #define ITEM_RUNOUT_NUM 3
   const LISTITEM itemRunout[ITEM_RUNOUT_NUM] = {
 // icon                 ItemType      Item Title        item value text(only for custom value)
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE,  LABEL_FILAMENT_RUNOUT, LABEL_OFF},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE,  LABEL_FILAMENT_RUNOUT, LABEL_ON},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE,  LABEL_FILAMENT_RUNOUT, LABEL_SMART},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE,  LABEL_FILAMENT_RUNOUT, LABEL_OFF},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE,  LABEL_FILAMENT_RUNOUT, LABEL_ON},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE,  LABEL_FILAMENT_RUNOUT, LABEL_SMART},
   };
 
   const  u8 item_runout[ITEM_RUNOUT_NUM] = {FILAMENT_RUNOUT_OFF, FILAMENT_RUNOUT_ON, FILAMENT_SMART_RUNOUT_ON};
@@ -53,9 +53,9 @@ const  u8  item_toggleState[2]    = {0, 1};
 #define ITEM_SPEED_NUM 3
 const LISTITEM itemMoveSpeed[ITEM_SPEED_NUM] = {
   // icon          ItemType           Item Title              item value text(only for custom value)
-  {ICONCHAR_BLANK, LIST_CUSTOMVALUE,  LABEL_MOVE_SPEED, LABEL_NORMAL_SPEED},
-  {ICONCHAR_BLANK, LIST_CUSTOMVALUE,  LABEL_MOVE_SPEED, LABEL_SLOW_SPEED},
-  {ICONCHAR_BLANK, LIST_CUSTOMVALUE,  LABEL_MOVE_SPEED, LABEL_FAST_SPEED},
+  {SYMBOL_BLANK, LIST_CUSTOMVALUE,  LABEL_MOVE_SPEED, LABEL_NORMAL_SPEED},
+  {SYMBOL_BLANK, LIST_CUSTOMVALUE,  LABEL_MOVE_SPEED, LABEL_SLOW_SPEED},
+  {SYMBOL_BLANK, LIST_CUSTOMVALUE,  LABEL_MOVE_SPEED, LABEL_FAST_SPEED},
 };
 const  u8 item_movespeed[ITEM_SPEED_NUM] = {LABEL_NORMAL_SPEED, LABEL_SLOW_SPEED, LABEL_FAST_SPEED};
 
@@ -63,15 +63,15 @@ const  u8 item_movespeed[ITEM_SPEED_NUM] = {LABEL_NORMAL_SPEED, LABEL_SLOW_SPEED
   #define LED_color_NUM 9
   const LISTITEM itemLedcolor[LED_color_NUM] = {
   // icon                       label
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_OFF},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_WHITE},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_RED},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_ORANGE},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_YELLOW},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_GREEN},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_BLUE},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_INDIGO},
-    {ICONCHAR_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_VIOLET},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_OFF},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_WHITE},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_RED},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_ORANGE},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_YELLOW},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_GREEN},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_BLUE},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_INDIGO},
+    {SYMBOL_BLANK, LIST_CUSTOMVALUE, LABEL_KNOB_LED, LABEL_VIOLET},
   };
   const  uint32_t led_color[LED_color_NUM] = {
                                     LED_OFF,
@@ -114,18 +114,18 @@ int fe_cur_page = 0;
 //set item types
 //
 LISTITEM settingPage[SKEY_COUNT] = {
-  {ICONCHAR_TOGGLE_ON,  LIST_TOGGLE,        LABEL_TERMINAL_ACK,       _LABEL_EMPTY_},
-  {ICONCHAR_TOGGLE_ON,  LIST_TOGGLE,        LABEL_INVERT_YAXIS,       _LABEL_EMPTY_},
-  {ICONCHAR_TOGGLE_ON,  LIST_TOGGLE,        LABEL_INVERT_ZAXIS,       _LABEL_EMPTY_},
+  {SYMBOL_TOGGLE_ON,  LIST_TOGGLE,        LABEL_TERMINAL_ACK,       _LABEL_EMPTY_},
+  {SYMBOL_TOGGLE_ON,  LIST_TOGGLE,        LABEL_INVERT_YAXIS,       _LABEL_EMPTY_},
+  {SYMBOL_TOGGLE_ON,  LIST_TOGGLE,        LABEL_INVERT_ZAXIS,       _LABEL_EMPTY_},
   #ifdef PS_ON_PIN
-  {ICONCHAR_TOGGLE_ON,  LIST_TOGGLE,        LABEL_AUTO_SHUT_DOWN,     _LABEL_EMPTY_},
+  {SYMBOL_TOGGLE_ON,  LIST_TOGGLE,        LABEL_AUTO_SHUT_DOWN,     _LABEL_EMPTY_},
   #endif
   #ifdef FIL_RUNOUT_PIN
-  {ICONCHAR_TOGGLE_ON,  LIST_CUSTOMVALUE,   LABEL_FILAMENT_RUNOUT,    LABEL_OFF       },
+  {SYMBOL_TOGGLE_ON,  LIST_CUSTOMVALUE,   LABEL_FILAMENT_RUNOUT,    LABEL_OFF       },
   #endif
-  {ICONCHAR_TOGGLE_ON,  LIST_CUSTOMVALUE,   LABEL_MOVE_SPEED,         LABEL_NORMAL_SPEED},
+  {SYMBOL_TOGGLE_ON,  LIST_CUSTOMVALUE,   LABEL_MOVE_SPEED,         LABEL_NORMAL_SPEED},
   #ifdef LED_color_PIN
-  {ICONCHAR_BLANK,      LIST_CUSTOMVALUE,   LABEL_KNOB_LED,           LABEL_OFF       },
+  {SYMBOL_BLANK,      LIST_CUSTOMVALUE,   LABEL_KNOB_LED,           LABEL_OFF       },
   #endif
 
 };
@@ -255,7 +255,7 @@ void loadFeatureSettings(){
       #endif
 
       default:
-        settingPage[item_index].icon = ICONCHAR_BACKGROUND;
+        settingPage[item_index].icon = _SYMBOL_EMPTY_;
         featureSettingsItems.items[i] = settingPage[item_index];
       break;
     }
@@ -263,23 +263,23 @@ void loadFeatureSettings(){
   // set page up down button according to page count and current page
   if (SKEY_COUNT <= LISTITEM_PER_PAGE)
   {
-    featureSettingsItems.items[5].icon = ICONCHAR_BACKGROUND;
-    featureSettingsItems.items[6].icon = ICONCHAR_BACKGROUND;
+    featureSettingsItems.items[5].icon = _SYMBOL_EMPTY_;
+    featureSettingsItems.items[6].icon = _SYMBOL_EMPTY_;
   }
   else
   {
     if(fe_cur_page == 0){
-      featureSettingsItems.items[5].icon = ICONCHAR_BACKGROUND;
-      featureSettingsItems.items[6].icon = ICONCHAR_PAGEDOWN;
+      featureSettingsItems.items[5].icon = _SYMBOL_EMPTY_;
+      featureSettingsItems.items[6].icon = SYMBOL_PAGEDOWN;
     }
     else if(fe_cur_page == (FE_PAGE_COUNT-1)){
-      featureSettingsItems.items[5].icon = ICONCHAR_PAGEUP;
-      featureSettingsItems.items[6].icon = ICONCHAR_BACKGROUND;
+      featureSettingsItems.items[5].icon = SYMBOL_PAGEUP;
+      featureSettingsItems.items[6].icon = _SYMBOL_EMPTY_;
     }
     else
     {
-      featureSettingsItems.items[5].icon = ICONCHAR_PAGEUP;
-      featureSettingsItems.items[6].icon = ICONCHAR_PAGEDOWN;
+      featureSettingsItems.items[5].icon = SYMBOL_PAGEUP;
+      featureSettingsItems.items[6].icon = SYMBOL_PAGEDOWN;
     }
   }
   //menuDrawListItem(&featureSettingsItems.items[5],5);
