@@ -152,6 +152,11 @@
 #define AM_KNOB_LED             "Rotary Knob LED"
 #define AM_M0_PAUSE             "Paused by M0 command"
 
+#define AM_SEND_START_GCODE     "Start Gcode before print"
+#define AM_SEND_END_GCODE       "End Gcode after print"
+#define AM_PERSISTENT_STATUS_INFO "Persistent Status Info"
+#define AM_FILE_LISTMODE        "Files viewer List Mode"
+
 #define AM_SCREEN_INFO          "Info"
 
 #define AM_POINT_5              "Frnt/Cntr"

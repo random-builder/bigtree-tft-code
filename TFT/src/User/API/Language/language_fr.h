@@ -152,6 +152,11 @@
 #define FR_KNOB_LED             "Rotary Knob LED"
 #define FR_M0_PAUSE             "Paused by M0 command"
 
+#define FR_SEND_START_GCODE     "Start Gcode before print"
+#define FR_SEND_END_GCODE       "End Gcode after print"
+#define FR_PERSISTENT_STATUS_INFO "Persistent Status Info"
+#define FR_FILE_LISTMODE        "Files viewer List Mode"
+
 #define FR_POINT_5              "Frnt/Cntr"
 #define FR_HOME_ALL             "X-Y-Z"
 #define FR_MOTION_STOP          "Drive Off"

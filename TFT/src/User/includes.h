@@ -22,7 +22,7 @@
 #include <HotbedProbeOffset.h>
 #include <InvokeGcode.h>
 #include <list_view.h>
-#include <LightingControl.h>
+#include <ledcolor.h>
 #include <ParameterControl.h>
 #include <PositionControl.h>
 #include <PrintControl.h>

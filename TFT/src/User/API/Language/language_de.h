@@ -152,6 +152,11 @@
 #define DE_KNOB_LED             "Rotary Knob LED"
 #define DE_M0_PAUSE             "Paused by M0 command"
 
+#define DE_SEND_START_GCODE     "Start Gcode before print"
+#define DE_SEND_END_GCODE       "End Gcode after print"
+#define DE_PERSISTENT_STATUS_INFO "Persistent Status Info"
+#define DE_FILE_LISTMODE        "Files viewer List Mode"
+
 #define DE_SCREEN_INFO          "Info"
 
 #define DE_POINT_5              "Frnt/Cntr"

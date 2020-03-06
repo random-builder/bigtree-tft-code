@@ -152,6 +152,11 @@
 #define PT_KNOB_LED             "Rotary Knob LED"
 #define PT_M0_PAUSE             "Paused by M0 command"
 
+#define PT_SEND_START_GCODE     "Start Gcode before print"
+#define PT_SEND_END_GCODE       "End Gcode after print"
+#define PT_PERSISTENT_STATUS_INFO "Persistent Status Info"
+#define PT_FILE_LISTMODE        "Files viewer List Mode"
+
 #define PT_SCREEN_INFO          "Info"
 
 #define PT_POINT_5              "Frnt/Cntr"

@@ -443,7 +443,7 @@ void scanUpdates(void) {
             updateFontUnicode();
         }
         if (result & HAS_BMP) {
-#ifdef SHOW_LOGO
+#ifdef SHOW_BTT_BOOTSCREEN
             updateLogoImage();
 #endif
             updateIconImageSet();

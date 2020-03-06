@@ -6,9 +6,9 @@ SETTINGS infoSettings;
 // Reset settings data
 void infoSettingsReset(void)
 {
-  infoSettings.baudrate = 115200;
-  infoSettings.language = LANG_ENGLISH;
-  infoSettings.mode = SERIAL_TSC;
+  infoSettings.baudrate = BAUDRATE;
+  infoSettings.language = DEFAULT_LANGUAGE;
+  infoSettings.mode = DEFAULT_LCD_MODE;
   infoSettings.runout = 0;
   infoSettings.rotate_ui = 0;
   infoSettings.bg_color = ST7920_BKCOLOR;
@@ -18,8 +18,12 @@ void infoSettingsReset(void)
   infoSettings.terminalACK = 0;
   infoSettings.invert_yaxis = 0;
   infoSettings.move_speed = 0;
-  infoSettings.led_color = LED_OFF;
+  infoSettings.knob_led_color = (STARTUP_KNOB_LED_COLOR - 1); 
   infoSettings.invert_zaxis = 0;
+  infoSettings.send_start_gcode = 1;
+  infoSettings.send_end_gcode = 1;
+  infoSettings.persistent_info = 1;
+  infoSettings.file_listmode = 1;
   
 }
 
@@ -38,7 +42,7 @@ void menuInfo(void)
 
   GUI_DispString(startX, centerY - BYTE_HEIGHT, (u8 *)hardware);
   GUI_DispString(startX, centerY, (u8 *)firmware);
-  GUI_DispStringInRect(20, LCD_HEIGHT - (BYTE_HEIGHT*2), LCD_WIDTH-20, LCD_HEIGHT, language_text(LABEL_TOUCH_TO_EXIT));
+  GUI_DispStringInRect(20, LCD_HEIGHT - (BYTE_HEIGHT*2), LCD_WIDTH-20, LCD_HEIGHT, symbol_image_by_index(LABEL_TOUCH_TO_EXIT));
 
   while(!isPress()) loopProcess();
   while(isPress())  loopProcess();
@@ -50,8 +54,8 @@ void menuInfo(void)
 void menuDisconnect(void)
 {
   GUI_Clear(BACKGROUND_COLOR);
-  GUI_DispStringInRect(20, 0, LCD_WIDTH-20, LCD_HEIGHT, language_text(LABEL_DISCONNECT_INFO));
-  GUI_DispStringInRect(20, LCD_HEIGHT - (BYTE_HEIGHT*2), LCD_WIDTH-20, LCD_HEIGHT, language_text(LABEL_TOUCH_TO_EXIT));
+  GUI_DispStringInRect(20, 0, LCD_WIDTH-20, LCD_HEIGHT, symbol_image_by_index(LABEL_DISCONNECT_INFO));
+  GUI_DispStringInRect(20, LCD_HEIGHT - (BYTE_HEIGHT*2), LCD_WIDTH-20, LCD_HEIGHT, symbol_image_by_index(LABEL_TOUCH_TO_EXIT));
 
   Serial_DeInit();
   while(!isPress());

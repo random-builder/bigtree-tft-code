@@ -152,6 +152,11 @@
 #define CZ_KNOB_LED             "Rotary Knob LED"
 #define CZ_M0_PAUSE             "Paused by M0 command"
 
+#define CZ_SEND_START_GCODE     "Start Gcode before print"
+#define CZ_SEND_END_GCODE       "End Gcode after print"
+#define CZ_PERSISTENT_STATUS_INFO "Persistent Status Info"
+#define CZ_FILE_LISTMODE        "Files viewer List Mode"
+
 #define CZ_SCREEN_INFO          "Info"
 
 #define CZ_POINT_5              "Frnt/Cntr"

@@ -152,6 +152,11 @@
 #define DU_KNOB_LED             "Rotary Knob LED"
 #define DU_M0_PAUSE             "Paused by M0 command"
 
+#define DU_SEND_START_GCODE     "Start Gcode before print"
+#define DU_SEND_END_GCODE       "End Gcode after print"
+#define DU_PERSISTENT_STATUS_INFO "Persistent Status Info"
+#define DU_FILE_LISTMODE        "Files viewer List Mode"
+
 #define DU_SCREEN_INFO          "Info"
 
 #define DU_POINT_5              "Frnt/Cntr"

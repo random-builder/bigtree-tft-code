@@ -152,6 +152,11 @@
 #define RU_KNOB_LED             "Rotary Knob LED"
 #define RU_M0_PAUSE             "Paused by M0 command"
 
+#define RU_SEND_START_GCODE     "Start Gcode before print"
+#define RU_SEND_END_GCODE       "End Gcode after print"
+#define RU_PERSISTENT_STATUS_INFO "Persistent Status Info"
+#define RU_FILE_LISTMODE        "Files viewer List Mode"
+
 #define RU_POINT_5              "Frnt/Cntr"
 #define RU_HOME_ALL             "X-Y-Z"
 #define RU_MOTION_STOP          "Drive Off"
