@@ -26,7 +26,7 @@
 
 // effectively discard these parameters
 #undef  TOOL_NUM
-//#undef  EXTRUDER_NUM // FIXME
+#undef  EXTRUDER_NUM
 
 #undef  X_MAX_POS
 #undef  Y_MAX_POS

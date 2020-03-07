@@ -272,7 +272,7 @@ void toggleTool(void)
 {
   if (OS_GetTime() > nowTime + update_time)
   {
-    if (EXTRUDER_NUM > 1)
+    // FIXME decouple extruder from heater
     {
       current_Ext = heater_next_nozzle(current_Ext);
       if (current_Ext == 0)
