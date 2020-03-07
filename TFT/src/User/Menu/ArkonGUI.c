@@ -7,7 +7,7 @@
 #include "GUI.h"
 
 //1 title, ITEM_PER_PAGE items (icon + label) 
-MENUITEMS StatusItems = {
+static MENUITEMS StatusItems = {
 // title
 LABEL_READY,
 // icon                       label
@@ -23,13 +23,13 @@ LABEL_READY,
  }
 };
 
-const ITEM ToolItems[3] = {
+static const ITEM ToolItems[3] = {
 // icon                       label
   {ICON_StatusNozzle,         _LABEL_EMPTY_},
   {ICON_StatusBed,            _LABEL_EMPTY_},
   {ICON_StatusFan,            _LABEL_EMPTY_},
 };
-const ITEM SpeedItems[2] = {
+static const ITEM SpeedItems[2] = {
 // icon                       label
   {ICON_StatusSpeed,         _LABEL_EMPTY_},
   {ICON_StatusFlow,          _LABEL_EMPTY_},
@@ -37,7 +37,7 @@ const ITEM SpeedItems[2] = {
 
 static u32 nowTime = 0;
 static u32 update_time = 100; // 1 seconds is 100
-SCROLL     msgScroll;
+static SCROLL     msgScroll;
 static int connected_status = -1;
 
 static char msg_head[20];
@@ -49,19 +49,19 @@ static float position_Y;
 static float position_Z;
 static bool positionCmdWait = false;
 
-TOOL current_Ext = TOOL_NOZZLE0;
-int current_fan = 0;
-int current_speedID = 0;
-const char* SpeedID[2] = SPEED_ID;
+static TOOL current_Ext = TOOL_NOZZLE0;
+static int current_fan = 0;
+static int current_speedID = 0;
+static const char* SpeedID[2] = SPEED_ID;
 // text position rectangles for Live icons 
 //icon 0
-const GUI_POINT pointID[4] = {
+static const GUI_POINT pointID[4] = {
   {1*ICON_WIDTH+0*SPACE_X+START_X - BYTE_WIDTH/2,    ICON_START_Y + 0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_NAME_Y0},
   {2*ICON_WIDTH+1*SPACE_X+START_X - BYTE_WIDTH/2,    ICON_START_Y + 0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_NAME_Y0},
   {3*ICON_WIDTH+2*SPACE_X+START_X - BYTE_WIDTH/2,    ICON_START_Y + 0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_NAME_Y0},
   {4*ICON_WIDTH+3*SPACE_X+START_X - BYTE_WIDTH/2,    ICON_START_Y + 0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_NAME_Y0},
 };
-const GUI_RECT rectB[4] = {
+static const GUI_RECT rectB[4] = {
   {START_X + 0 * ICON_WIDTH + 0 * SPACE_X,  ICON_START_Y +  0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_VAL_Y0,
    START_X + 1 * ICON_WIDTH + 0 * SPACE_X,  ICON_START_Y +  0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_VAL_Y0 + BYTE_HEIGHT},
 
@@ -76,13 +76,13 @@ const GUI_RECT rectB[4] = {
 };
 
 //info rectangle          
-const GUI_RECT RectInfo = {START_X + 1 * ICON_WIDTH + 1 * SPACE_X,  ICON_START_Y +  1 * ICON_HEIGHT + 1 * SPACE_Y,
+static const GUI_RECT RectInfo = {START_X + 1 * ICON_WIDTH + 1 * SPACE_X,  ICON_START_Y +  1 * ICON_HEIGHT + 1 * SPACE_Y,
                            START_X + 3 * ICON_WIDTH + 2 * SPACE_X,  ICON_START_Y +  2 * ICON_HEIGHT + 1 * SPACE_Y};
 
-const  GUI_RECT msgRect ={START_X + 1 * ICON_WIDTH + 1 * SPACE_X + 2,   ICON_START_Y +  1 * ICON_HEIGHT + 1 * SPACE_Y + STATUS_MSG_BODY_YOFFSET,
+static const  GUI_RECT msgRect ={START_X + 1 * ICON_WIDTH + 1 * SPACE_X + 2,   ICON_START_Y +  1 * ICON_HEIGHT + 1 * SPACE_Y + STATUS_MSG_BODY_YOFFSET,
                           START_X + 3 * ICON_WIDTH + 2 * SPACE_X - 2,   ICON_START_Y +  2 * ICON_HEIGHT + 1 * SPACE_Y - STATUS_MSG_BODY_BOTTOM};
 
-const GUI_RECT RecGantry = {START_X,                        1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y + STATUS_GANTRY_YOFFSET,
+static const GUI_RECT RecGantry = {START_X,                        1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y + STATUS_GANTRY_YOFFSET,
                             4*ICON_WIDTH+3*SPACE_X+START_X, 1*ICON_HEIGHT+1*SPACE_Y+ICON_START_Y - STATUS_GANTRY_YOFFSET};
 
 
@@ -96,7 +96,7 @@ const GUI_RECT RecGantry = {START_X,                        1*ICON_HEIGHT+0*SPAC
 
 } */
 
-void drawTemperature(void)
+static void drawTemperature(void)
 {
   //icons and their values are updated one by one to reduce flicker/clipping
 
@@ -163,58 +163,59 @@ void persistPosition(int n, float val){
   positionCmdWait = false;
 }
 
-void gantry_inc(int n, float val){
-    //float* px = &val;
-  switch (n)
-  {
-  case 0:
-    position_X += val;
-    if ( position_X > X_MAX_POS){
-      position_X = X_MAX_POS;
-    }
-    break;
-  case 1:
-    position_Y += val;
-    if ( position_Y > Y_MAX_POS){
-      position_Y = Y_MAX_POS;
-    }
-    break;
-  case 2:
-    position_Z += val;
-    if ( position_Z > Z_MAX_POS){
-      position_Z = Z_MAX_POS;
-    }
-    break;
-  default:
-    break;
-  }
-}
-void gantry_dec(int n, float val){
-    //float* px = &val;
-  switch (n)
-  {
-  case 0:
-    position_X -= val;
-    if ( position_X < X_MIN_POS){
-      position_X = X_MIN_POS;
-    }
-    break;
-  case 1:
-    position_Y -= val;
-    if ( position_Y < Y_MIN_POS){
-      position_Y = Y_MIN_POS;
-    }
-    break;
-  case 2:
-    position_Z -= val;
-    if ( position_Z < Z_MIN_POS){
-      position_Z = Z_MIN_POS;
-    }
-    break;
-  default:
-    break;
-  }
-}
+//static void gantry_inc(int n, float val){
+//    //float* px = &val;
+//  switch (n)
+//  {
+//  case 0:
+//    position_X += val;
+//    if ( position_X > X_MAX_POS){
+//      position_X = X_MAX_POS;
+//    }
+//    break;
+//  case 1:
+//    position_Y += val;
+//    if ( position_Y > Y_MAX_POS){
+//      position_Y = Y_MAX_POS;
+//    }
+//    break;
+//  case 2:
+//    position_Z += val;
+//    if ( position_Z > Z_MAX_POS){
+//      position_Z = Z_MAX_POS;
+//    }
+//    break;
+//  default:
+//    break;
+//  }
+//}
+
+//static void gantry_dec(int n, float val){
+//    //float* px = &val;
+//  switch (n)
+//  {
+//  case 0:
+//    position_X -= val;
+//    if ( position_X < X_MIN_POS){
+//      position_X = X_MIN_POS;
+//    }
+//    break;
+//  case 1:
+//    position_Y -= val;
+//    if ( position_Y < Y_MIN_POS){
+//      position_Y = Y_MIN_POS;
+//    }
+//    break;
+//  case 2:
+//    position_Z -= val;
+//    if ( position_Z < Z_MIN_POS){
+//      position_Z = Z_MIN_POS;
+//    }
+//    break;
+//  default:
+//    break;
+//  }
+//}
 
 float getAxisLocation(u8 n){
   switch (n)
@@ -273,7 +274,7 @@ void toggleTool(void)
   {
     if (EXTRUDER_NUM > 1)
     {
-      current_Ext = (TOOL)((current_Ext + 1) % HEATER_NUM);
+      current_Ext = heater_next_nozzle(current_Ext);
       if (current_Ext == 0)
       {
         current_Ext += 1;
@@ -305,6 +306,8 @@ void toggleTool(void)
 void menuStatus(void)
 {
   KEY_VALUES key_num = KEY_IDLE;
+
+  heater_ensure_config();
   GUI_SetBkColor(BACKGROUND_COLOR);
 //set_status_icon();
   menuDrawPage(&StatusItems);
@@ -330,11 +333,11 @@ void menuStatus(void)
     switch (key_num)
     {
       case KEY_ICON_0: // dynamic nozzle
-        heatSetCurrentTool((TOOL)TOOL_NOZZLE0);
+        heatSetCurrentTool(TOOL_NOZZLE0);
         infoMenu.menu[++infoMenu.cur] = menuHeaterControl;
         break;
-      case KEY_ICON_1: // dynamic bed
-        heatSetCurrentTool((TOOL)TOOL_HOTBED);
+      case KEY_ICON_1: // dynamic hotbed
+        heatSetCurrentTool(TOOL_HOTBED);
         infoMenu.menu[++infoMenu.cur] = menuHeaterControl;
         break;
       case KEY_ICON_2: // dynamic fan

@@ -130,6 +130,7 @@ void config_issue_gcode(const char *command_list) {
     char *buffer = strdup(command_list);  // mutable
     char *command = strtok(buffer, "\n");
     while (command != NULL) {
+        //render_plain_message(command);
         storeCmd("%s\n", command);
         command = strtok(NULL, "\n");
     }
@@ -165,3 +166,4 @@ float config_parse_expr(const char *value) {
 int config_find_icon(const char *icon_name) {
     return icon_find_index(icon_name);
 }
+

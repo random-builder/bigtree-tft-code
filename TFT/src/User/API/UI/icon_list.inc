@@ -159,3 +159,4 @@ X_IMAGE (parametersetting)
 X_IMAGE (global_nozzle)
 X_IMAGE (global_bed)
 X_IMAGE(ledcolor)
+

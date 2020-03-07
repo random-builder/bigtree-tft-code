@@ -104,9 +104,11 @@ void endGcodeExecute(void)
 {
   mustStoreCmd("G90\n");
   mustStoreCmd("G92 E0\n");
-  for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
+  for(TOOL tool = TOOL_HOTBED; tool < HEATER_COUNT; tool++)
   {
-    mustStoreCmd("%s S0\n", heatCmd[i]);  
+    if(heater_has_use(tool)) {
+        mustStoreCmd("%s S0\n", heatCmd[tool]);
+    }
   }
   for(u8 i = 0; i < FAN_NUM; i++)
   {
@@ -569,7 +571,7 @@ void menuShutDown(void)
         break;		
     }
     tempIsLower = true;
-    for (TOOL i = TOOL_NOZZLE0; i < HEATER_NUM; i++)
+    for (TOOL tool = TOOL_NOZZLE0; tool < HEATER_COUNT; tool++) // FIXME little insane
     {
       if(heatGetCurrentTemp(TOOL_NOZZLE0) >= AUTO_SHUT_DOWN_MAXTEMP)
         tempIsLower = false;

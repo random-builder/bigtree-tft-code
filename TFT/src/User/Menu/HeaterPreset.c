@@ -69,6 +69,7 @@ static PRESET_ENTRY preset_entry_list[PRESET_COUNT] =
           { 0 },
         };
 
+// remember selected tool between invocations
 static TOOL_PREHEAT current_heater_tool = PREHEAT_BOTH;
 
 // preset entry config parser

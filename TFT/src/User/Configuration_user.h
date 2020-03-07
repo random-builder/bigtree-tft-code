@@ -21,6 +21,13 @@
 //
 //
 
+#define HEATER_COUNT 7 // limit heater tools: 1 hotbed + 6 nozzle
+
+// effectively discard these parameters
+#undef  TOOL_NUM
+#undef  EXTRUDER_NUM
+#define EXTRUDER_NUM HEATER_COUNT
+
 #undef  X_MAX_POS
 #undef  Y_MAX_POS
 #undef  Z_MAX_POS
@@ -184,3 +191,16 @@
 #define CUSTOM_19_LABEL "Custom19"
 #define CUSTOM_19_GCODE "M105\n"
 
+//
+// no longer used
+//
+
+#undef PREHEAT_BED
+#undef PREHEAT_HOTEND
+#undef PREHEAT_TEXT
+
+#undef HEAT_MAX_TEMP
+#undef HEAT_SIGN_ID
+#undef HEAT_DISPLAY_ID
+#undef HEAT_CMD
+#undef HEAT_WAIT_CMD

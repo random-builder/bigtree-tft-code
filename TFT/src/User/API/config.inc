@@ -286,3 +286,91 @@ X_ENTRY(heater_preset, preheat_5_icon, "Preheat_5")
 X_ENTRY(heater_preset, preheat_5_label, "PEK")
 X_ENTRY(heater_preset, preheat_5_hotbed, "120")
 X_ENTRY(heater_preset, preheat_5_nozzle, "280")
+
+//
+// HeaterControl.c
+//
+
+// [heater_control]
+
+// fields:
+// gcid :: gcode-id - used by gcode parser, not user-visible
+// nick :: short tool name shown on top level smart/dynamic icon
+// label :: long tool name shown on regular icon and with edit mode
+// temp_min :: minimum allowed tool temperature
+// temp_max :: maximum allowed tool temperature
+// gcode_init :: command prefix to set-and-continue temperature
+// gcode_wait :: command prefix to set-and-await-ready temperature
+
+// note: gcode in this section is prefix-only, does not end with "\n"
+
+// tool 0
+X_ENTRY(heater_control, tool_0_use, "yes")
+X_ENTRY(heater_control, tool_0_icon, "Hotbed")
+X_ENTRY(heater_control, tool_0_gcid, "B:")
+X_ENTRY(heater_control, tool_0_nick, "Bed")
+X_ENTRY(heater_control, tool_0_label, "HotBed")
+X_ENTRY(heater_control, tool_0_temp_min, "20")
+X_ENTRY(heater_control, tool_0_temp_max, "110")
+X_ENTRY(heater_control, tool_0_gcode_init, "M140")
+X_ENTRY(heater_control, tool_0_gcode_wait, "M190")
+// tool 1
+X_ENTRY(heater_control, tool_1_use, "yes")
+X_ENTRY(heater_control, tool_1_icon, "Nozzle")
+X_ENTRY(heater_control, tool_1_gcid, "T0:")
+X_ENTRY(heater_control, tool_1_nick, "T-0")
+X_ENTRY(heater_control, tool_1_label, "Tool-0")
+X_ENTRY(heater_control, tool_1_temp_min, "20")
+X_ENTRY(heater_control, tool_1_temp_max, "275")
+X_ENTRY(heater_control, tool_1_gcode_init, "M104 T0")
+X_ENTRY(heater_control, tool_1_gcode_wait, "M109 T0")
+// tool 2
+X_ENTRY(heater_control, tool_2_use, "yes")
+X_ENTRY(heater_control, tool_2_icon, "Nozzle")
+X_ENTRY(heater_control, tool_2_gcid, "T1:")
+X_ENTRY(heater_control, tool_2_nick, "T-1")
+X_ENTRY(heater_control, tool_2_label, "Tool-1")
+X_ENTRY(heater_control, tool_2_temp_min, "20")
+X_ENTRY(heater_control, tool_2_temp_max, "275")
+X_ENTRY(heater_control, tool_2_gcode_init, "M104 T1")
+X_ENTRY(heater_control, tool_2_gcode_wait, "M109 T1")
+// tool 3
+X_ENTRY(heater_control, tool_3_use, "yes")
+X_ENTRY(heater_control, tool_3_icon, "Nozzle")
+X_ENTRY(heater_control, tool_3_gcid, "T2:")
+X_ENTRY(heater_control, tool_3_nick, "T-2")
+X_ENTRY(heater_control, tool_3_label, "Tool-2")
+X_ENTRY(heater_control, tool_3_temp_min, "20")
+X_ENTRY(heater_control, tool_3_temp_max, "275")
+X_ENTRY(heater_control, tool_3_gcode_init, "M104 T2")
+X_ENTRY(heater_control, tool_3_gcode_wait, "M109 T2")
+// tool 4
+X_ENTRY(heater_control, tool_4_use, "yes")
+X_ENTRY(heater_control, tool_4_icon, "Nozzle")
+X_ENTRY(heater_control, tool_4_gcid, "T3:")
+X_ENTRY(heater_control, tool_4_nick, "T-3")
+X_ENTRY(heater_control, tool_4_label, "Tool-3")
+X_ENTRY(heater_control, tool_4_temp_min, "20")
+X_ENTRY(heater_control, tool_4_temp_max, "275")
+X_ENTRY(heater_control, tool_4_gcode_init, "M104 T3")
+X_ENTRY(heater_control, tool_4_gcode_wait, "M109 T3")
+// tool 4
+X_ENTRY(heater_control, tool_5_use, "yes")
+X_ENTRY(heater_control, tool_5_icon, "Nozzle")
+X_ENTRY(heater_control, tool_5_gcid, "T4:")
+X_ENTRY(heater_control, tool_5_nick, "T-4")
+X_ENTRY(heater_control, tool_5_label, "Tool-4")
+X_ENTRY(heater_control, tool_5_temp_min, "20")
+X_ENTRY(heater_control, tool_5_temp_max, "275")
+X_ENTRY(heater_control, tool_5_gcode_init, "M104 T4")
+X_ENTRY(heater_control, tool_5_gcode_wait, "M109 T4")
+// tool 6
+X_ENTRY(heater_control, tool_6_use, "yes")
+X_ENTRY(heater_control, tool_6_icon, "Nozzle")
+X_ENTRY(heater_control, tool_6_gcid, "T5:")
+X_ENTRY(heater_control, tool_6_nick, "T-5")
+X_ENTRY(heater_control, tool_6_label, "Tool-5")
+X_ENTRY(heater_control, tool_6_temp_min, "20")
+X_ENTRY(heater_control, tool_6_temp_max, "275")
+X_ENTRY(heater_control, tool_6_gcode_init, "M104 T5")
+X_ENTRY(heater_control, tool_6_gcode_wait, "M109 T5")

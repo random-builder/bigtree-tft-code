@@ -40,3 +40,4 @@ int icon_find_index(const char *icon_name) {
 const char (* icon_file_list())[FILE_NAME_SIZE] {
             return icon_file_store;
         }
+

@@ -67,9 +67,9 @@ void powerFailedCache(u32 offset)
   infoBreakPoint.speed = speedGetPercent(0);
   infoBreakPoint.flow = speedGetPercent(1);
   
-  for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
+  for(TOOL tool = TOOL_HOTBED; tool < HEATER_COUNT; tool++)
   {
-    infoBreakPoint.target[i] = heatGetTargetTemp(i);
+    infoBreakPoint.target[tool] = heatGetTargetTemp(tool);
   }
   infoBreakPoint.nozzle = heatGetCurrentToolNozzle();
   
@@ -130,10 +130,10 @@ bool powerOffGetData(void)
   if(f_lseek(&fp, MAX_PATH_LEN)                                 != FR_OK)        return false;  
   if(f_read(&fp, &infoBreakPoint,  sizeof(infoBreakPoint), &br) != FR_OK)        return false;
 
-  for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
+  for(TOOL tool = TOOL_HOTBED; tool < HEATER_COUNT; tool++)
   {
-    if(infoBreakPoint.target[i] != 0)
-      mustStoreCacheCmd("%s S%d\n", heatWaitCmd[i], infoBreakPoint.target[i]);
+    if(infoBreakPoint.target[tool] != 0)
+      mustStoreCacheCmd("%s S%d\n", heatWaitCmd[tool], infoBreakPoint.target[tool]);
   }
   
   for(u8 i=0; i < FAN_NUM; i++)

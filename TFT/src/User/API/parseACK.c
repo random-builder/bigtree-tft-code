@@ -174,12 +174,12 @@ void parseACK(void)
     {
       heatSetCurrentTemp(heatGetCurrentToolNozzle(), ack_value()+0.5);
       heatSyncTargetTemp(heatGetCurrentToolNozzle(), ack_second_value()+0.5);
-      for(TOOL i = TOOL_HOTBED; i < HEATER_NUM; i++)
+      for(TOOL tool = TOOL_HOTBED; tool < HEATER_COUNT; tool++)
       {
-        if(ack_seen(toolID[i])) 
+        if(ack_seen(toolID[tool])) 
         {
-          heatSetCurrentTemp(i, ack_value()+0.5);
-          heatSyncTargetTemp(i, ack_second_value()+0.5);
+          heatSetCurrentTemp(tool, ack_value()+0.5);
+          heatSyncTargetTemp(tool, ack_second_value()+0.5);
         }      
       }
       avoid_terminal = infoSettings.terminalACK;
