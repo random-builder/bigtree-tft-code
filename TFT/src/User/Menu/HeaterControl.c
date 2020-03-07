@@ -125,9 +125,11 @@ static HEATER_ENTRY heater_entry_list[HEATER_COUNT] =
 // HEATER_PARSE
 
 // extract heater settings from config.ini
-void parse_heater_data(void) {
+static void parse_heater_data(void) {
     const SYSTEM_CONFIG *config = config_instance();
+    // hotbed
     HEATER_PARSE(0)
+    // nozzle 0 ... 5
     HEATER_PARSE(1)
     HEATER_PARSE(2)
     HEATER_PARSE(3)
@@ -169,7 +171,7 @@ TOOL heater_next_nozzle(const TOOL this_tool) {
 }
 
 // populate from config arrays-to-be-removed
-void setup_legacy_data(void) {
+static void setup_legacy_data(void) {
     for (TOOL tool = 0; tool < HEATER_COUNT; tool++) {
         const HEATER_ENTRY *heater_entry = &(heater_entry_list[tool]);
         heat_max_temp[tool] = heater_entry->temp_max;
@@ -181,7 +183,7 @@ void setup_legacy_data(void) {
 }
 
 // customize tool menu item icon and label
-void setup_tool_icon(TOOL tool, KEY_VALUES key_num) {
+static void setup_heater_icon(TOOL tool, KEY_VALUES key_num) {
     HEATER_ENTRY *heater_entry = &(heater_entry_list[tool]);
     ITEM *menu_item = &(HeaterItems.items[key_num]);
     menu_item->icon = heater_entry->icon;
@@ -192,7 +194,7 @@ void setup_tool_icon(TOOL tool, KEY_VALUES key_num) {
 void heater_ensure_config(void) {
     parse_heater_data();
     setup_legacy_data();
-    setup_tool_icon(heater_active.tool, KEY_ICON_4);
+    setup_heater_icon(heater_active.tool, KEY_ICON_4);
 }
 
 //
@@ -217,12 +219,12 @@ u16 heatGetTargetTemp(TOOL tool) {
 
 /* Set current temperature */
 void heatSetCurrentTemp(TOOL tool, s16 temp) {
-    heater_active.T[tool].current = limitValue(-99, temp, 999);
+    heater_active.T[tool].actual = limitValue(-99, temp, 999);
 }
 
 /* Get current temperature */
 s16 heatGetCurrentTemp(TOOL tool) {
-    return heater_active.T[tool].current;
+    return heater_active.T[tool].actual;
 }
 
 /* Is heating waiting to heat up */
@@ -261,7 +263,7 @@ void heatClearIsWaiting(void) {
 void heatSetCurrentTool(TOOL tool) {
     heater_active.tool = tool;
     heater_shadow.tool = tool;
-    setup_tool_icon(heater_active.tool, KEY_ICON_4);
+    setup_heater_icon(heater_active.tool, KEY_ICON_4);
 }
 
 /* Get current tool, nozzle or hot bed */
@@ -299,7 +301,7 @@ void heatSetSendWaiting(TOOL tool, bool isWaiting) {
 }
 
 static void render_current_temp(void) {
-    GUI_DispDec(CENTER_X - BYTE_WIDTH * 3, CENTER_Y, heater_active.T[heater_active.tool].current, 3, RIGHT);
+    GUI_DispDec(CENTER_X - BYTE_WIDTH * 3, CENTER_Y, heater_active.T[heater_active.tool].actual, 3, RIGHT);
 }
 
 static void render_target_temp(void) {
@@ -362,7 +364,7 @@ void menuHeaterControl(void) {
             next_tool = heater_next_tool(heater_active.tool);
             heater_active.tool = next_tool;
             heater_shadow.tool = next_tool;
-            setup_tool_icon(next_tool, key_num);
+            setup_heater_icon(next_tool, key_num);
             menuDrawItem(&HeaterItems.items[key_num], key_num);
             render_both_temp();
             break;
@@ -389,8 +391,8 @@ void menuHeaterControl(void) {
             heater_shadow.tool = heater_active.tool;
             render_both_temp();
         }
-        if (heater_shadow.T[heater_active.tool].current != heater_active.T[heater_active.tool].current) {
-            heater_shadow.T[heater_active.tool].current = heater_active.T[heater_active.tool].current;
+        if (heater_shadow.T[heater_active.tool].actual != heater_active.T[heater_active.tool].actual) {
+            heater_shadow.T[heater_active.tool].actual = heater_active.T[heater_active.tool].actual;
             render_current_temp();
         }
         if (heater_shadow.T[heater_active.tool].target != heater_active.T[heater_active.tool].target) {
@@ -440,11 +442,11 @@ void loopCheckHeater(void) {
             continue;  // ignore non-wating heater
         }
         if (tool == TOOL_HOTBED) {
-            if (heater_active.T[TOOL_HOTBED].current + 2 <= heater_active.T[TOOL_HOTBED].target) {
+            if (heater_active.T[TOOL_HOTBED].actual + 2 <= heater_active.T[TOOL_HOTBED].target) {
                 continue;  // ignore small hotbed hysteresis
             }
         } else {
-            if (inRange(heater_active.T[tool].current, heater_active.T[tool].target, 2) != true) {
+            if (inRange(heater_active.T[tool].actual, heater_active.T[tool].target, 2) != true) {
                 continue;  // ignore small nozzle hysteresis
             }
         }

@@ -35,14 +35,14 @@ const uint16_t toggleitem[TOGGLE_NUM] = {SYMBOL_TOGGLE_OFF,SYMBOL_TOGGLE_ON};
 
 #endif
 
-#define ITEM_SPEED_NUM 3
-const LABEL itemMoveSpeed[ITEM_SPEED_NUM] = {
+#define SPEED_STEP_COUNT 3
+const LABEL itemMoveSpeed[SPEED_STEP_COUNT] = {
                                               //item value text(only for custom value)
                                               LABEL_NORMAL_SPEED,
                                               LABEL_SLOW_SPEED,
                                               LABEL_FAST_SPEED,
                                             };
-const  u8 item_movespeed[ITEM_SPEED_NUM] = {LABEL_NORMAL_SPEED, LABEL_SLOW_SPEED, LABEL_FAST_SPEED};
+const  u8 item_movespeed[SPEED_STEP_COUNT] = {LABEL_NORMAL_SPEED, LABEL_SLOW_SPEED, LABEL_FAST_SPEED};
 
 //
 //add key number index of the items
@@ -149,7 +149,7 @@ void updateFeatureSettings(uint8_t key_val)
     #endif
 
     case SKEY_SPEED:
-    infoSettings.move_speed = (infoSettings.move_speed + 1) % ITEM_SPEED_NUM;
+    infoSettings.move_speed = (infoSettings.move_speed + 1) % SPEED_STEP_COUNT;
     settingPage[item_index].valueLabel = itemMoveSpeed[infoSettings.move_speed];
     featureSettingsItems.items[key_val] = settingPage[item_index];
 

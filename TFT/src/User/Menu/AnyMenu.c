@@ -146,7 +146,7 @@ void menuRefreshListPage(void){
 
 static REMINDER reminder_failure = {{0, 0, LCD_WIDTH, TITLE_END_Y}, 0, STATUS_UNCONNECT, LABEL_UNCONNECTED};
 static REMINDER reminder_success = {{0, 0, LCD_WIDTH, TITLE_END_Y}, 0, STATUS_IDLE, _LABEL_EMPTY_};
-static REMINDER reminder_process = {{LCD_WIDTH - BYTE_WIDTH/2, 0, LCD_WIDTH, BYTE_HEIGHT}, 0, STATUS_BUSY, LABEL_BUSY};
+static REMINDER reminder_process = {{LCD_WIDTH - BYTE_WIDTH, 0, LCD_WIDTH, BYTE_HEIGHT}, 0, STATUS_BUSY, LABEL_BUSY};
 
 static bool status_has_setup_config = false;
 static u16 config_reminder_timeout = 200;
@@ -157,7 +157,7 @@ static void loop_setup_config() {
         return;
     }
     status_has_setup_config = true;
-    SYSTEM_CONFIG *config = config_instance();
+    const SYSTEM_CONFIG *config = config_instance();
     config_reminder_timeout = config_parse_int(config->display_behavior__reminder_timeout) / 10; // millis to local
 }
 

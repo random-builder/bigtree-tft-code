@@ -399,17 +399,17 @@ void menuPrinting(void)
       }	
     }            
 
-    if (nowHeat.T[heatGetCurrentToolNozzle()].current != heatGetCurrentTemp(heatGetCurrentToolNozzle()) 
+    if (nowHeat.T[heatGetCurrentToolNozzle()].actual != heatGetCurrentTemp(heatGetCurrentToolNozzle()) 
      || nowHeat.T[heatGetCurrentToolNozzle()].target != heatGetTargetTemp(heatGetCurrentToolNozzle()))
     {
-      nowHeat.T[heatGetCurrentToolNozzle()].current = heatGetCurrentTemp(heatGetCurrentToolNozzle());
+      nowHeat.T[heatGetCurrentToolNozzle()].actual = heatGetCurrentTemp(heatGetCurrentToolNozzle());
       nowHeat.T[heatGetCurrentToolNozzle()].target = heatGetTargetTemp(heatGetCurrentToolNozzle());
       reValueNozzle();	
     }
-    if (nowHeat.T[TOOL_HOTBED].current != heatGetCurrentTemp(TOOL_HOTBED) 
+    if (nowHeat.T[TOOL_HOTBED].actual != heatGetCurrentTemp(TOOL_HOTBED) 
      || nowHeat.T[TOOL_HOTBED].target != heatGetTargetTemp(TOOL_HOTBED))
     {
-      nowHeat.T[TOOL_HOTBED].current = heatGetCurrentTemp(TOOL_HOTBED);
+      nowHeat.T[TOOL_HOTBED].actual = heatGetCurrentTemp(TOOL_HOTBED);
       nowHeat.T[TOOL_HOTBED].target = heatGetTargetTemp(TOOL_HOTBED);
       reValueBed();	
     }

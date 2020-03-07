@@ -11,6 +11,14 @@
 //
 
 //
+// AnyMenu.c
+//
+
+// [display_behavior]
+
+X_ENTRY(display_behavior, reminder_timeout, "2000")// millisecond
+
+//
 // HotbedLeveling.c
 //
 
@@ -316,69 +324,100 @@ X_ENTRY(heater_control, tool_0_gcode_init, "M140")
 X_ENTRY(heater_control, tool_0_gcode_wait, "M190")
 // tool 1
 X_ENTRY(heater_control, tool_1_use, "yes")
-X_ENTRY(heater_control, tool_1_icon, "Nozzle")
+X_ENTRY(heater_control, tool_1_icon, "NozzleHeat")
 X_ENTRY(heater_control, tool_1_gcid, "T0:")
-X_ENTRY(heater_control, tool_1_nick, "T-0")
-X_ENTRY(heater_control, tool_1_label, "Tool-0")
+X_ENTRY(heater_control, tool_1_nick, "H-0")
+X_ENTRY(heater_control, tool_1_label, "Heat-0")
 X_ENTRY(heater_control, tool_1_temp_min, "20")
 X_ENTRY(heater_control, tool_1_temp_max, "275")
 X_ENTRY(heater_control, tool_1_gcode_init, "M104 T0")
 X_ENTRY(heater_control, tool_1_gcode_wait, "M109 T0")
 // tool 2
 X_ENTRY(heater_control, tool_2_use, "yes")
-X_ENTRY(heater_control, tool_2_icon, "Nozzle")
+X_ENTRY(heater_control, tool_2_icon, "NozzleHeat")
 X_ENTRY(heater_control, tool_2_gcid, "T1:")
-X_ENTRY(heater_control, tool_2_nick, "T-1")
-X_ENTRY(heater_control, tool_2_label, "Tool-1")
+X_ENTRY(heater_control, tool_2_nick, "H-1")
+X_ENTRY(heater_control, tool_2_label, "Heat-1")
 X_ENTRY(heater_control, tool_2_temp_min, "20")
 X_ENTRY(heater_control, tool_2_temp_max, "275")
 X_ENTRY(heater_control, tool_2_gcode_init, "M104 T1")
 X_ENTRY(heater_control, tool_2_gcode_wait, "M109 T1")
 // tool 3
 X_ENTRY(heater_control, tool_3_use, "yes")
-X_ENTRY(heater_control, tool_3_icon, "Nozzle")
+X_ENTRY(heater_control, tool_3_icon, "NozzleHeat")
 X_ENTRY(heater_control, tool_3_gcid, "T2:")
-X_ENTRY(heater_control, tool_3_nick, "T-2")
-X_ENTRY(heater_control, tool_3_label, "Tool-2")
+X_ENTRY(heater_control, tool_3_nick, "H-2")
+X_ENTRY(heater_control, tool_3_label, "Heat-2")
 X_ENTRY(heater_control, tool_3_temp_min, "20")
 X_ENTRY(heater_control, tool_3_temp_max, "275")
 X_ENTRY(heater_control, tool_3_gcode_init, "M104 T2")
 X_ENTRY(heater_control, tool_3_gcode_wait, "M109 T2")
 // tool 4
 X_ENTRY(heater_control, tool_4_use, "yes")
-X_ENTRY(heater_control, tool_4_icon, "Nozzle")
+X_ENTRY(heater_control, tool_4_icon, "NozzleHeat")
 X_ENTRY(heater_control, tool_4_gcid, "T3:")
-X_ENTRY(heater_control, tool_4_nick, "T-3")
-X_ENTRY(heater_control, tool_4_label, "Tool-3")
+X_ENTRY(heater_control, tool_4_nick, "H-3")
+X_ENTRY(heater_control, tool_4_label, "Heat-3")
 X_ENTRY(heater_control, tool_4_temp_min, "20")
 X_ENTRY(heater_control, tool_4_temp_max, "275")
 X_ENTRY(heater_control, tool_4_gcode_init, "M104 T3")
 X_ENTRY(heater_control, tool_4_gcode_wait, "M109 T3")
 // tool 4
 X_ENTRY(heater_control, tool_5_use, "yes")
-X_ENTRY(heater_control, tool_5_icon, "Nozzle")
+X_ENTRY(heater_control, tool_5_icon, "NozzleHeat")
 X_ENTRY(heater_control, tool_5_gcid, "T4:")
-X_ENTRY(heater_control, tool_5_nick, "T-4")
-X_ENTRY(heater_control, tool_5_label, "Tool-4")
+X_ENTRY(heater_control, tool_5_nick, "H-4")
+X_ENTRY(heater_control, tool_5_label, "Heat-4")
 X_ENTRY(heater_control, tool_5_temp_min, "20")
 X_ENTRY(heater_control, tool_5_temp_max, "275")
 X_ENTRY(heater_control, tool_5_gcode_init, "M104 T4")
 X_ENTRY(heater_control, tool_5_gcode_wait, "M109 T4")
 // tool 6
 X_ENTRY(heater_control, tool_6_use, "yes")
-X_ENTRY(heater_control, tool_6_icon, "Nozzle")
+X_ENTRY(heater_control, tool_6_icon, "NozzleHeat")
 X_ENTRY(heater_control, tool_6_gcid, "T5:")
-X_ENTRY(heater_control, tool_6_nick, "T-5")
-X_ENTRY(heater_control, tool_6_label, "Tool-5")
+X_ENTRY(heater_control, tool_6_nick, "H-5")
+X_ENTRY(heater_control, tool_6_label, "Heat-5")
 X_ENTRY(heater_control, tool_6_temp_min, "20")
 X_ENTRY(heater_control, tool_6_temp_max, "275")
 X_ENTRY(heater_control, tool_6_gcode_init, "M104 T5")
 X_ENTRY(heater_control, tool_6_gcode_wait, "M109 T5")
 
 //
-// AnyMenu.c
+// FilamentControl.c
 //
 
-// [display_behavior]
+// [filament_control]
 
-X_ENTRY(display_behavior, reminder_timeout, "2000")// millisecond
+// no tool 0
+
+// tool 1
+X_ENTRY(filament_control, tool_1_use, "yes")
+X_ENTRY(filament_control, tool_1_icon, "NozzleMoto")
+X_ENTRY(filament_control, tool_1_label, "Moto-0")
+X_ENTRY(filament_control, tool_1_gcode_tool, "T0\n")
+// tool 2
+X_ENTRY(filament_control, tool_2_use, "yes")
+X_ENTRY(filament_control, tool_2_icon, "NozzleMoto")
+X_ENTRY(filament_control, tool_2_label, "Moto-1")
+X_ENTRY(filament_control, tool_2_gcode_tool, "T1\n")
+// tool 3
+X_ENTRY(filament_control, tool_3_use, "yes")
+X_ENTRY(filament_control, tool_3_icon, "NozzleMoto")
+X_ENTRY(filament_control, tool_3_label, "Moto-2")
+X_ENTRY(filament_control, tool_3_gcode_tool, "T2\n")
+// tool 5
+X_ENTRY(filament_control, tool_4_use, "yes")
+X_ENTRY(filament_control, tool_4_icon, "NozzleMoto")
+X_ENTRY(filament_control, tool_4_label, "Moto-3")
+X_ENTRY(filament_control, tool_4_gcode_tool, "T3\n")
+// tool 5
+X_ENTRY(filament_control, tool_5_use, "yes")
+X_ENTRY(filament_control, tool_5_icon, "NozzleMoto")
+X_ENTRY(filament_control, tool_5_label, "Moto-4")
+X_ENTRY(filament_control, tool_5_gcode_tool, "T4\n")
+// tool 6
+X_ENTRY(filament_control, tool_6_use, "yes")
+X_ENTRY(filament_control, tool_6_icon, "NozzleMoto")
+X_ENTRY(filament_control, tool_6_label, "Moto-5")
+X_ENTRY(filament_control, tool_6_gcode_tool, "T5\n")

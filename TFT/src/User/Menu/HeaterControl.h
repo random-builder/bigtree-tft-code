@@ -21,8 +21,8 @@ typedef enum {
 
 // tool temperature state
 typedef struct {
-    int16_t current;  // current temperature
-    int16_t target;   // target temperature
+    int16_t actual;   // measured temperature
+    int16_t target;   // expected temperature
     bool waiting;     // tool is waiting for current to reach target
 } _TEMP_;
 

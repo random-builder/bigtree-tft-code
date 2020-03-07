@@ -33,6 +33,9 @@ X_IMAGE (Preheat_4)
 X_IMAGE (Preheat_5)
 
 X_IMAGE (Nozzle)
+X_IMAGE (NozzleHeat)
+X_IMAGE (NozzleMoto)
+
 X_IMAGE (Hotbed)
 
 X_IMAGE (Temp_1)
@@ -158,5 +161,5 @@ X_IMAGE (Custom)
 X_IMAGE (parametersetting)
 X_IMAGE (global_nozzle)
 X_IMAGE (global_bed)
-X_IMAGE(ledcolor)
+X_IMAGE (ledcolor)
 

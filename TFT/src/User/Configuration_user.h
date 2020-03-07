@@ -22,11 +22,11 @@
 //
 
 #define HEATER_COUNT 7 // limit heater tools: 1 hotbed + 6 nozzle
+#define EXTRUDER_COUNT 6 // limit extruder tools: 6 nozzle
 
 // effectively discard these parameters
 #undef  TOOL_NUM
-#undef  EXTRUDER_NUM
-#define EXTRUDER_NUM HEATER_COUNT
+//#undef  EXTRUDER_NUM // FIXME
 
 #undef  X_MAX_POS
 #undef  Y_MAX_POS
