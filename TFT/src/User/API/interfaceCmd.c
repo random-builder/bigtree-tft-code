@@ -41,7 +41,7 @@ bool storeCmd(const char * format,...)
   
   if (pQueue->count >= CMD_MAX_LIST)
   {  
-    reminderMessage(LABEL_BUSY, STATUS_BUSY);
+    show_reminder_failure(LABEL_BUSY, STATUS_BUSY);
     return false;
   }
   
@@ -63,7 +63,7 @@ void mustStoreCmd(const char * format,...)
 {
   QUEUE *pQueue = &infoCmd;
   
-  if(pQueue->count >= CMD_MAX_LIST) reminderMessage(LABEL_BUSY, STATUS_BUSY);
+  if(pQueue->count >= CMD_MAX_LIST) show_reminder_failure(LABEL_BUSY, STATUS_BUSY);
 
   while (pQueue->count >= CMD_MAX_LIST)
   {  
@@ -88,7 +88,7 @@ bool storeCmdFromUART(uint8_t port, const char * gcode)
   
   if (pQueue->count >= CMD_MAX_LIST)
   {  
-    reminderMessage(LABEL_BUSY, STATUS_BUSY);
+    show_reminder_failure(LABEL_BUSY, STATUS_BUSY);
     return false;
   }
   
@@ -107,7 +107,7 @@ void mustStoreCacheCmd(const char * format,...)
 {
   QUEUE *pQueue = &infoCacheCmd;
   
-  if(pQueue->count == CMD_MAX_LIST) reminderMessage(LABEL_BUSY, STATUS_BUSY);
+  if(pQueue->count == CMD_MAX_LIST) show_reminder_failure(LABEL_BUSY, STATUS_BUSY);
 
   while (pQueue->count >= CMD_MAX_LIST)
   {  

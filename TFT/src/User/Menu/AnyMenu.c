@@ -72,9 +72,9 @@ void GUI_RestoreColorDefault(void){
   GUI_SetNumMode(GUI_NUMMODE_SPACE);
 }
 
-static const MENUITEMS *curMenuItems = NULL;   //current menu
+static const MENUITEMS *CurrentMenuItems = NULL;   // current menu
 
-static const LISTITEMS *curListItems = NULL;   //current listmenu
+static const LISTITEMS *CurrentListItems = NULL;   // current listmenu
 
 static bool isListview;
 
@@ -131,7 +131,7 @@ void menuDrawIconOnly(const ITEM *item, uint8_t positon)
 void menuRefreshListPage(void){
  for (uint8_t i = 0; i < ITEM_PER_PAGE; i++)
     {
-      menuDrawListItem(&curListItems->items[i], i);
+      menuDrawListItem(&CurrentListItems->items[i], i);
       #ifdef RAPID_SERIAL_COMM
         #ifndef CLEAN_MODE_SWITCHING_SUPPORT
           if(isPrinting() == true)
@@ -144,47 +144,64 @@ void menuRefreshListPage(void){
 
 }
 
-static REMINDER reminder = {{0, 0, LCD_WIDTH, TITLE_END_Y}, 0, STATUS_UNCONNECT, LABEL_UNCONNECTED};
-static REMINDER volumeReminder = {{0, 0, LCD_WIDTH, TITLE_END_Y}, 0, STATUS_IDLE, _LABEL_EMPTY_};
-static REMINDER busySign = {{LCD_WIDTH - 5, 0, LCD_WIDTH, 5}, 0, STATUS_BUSY, LABEL_BUSY};
+static REMINDER reminder_failure = {{0, 0, LCD_WIDTH, TITLE_END_Y}, 0, STATUS_UNCONNECT, LABEL_UNCONNECTED};
+static REMINDER reminder_success = {{0, 0, LCD_WIDTH, TITLE_END_Y}, 0, STATUS_IDLE, _LABEL_EMPTY_};
+static REMINDER reminder_process = {{LCD_WIDTH - BYTE_WIDTH/2, 0, LCD_WIDTH, BYTE_HEIGHT}, 0, STATUS_BUSY, LABEL_BUSY};
 
+static bool status_has_setup_config = false;
+static u16 config_reminder_timeout = 200;
 
-void reminderMessage(int16_t inf, SYS_STATUS status)
+// extract config setting
+static void loop_setup_config() {
+    if (status_has_setup_config) {
+        return;
+    }
+    status_has_setup_config = true;
+    SYSTEM_CONFIG *config = config_instance();
+    config_reminder_timeout = config_parse_int(config->display_behavior__reminder_timeout) / 10; // millis to local
+}
+
+static void render_reminder_process(bool has_active) {
+    uint16_t color;
+    if (has_active) {
+        color = RED;
+    } else {
+        color = BACKGROUND_COLOR;
+    }
+    GUI_RECT *rect = &(reminder_process.rect);
+    GUI_FillRectColor(rect->x0, rect->y0, rect->x1, rect->y1, color);
+}
+
+void show_reminder_failure(int16_t label_index, SYS_STATUS status_code)
 {
-  reminder.inf = inf;
+  reminder_failure.label_index = label_index;
   GUI_SetColor(REMINDER_FONT_COLOR);
-  GUI_DispStringInPrect(&reminder.rect, language_text(reminder.inf));
+  GUI_DispStringInPrect(&reminder_failure.rect, language_text(reminder_failure.label_index));
   GUI_SetColor(FONT_COLOR);
-  reminder.status = status;
-  reminder.time = OS_GetTime();
+  reminder_failure.status_code = status_code;
+  reminder_failure.time_stamp = OS_GetTime();
 }
 
-void volumeReminderMessage(int16_t inf, SYS_STATUS status)
+void show_reminder_success(int16_t label_index, SYS_STATUS status_code)
 { 
-  volumeReminder.inf = inf;
+  reminder_success.label_index = label_index;
   GUI_SetColor(VOLUME_REMINDER_FONT_COLOR);
-  GUI_DispStringInPrect(&volumeReminder.rect, language_text(volumeReminder.inf));
+  GUI_DispStringInPrect(&reminder_success.rect, language_text(reminder_success.label_index));
   GUI_SetColor(FONT_COLOR);
-  volumeReminder.status = status;
-  volumeReminder.time = OS_GetTime();
+  reminder_success.status_code = status_code;
+  reminder_success.time_stamp = OS_GetTime();
 }
 
-void busyIndicator(SYS_STATUS status)
+void show_reminder_process(SYS_STATUS status_code)
 {
-  if(status == STATUS_BUSY)
-  {
-//  GUI_SetColor(CYAN);
-//  GUI_FillCircle(busySign.rect.x0, (busySign.rect.y1 - busySign.rect.y0) / 2, (busySign.rect.x1-busySign.rect.x0)/2);
-    GUI_FillRectColor(busySign.rect.x0, busySign.rect.y0, busySign.rect.x1, busySign.rect.y1, CYAN);
-    GUI_SetColor(FONT_COLOR);
-  }
-  busySign.status = status;
-  busySign.time = OS_GetTime();
+  render_reminder_process(true);
+  reminder_process.status_code = status_code;
+  reminder_process.time_stamp = OS_GetTime();
 }
 
-void loopReminderClear(void)
+static void loop_reminder_failure_reset(void)
 {	
-  switch(reminder.status)
+  switch(reminder_failure.status_code)
   {
     case STATUS_IDLE:
       return;
@@ -200,7 +217,7 @@ void loopReminderClear(void)
       break;
       
     case STATUS_NORMAL:
-      if(OS_GetTime()<reminder.time+200)
+      if(OS_GetTime() < reminder_failure.time_stamp + config_reminder_timeout)
         return;
       break;
     default:
@@ -208,18 +225,18 @@ void loopReminderClear(void)
   }
 
   /* Clear warning message */		
-  reminder.status = STATUS_IDLE;
-  if(curMenuItems == NULL)
+  reminder_failure.status_code = STATUS_IDLE;
+  if(CurrentMenuItems == NULL)
     return;
-  menuDrawTitle(labelGetAddress(&curMenuItems->title));
+  menuDrawTitle(labelGetAddress(&CurrentMenuItems->title));
 }
 
-void loopVolumeReminderClear(void)
+static void loop_reminder_success_reset(void)
 {	
-  switch(volumeReminder.status)
+  switch(reminder_success.status_code)
   {
     case STATUS_NORMAL:
-      if(OS_GetTime()<volumeReminder.time + 200)
+      if(OS_GetTime() < reminder_success.time_stamp + config_reminder_timeout)
         return;
       break;
     default:
@@ -227,48 +244,47 @@ void loopVolumeReminderClear(void)
   }
 
   /* Clear warning message */		
-  volumeReminder.status = STATUS_IDLE;
-  if(curMenuItems == NULL)
+  reminder_success.status_code = STATUS_IDLE;
+  if(CurrentMenuItems == NULL)
     return;
-  menuDrawTitle(labelGetAddress(&curMenuItems->title));
+  menuDrawTitle(labelGetAddress(&CurrentMenuItems->title));
 }
 
-void loopBusySignClear(void)
+static void loop_reminder_process_reset(void)
 {	
-  switch(busySign.status)
+  switch(reminder_process.status_code)
   {
     case STATUS_IDLE:
       return;
     
     case STATUS_BUSY:
-     if(OS_GetTime()<busySign.time+200)
+     if(OS_GetTime() < reminder_process.time_stamp + config_reminder_timeout)
         return;
      break;
   }
 
   /* End Busy display sing */		
-  busySign.status = STATUS_IDLE;
-  GUI_SetColor(BACKGROUND_COLOR);
-  GUI_FillCircle(busySign.rect.x0, (busySign.rect.y1 - busySign.rect.y0) / 2, (busySign.rect.x1-busySign.rect.x0)/2);
-  GUI_SetColor(FONT_COLOR);
+  render_reminder_process(false);
+  reminder_process.status_code = STATUS_IDLE;
 }
 
 void menuDrawTitle(const uint8_t *content) //(const MENUITEMS * menuItems)
 {
+  uint16_t start_x = 10;
   uint16_t start_y = (TITLE_END_Y - BYTE_HEIGHT) / 2;
-  GUI_FillRectColor(10, start_y, LCD_WIDTH-10, start_y+BYTE_HEIGHT, TITLE_BACKGROUND_COLOR);
+  GUI_FillRectColor(start_x, start_y, LCD_WIDTH-start_x, start_y+BYTE_HEIGHT, TITLE_BACKGROUND_COLOR);
   
   if (content)
   {
     GUI_SetTextMode(GUI_TEXTMODE_TRANS);
-    GUI_DispLenString(10, start_y, content, LCD_WIDTH-20);
+    GUI_DispLenString(start_x, start_y, content, LCD_WIDTH-start_x*2);
     GUI_SetTextMode(GUI_TEXTMODE_NORMAL);
   }
 
   show_GlobalInfo();
-  if(reminder.status == STATUS_IDLE) return;
+  if(reminder_failure.status_code == STATUS_IDLE) return;
   GUI_SetColor(RED);
-  GUI_DispStringInPrect(&reminder.rect, language_text(reminder.inf));
+  GUI_DispStringInPrect(&reminder_failure.rect, language_text(reminder_failure.label_index));
   GUI_SetColor(FONT_COLOR);
 }
 
@@ -277,7 +293,7 @@ void menuDrawPage(const MENUITEMS *menuItems)
 {
   u8 item_index = 0;
   isListview = false;
-  curMenuItems = menuItems;
+  CurrentMenuItems = menuItems;
   TSC_ReDrawIcon = itemDrawIconPress;
 
   //GUI_Clear(BLACK);
@@ -302,7 +318,7 @@ void menuDrawListPage(const LISTITEMS *listItems)
 {
   u8 i = 0;
   isListview = true;
-  curListItems = listItems;
+  CurrentListItems = listItems;
   TSC_ReDrawIcon = itemDrawIconPress;
   
   GUI_SetBkColor(TITLE_BACKGROUND_COLOR);
@@ -316,8 +332,8 @@ void menuDrawListPage(const LISTITEMS *listItems)
   for (i = 0; i < ITEM_PER_PAGE; i++)
   {
     //const GUI_RECT *rect = rect_of_keyListView + i;
-   if (curListItems->items[i].icon != _SYMBOL_EMPTY_)    
-     menuDrawListItem(&curListItems->items[i], i);
+   if (CurrentListItems->items[i].icon != _SYMBOL_EMPTY_)    
+     menuDrawListItem(&CurrentListItems->items[i], i);
     #ifdef RAPID_SERIAL_COMM
       #ifndef CLEAN_MODE_SWITCHING_SUPPORT
         if(isPrinting() == true)
@@ -338,33 +354,33 @@ void itemDrawIconPress(u8 position, u8 is_press)
 
   if (isListview == false)
   {
-    if (curMenuItems == NULL) return;
-    if (curMenuItems->items[position].icon == _ICON_EMPTY_) return;
+    if (CurrentMenuItems == NULL) return;
+    if (CurrentMenuItems->items[position].icon == _ICON_EMPTY_) return;
     
     const GUI_RECT *rect = rect_of_key + position;
     
     if (is_press) // Turn green when pressed
-      ICON_PressedDisplay(rect->x0, rect->y0, curMenuItems->items[position].icon);
+      ICON_PressedDisplay(rect->x0, rect->y0, CurrentMenuItems->items[position].icon);
     else // Redraw normal icon when released
-      ICON_ReadDisplay(rect->x0, rect->y0, curMenuItems->items[position].icon);
+      ICON_ReadDisplay(rect->x0, rect->y0, CurrentMenuItems->items[position].icon);
   }
   else
   { //draw rec over list item if pressed
-    if (curListItems == NULL)
+    if (CurrentListItems == NULL)
     return;
 
     const GUI_RECT *rect = rect_of_keyListView + position;
 
-    if (curListItems->items[position].icon == _SYMBOL_EMPTY_)
+    if (CurrentListItems->items[position].icon == _SYMBOL_EMPTY_)
     {
     GUI_ClearPrect(rect);
     return;
     }
     if (is_press){
-    ListItem_Display(rect,position,&curListItems->items[position], true);
+    ListItem_Display(rect,position,&CurrentListItems->items[position], true);
     }
     else{ 
-    ListItem_Display(rect,position,&curListItems->items[position], false);
+    ListItem_Display(rect,position,&CurrentListItems->items[position], false);
     }
   
   }
@@ -415,13 +431,11 @@ void loopBackEnd(void)
 
 void loopFrontEnd(void)
 {
-  loopVolumeSource();                 //Check if volume source(SD/U disk) insert
-  
-  loopReminderClear();	              //If there is a message in the status bar, timed clear
-  
-  loopVolumeReminderClear();
-
-  loopBusySignClear();                //Busy Indicator clear
+  loop_setup_config();
+  loopVolumeSource();             // Check if volume source(SD/U disk) insert
+  loop_reminder_failure_reset();  // If there is a message in the status bar, timed clear
+  loop_reminder_success_reset();
+  loop_reminder_process_reset();  // Busy Indicator clear
 }
 
 void loopProcess(void)

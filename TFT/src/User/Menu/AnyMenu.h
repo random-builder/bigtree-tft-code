@@ -61,9 +61,9 @@ typedef enum
 typedef struct
 {
     GUI_RECT rect;
-    uint32_t time;
-    uint8_t status;
-    int16_t inf;
+    uint32_t time_stamp;
+    uint8_t status_code;
+    int16_t label_index;
 } REMINDER;
 
 typedef enum
@@ -97,10 +97,10 @@ extern const GUI_RECT exhibitRect;
 #define LISTITEM_HEIGHT ((LCD_HEIGHT-ICON_START_Y-START_X)/5)
 #define LISTICON_SPACE_Y ((LCD_HEIGHT-ICON_START_Y-START_X-(3*LIST_ICON_HEIGHT))/ 2)
 
-void reminderMessage(int16_t inf, SYS_STATUS status);
-void volumeReminderMessage(int16_t inf, SYS_STATUS status);
+void show_reminder_failure(int16_t label_index, SYS_STATUS status);
+void show_reminder_success(int16_t label_index, SYS_STATUS status);
 
-void busyIndicator(SYS_STATUS status);
+void show_reminder_process(SYS_STATUS status);
 
 void GUI_RestoreColorDefault(void);
 void menuDrawItem(const ITEM *menuItem, uint8_t positon);

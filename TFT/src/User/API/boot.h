@@ -54,7 +54,7 @@
 #define INFOBOX_TAIL            INFOBOX_ADDR + INFOBOX_SIZE
 
 #define ICON_SIZE               FLASH_IMAGE_UNIT(ICON_WIDTH,ICON_HEIGHT)
-#define ICON_ADDR(index)        INFOBOX_TAIL + (ICON_SIZE * index)
+#define ICON_ADDR(INDEX)        INFOBOX_TAIL + (ICON_SIZE * INDEX)
 
 // file detection mask
 #define HAS_BMP     (1<<1)

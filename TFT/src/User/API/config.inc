@@ -374,3 +374,11 @@ X_ENTRY(heater_control, tool_6_temp_min, "20")
 X_ENTRY(heater_control, tool_6_temp_max, "275")
 X_ENTRY(heater_control, tool_6_gcode_init, "M104 T5")
 X_ENTRY(heater_control, tool_6_gcode_wait, "M109 T5")
+
+//
+// AnyMenu.c
+//
+
+// [display_behavior]
+
+X_ENTRY(display_behavior, reminder_timeout, "2000")// millisecond

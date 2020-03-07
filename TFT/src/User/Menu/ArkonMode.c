@@ -62,7 +62,7 @@ void infoMenuSelect(void)
         heatSetUpdateTime(300);
       #endif
         
-      reminderMessage(LABEL_UNCONNECTED, STATUS_UNCONNECT); // reset connect status
+      show_reminder_failure(LABEL_UNCONNECTED, STATUS_UNCONNECT); // reset connect status
       break;
     }
       

@@ -210,7 +210,7 @@ void parseACK(void)
     }
     else if(ack_seen(echomagic) && ack_seen(busymagic) && ack_seen("processing"))
     {
-      busyIndicator(STATUS_BUSY);
+      show_reminder_process(STATUS_BUSY);
     }
     else if(ack_seen(echomagic) && ack_seen(busymagic) && ack_seen("paused for user"))
     {

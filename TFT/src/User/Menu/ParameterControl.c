@@ -341,12 +341,12 @@ void drawGlobalInfo(void){
     GUI_ClearRect(LCD_WIDTH/3, 0, LCD_WIDTH, BYTE_HEIGHT);
     
     //global nozzle 
-    lcd_frame_display(ICON_NOZZLE_X, 0, 2*BYTE_WIDTH, BYTE_HEIGHT, ICON_ADDR(ICON_global_nozzle));
+    lcd_frame_display(IMAGE_NOZZLE_X, 0, 2*BYTE_WIDTH, BYTE_HEIGHT, ICON_ADDR(ICON_global_nozzle));
     my_sprintf(tempstr, "%d/%d", heatGetCurrentTemp(TOOL_NOZZLE0), heatGetTargetTemp(TOOL_NOZZLE0)); 
-    GUI_DispStringInRect(VALUE_NOZZLE_X,0,VALUE_NOZZLE_X+8*BYTE_WIDTH,BYTE_HEIGHT, (u8 *)tempstr);
+    GUI_DispStringInRect(VALUE_NOZZLE_X,0,VALUE_NOZZLE_X+9*BYTE_WIDTH,BYTE_HEIGHT, (u8 *)tempstr);
         
-    //global bed 
-    lcd_frame_display(ICON_Hotbed_X, 0, 2*BYTE_WIDTH, BYTE_HEIGHT, ICON_ADDR(ICON_global_bed));
+    //global hotbed
+    lcd_frame_display(IMAGE_HOTBED_X, 0, 2*BYTE_WIDTH, BYTE_HEIGHT, ICON_ADDR(ICON_global_bed));
     my_sprintf(tempstr, "%d/%d", heatGetCurrentTemp(TOOL_HOTBED), heatGetTargetTemp(TOOL_HOTBED)); 
-    GUI_DispStringInRect(VALUE_BED_X,0,VALUE_BED_X+8*BYTE_WIDTH,BYTE_HEIGHT, (u8 *)tempstr);
+    GUI_DispStringInRect(VALUE_HOTBED_X,0,VALUE_HOTBED_X+9*BYTE_WIDTH,BYTE_HEIGHT, (u8 *)tempstr);
 }
