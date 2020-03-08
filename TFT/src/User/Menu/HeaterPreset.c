@@ -6,20 +6,20 @@
 #include "includes.h"
 
 // icon text overlay location
-#define ICON_TEXT_X(COL)   ( (COL) * ICON_WIDTH  + (COL-1) * SPACE_X + START_X - BYTE_WIDTH/2 )
-#define ICON_TEXT_Y(ROW)   ( (ROW) * ICON_HEIGHT + (ROW)   * SPACE_Y - 7       - BYTE_HEIGHT/2 )
+#define OVERLAY_TEXT_X(COL)   ( (COL) * ICON_WIDTH  + (COL-1) * SPACE_X + START_X - BYTE_WIDTH/2 )
+#define OVERLAY_TEXT_Y(ROW)   ( (ROW) * ICON_HEIGHT + (ROW)   * SPACE_Y - 7       - BYTE_HEIGHT/2 )
 
 // icon text overlay location
 static const GUI_POINT position_icon_text[8] =
         {
-          { ICON_TEXT_X(1), ICON_TEXT_Y(1) },
-          { ICON_TEXT_X(2), ICON_TEXT_Y(1) },
-          { ICON_TEXT_X(3), ICON_TEXT_Y(1) },
-          { ICON_TEXT_X(4), ICON_TEXT_Y(1) },
-          { ICON_TEXT_X(1), ICON_TEXT_Y(2) },
-          { ICON_TEXT_X(2), ICON_TEXT_Y(2) },
-          { ICON_TEXT_X(3), ICON_TEXT_Y(2) },
-          { ICON_TEXT_X(4), ICON_TEXT_Y(2) },
+          { OVERLAY_TEXT_X(1), OVERLAY_TEXT_Y(1) },
+          { OVERLAY_TEXT_X(2), OVERLAY_TEXT_Y(1) },
+          { OVERLAY_TEXT_X(3), OVERLAY_TEXT_Y(1) },
+          { OVERLAY_TEXT_X(4), OVERLAY_TEXT_Y(1) },
+          { OVERLAY_TEXT_X(1), OVERLAY_TEXT_Y(2) },
+          { OVERLAY_TEXT_X(2), OVERLAY_TEXT_Y(2) },
+          { OVERLAY_TEXT_X(3), OVERLAY_TEXT_Y(2) },
+          { OVERLAY_TEXT_X(4), OVERLAY_TEXT_Y(2) },
         };
 
 // dynamic preheat menu
