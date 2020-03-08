@@ -305,7 +305,7 @@ void toggleTool(void)
 
 void menuStatus(void)
 {
-  KEY_VALUES key_num = KEY_IDLE;
+  KEY_VALUE key_num = KEY_IDLE;
 
   heater_ensure_config();
   GUI_SetBkColor(BACKGROUND_COLOR);

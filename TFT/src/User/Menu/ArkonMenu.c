@@ -24,7 +24,7 @@ LABEL_READY,
 
 void menuMain(void)
 {
-  KEY_VALUES key_num=KEY_IDLE;
+  KEY_VALUE key_num=KEY_IDLE;
   GUI_SetBkColor(ST7920_BKCOLOR);
   menuDrawPage(&mainPageItems);
 

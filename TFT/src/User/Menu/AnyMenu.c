@@ -387,15 +387,15 @@ void itemDrawIconPress(u8 position, u8 is_press)
 }
 
 // Get button value
-KEY_VALUES menuKeyGetValue(void)
+KEY_VALUE menuKeyGetValue(void)
 {
   if (isListview == false)
   {
-    return (KEY_VALUES)KEY_GetValue(sizeof(rect_of_key) / sizeof(rect_of_key[0]), rect_of_key); // for normal menu
+    return (KEY_VALUE)KEY_GetValue(sizeof(rect_of_key) / sizeof(rect_of_key[0]), rect_of_key); // for normal menu
   }
   else
   {
-    return (KEY_VALUES)KEY_GetValue(sizeof(rect_of_keyListView) / sizeof(rect_of_keyListView[0]), rect_of_keyListView); //for listview
+    return (KEY_VALUE)KEY_GetValue(sizeof(rect_of_keyListView) / sizeof(rect_of_keyListView[0]), rect_of_keyListView); //for listview
   }
 }
 

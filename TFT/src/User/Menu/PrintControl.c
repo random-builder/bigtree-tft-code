@@ -136,7 +136,7 @@ const int16_t labelVolumeError[] = {LABEL_READ_TFTSD_ERROR, LABEL_READ_U_DISK_ER
 
 void menuPrintFromSource(void)
 {
-  KEY_VALUES key_num = KEY_IDLE;
+  KEY_VALUE key_num = KEY_IDLE;
 
   u8 update=0;
 
@@ -265,7 +265,7 @@ LABEL_PRINT,
 
 void menuPrint(void)
 {
-  KEY_VALUES  key_num = KEY_IDLE;
+  KEY_VALUE  key_num = KEY_IDLE;
   
   menuDrawPage(&sourceSelItems);
   while(infoMenu.menu[infoMenu.cur] == menuPrint)

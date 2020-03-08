@@ -130,7 +130,7 @@ void setup_custom_menu(void) {
 }
 
 void menuCustomCommand(void) {
-    KEY_VALUES key_num = KEY_IDLE;
+    KEY_VALUE key_num = KEY_IDLE;
 
     parse_custom_data();
     setup_custom_menu();
@@ -271,7 +271,7 @@ void setup_light_menu(void) {
 }
 
 // perform light level apply for enabled key
-void perform_light_control(const KEY_VALUES key_num) {
+void perform_light_control(const KEY_VALUE key_num) {
     for (int index = 0; index < LIGHT_LEVEL_COUNT; index++) {
         LIGHT_ENTRY *light_entry = &(light_entry_list[index]);
         if (light_entry->use && light_entry->key == key_num) {
@@ -282,7 +282,7 @@ void perform_light_control(const KEY_VALUES key_num) {
 }
 
 void menuLightControl(void) {
-    KEY_VALUES key_num = KEY_IDLE;
+    KEY_VALUE key_num = KEY_IDLE;
 
     parse_light_data();
     setup_light_menu();
@@ -324,7 +324,7 @@ static MENUITEMS MachineSettingsItems =
 
 void menuMachineSettings(void)
 {
-    KEY_VALUES key_num = KEY_IDLE;
+    KEY_VALUE key_num = KEY_IDLE;
 
     menuDrawPage(&MachineSettingsItems);
 

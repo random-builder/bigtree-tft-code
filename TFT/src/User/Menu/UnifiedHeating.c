@@ -18,7 +18,7 @@ LABEL_HEATING,
 
 void menuUniHeating(void)
 {
-  KEY_VALUES key_num = KEY_IDLE;	
+  KEY_VALUE key_num = KEY_IDLE;	
   menuDrawPage(&UnifiedHeatItems);
   while(infoMenu.menu[infoMenu.cur] == menuUniHeating)
   {

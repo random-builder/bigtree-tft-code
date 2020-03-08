@@ -28,7 +28,7 @@ typedef enum {
     KEY_LABEL_6,
     KEY_LABEL_7,
     KEY_IDLE = IDLE_TOUCH,
-} KEY_VALUES;
+} KEY_VALUE;
 
 #define ITEM_PER_PAGE       8
 #define LISTITEM_PER_PAGE   5
@@ -111,7 +111,7 @@ void menuDrawTitle(const uint8_t *content);  //(const MENUITEMS * menuItems);
 void menuDrawPage(const MENUITEMS *menuItems);
 void menuDrawListPage(const LISTITEMS *listItems);
 void itemDrawIconPress(uint8_t positon, uint8_t is_press);
-KEY_VALUES menuKeyGetValue(void);
+KEY_VALUE menuKeyGetValue(void);
 
 void loopBackEnd(void);
 void loopFrontEnd(void);

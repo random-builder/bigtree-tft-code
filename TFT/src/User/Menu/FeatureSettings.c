@@ -312,7 +312,7 @@ void loadFeatureSettings(){
 
 void menuFeatureSettings(void)
 {
-  KEY_VALUES key_num = KEY_IDLE;
+  KEY_VALUE key_num = KEY_IDLE;
   SETTINGS now = infoSettings;
   feature_current_page = 0;
   loadFeatureSettings();

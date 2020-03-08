@@ -183,7 +183,7 @@ static void setup_legacy_data(void) {
 }
 
 // customize tool menu item icon and label
-static void setup_heater_icon(TOOL tool, KEY_VALUES key_num) {
+static void setup_heater_icon(TOOL tool, KEY_VALUE key_num) {
     HEATER_ENTRY *heater_entry = &(heater_entry_list[tool]);
     ITEM *menu_item = &(HeaterItems.items[key_num]);
     menu_item->icon = heater_entry->icon;
@@ -325,7 +325,7 @@ static void render_both_temp(void) {
 }
 
 void menuHeaterControl(void) {
-    KEY_VALUES key_num = KEY_IDLE;
+    KEY_VALUE key_num = KEY_IDLE;
 
     heater_shadow = heater_active;  // copy struct
     state_update_interval = 100;  // 1 second

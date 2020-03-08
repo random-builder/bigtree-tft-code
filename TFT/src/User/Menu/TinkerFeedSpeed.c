@@ -71,7 +71,7 @@ void percentageReDraw(void)
 
 void menuFeedSpeed(void)
 {
-  KEY_VALUES  key_num=KEY_IDLE;	
+  KEY_VALUE  key_num=KEY_IDLE;	
   u16         now[ITEM_PERCENTAGE_NUM];
 
   for(u8 i=0; i<ITEM_PERCENTAGE_NUM; i++)

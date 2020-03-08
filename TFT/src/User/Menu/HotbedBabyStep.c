@@ -74,7 +74,7 @@ void babyStepReDraw(void)
 
 void menuBabyStep(void)
 {
-  KEY_VALUES key_num = KEY_IDLE;
+  KEY_VALUE key_num = KEY_IDLE;
   float now = baby_step_value;
 
   initElements(KEY_ICON_5);

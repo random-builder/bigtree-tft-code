@@ -135,7 +135,7 @@ void setup_preset_menu() {
 }
 
 // perform temperature control only for enabled key
-void perform_preset_apply(const KEY_VALUES key_num) {
+void perform_preset_apply(const KEY_VALUE key_num) {
     for (int index = 0; index < PRESET_COUNT; index++) {
         const PRESET_ENTRY *preset_entry = &(preset_entry_list[index]);
         if (preset_entry->use && preset_entry->key == key_num) {
@@ -158,7 +158,7 @@ void perform_preset_apply(const KEY_VALUES key_num) {
 }
 
 // switch between Nozzle, Hotbed, or Both
-void perform_switch_tool(const KEY_VALUES key_num) {
+void perform_switch_tool(const KEY_VALUE key_num) {
     current_heater_tool = (TOOL_PREHEAT) ((current_heater_tool + 1) % 3);
     PreheatItems.items[key_num] = PreheatToolItems[current_heater_tool];
     menuDrawItem(&PreheatItems.items[key_num], key_num);
@@ -181,7 +181,7 @@ void perform_temperature_reset() {
 }
 
 void menuHeaterPreset(void) {
-    KEY_VALUES key_num = KEY_IDLE;
+    KEY_VALUE key_num = KEY_IDLE;
 
     parse_preset_data();
     setup_preset_menu();

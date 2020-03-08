@@ -20,7 +20,7 @@ LABEL_HOME,
 
 void menuHoming(void)
 {
-  KEY_VALUES key_num = KEY_IDLE;	
+  KEY_VALUE key_num = KEY_IDLE;	
   menuDrawPage(&homeItems);
   while(infoMenu.menu[infoMenu.cur] == menuHoming)
   {

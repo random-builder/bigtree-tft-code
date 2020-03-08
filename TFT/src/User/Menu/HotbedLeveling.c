@@ -20,7 +20,7 @@ const MENUITEMS autoLevelingItems =
         };
 
 void menuAutoLeveling(void) {
-    KEY_VALUES key_num = KEY_IDLE;
+    KEY_VALUE key_num = KEY_IDLE;
     const SYSTEM_CONFIG *config = config_instance();
 
     menuDrawPage(&autoLevelingItems);
@@ -171,7 +171,7 @@ void invoke_point_move(const POINT_ENTRY *point_entry) {
 }
 
 // perform point move only for enabled key
-void perform_point_move(const KEY_VALUES key_num) {
+void perform_point_move(const KEY_VALUE key_num) {
     for (int index = 0; index < POINT_COUNT; index++) {
         POINT_ENTRY *point_entry = &(point_entry_list[index]);
         if (point_entry->use && point_entry->key == key_num) {
@@ -182,7 +182,7 @@ void perform_point_move(const KEY_VALUES key_num) {
 }
 
 void menuManualLeveling(void) {
-    KEY_VALUES key_num = KEY_IDLE;
+    KEY_VALUE key_num = KEY_IDLE;
     const SYSTEM_CONFIG *config = config_instance();
 
     parse_point_data();

@@ -57,7 +57,7 @@ static u32 update_time = 50; // 1 seconds is 100
 
 void menuPosition(void)
 {
-  KEY_VALUES  key_num = KEY_IDLE;
+  KEY_VALUE  key_num = KEY_IDLE;
 
 
   #ifdef ALTERNATIVE_MOVE_MENU

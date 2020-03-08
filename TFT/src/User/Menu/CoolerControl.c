@@ -78,7 +78,7 @@ void menuCoolerControl(void)
   u8 nowIndex = curIndex;
   u8 nowFanSpeed[FAN_NUM];
   memcpy(nowFanSpeed, fanSpeed, sizeof(fanSpeed));
-  KEY_VALUES key_num = KEY_IDLE;	
+  KEY_VALUE key_num = KEY_IDLE;	
 
   menuDrawPage(&fanItems);
   showFanSpeed();

@@ -129,7 +129,7 @@ static void parse_motor_data(void) {
 }
 
 // customize tool menu item icon and label
-static void setup_motor_icon(const u8 motor_index, const KEY_VALUES key_num) {
+static void setup_motor_icon(const u8 motor_index, const KEY_VALUE key_num) {
     MOTOR_ENTRY *motor_entry = &(motor_entry_list[motor_index]);
     ITEM *menu_item = &(ExtruderItems.items[key_num]);
     menu_item->icon = motor_entry->icon;
@@ -165,12 +165,12 @@ static void setup_legacy_data(void) {
     }
 }
 
-static void render_speed_icon(const KEY_VALUES key_num) {
+static void render_speed_icon(const KEY_VALUE key_num) {
     ExtruderItems.items[key_num] = SpeedItems[current_speed_index];
     menuDrawItem(&ExtruderItems.items[key_num], key_num);
 }
 
-static void render_length_icon(const KEY_VALUES key_num) {
+static void render_length_icon(const KEY_VALUE key_num) {
     ExtruderItems.items[key_num] = LengthItems[current_length_index];
     menuDrawItem(&ExtruderItems.items[key_num], key_num);
 }
@@ -196,7 +196,7 @@ static void render_extruder_status(void) {
     render_extruder_position();
 }
 
-static void render_extruder_icon(const KEY_VALUES key_num) {
+static void render_extruder_icon(const KEY_VALUE key_num) {
     setup_motor_icon(current_motor_index, key_num);
     menuDrawItem(&ExtruderItems.items[key_num], key_num);
 }
@@ -219,7 +219,7 @@ u8 extruder_next_tool(const u8 this_index) {
 }
 
 void menuFilament(void) {
-    KEY_VALUES key_num = KEY_IDLE;
+    KEY_VALUE key_num = KEY_IDLE;
 
     u32 feed_rate = 0;
     bool has_relative_E = false;

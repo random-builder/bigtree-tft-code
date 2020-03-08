@@ -370,7 +370,7 @@ void printingDrawPage(void)
 
 void menuPrinting(void)	
 {
-  KEY_VALUES  key_num = KEY_IDLE;		
+  KEY_VALUE  key_num = KEY_IDLE;		
   u32         time = 0;
   HEATER      nowHeat; 
   memset(&nowHeat, 0, sizeof(HEATER));

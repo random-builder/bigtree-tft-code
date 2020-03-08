@@ -90,7 +90,7 @@ static u8  item_baudrate_i = 0;
 
 void menuSettings(void)
 {
-  KEY_VALUES key_num = KEY_IDLE;
+  KEY_VALUE key_num = KEY_IDLE;
   SETTINGS now = infoSettings;
 
   for(u8 i=0; i<ITEM_BAUDRATE_NUM; i++)

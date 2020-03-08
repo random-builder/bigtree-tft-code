@@ -41,7 +41,7 @@ LABEL_MORE,
 
 void menuMore(void)
 {
-  KEY_VALUES  key_num = KEY_IDLE;
+  KEY_VALUE  key_num = KEY_IDLE;
 
   menuDrawPage(&moreItems);
   while(infoMenu.menu[infoMenu.cur] == menuMore)
