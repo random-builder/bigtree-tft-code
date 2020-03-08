@@ -19,7 +19,8 @@ root_dir = os.path.dirname(base_dir)
 def platformio_run():
 
 #     user_stamp = time.strftime("%Y-%m-%d")
-    user_stamp = time.strftime("%Y-%m-%d_%H-%M-%S")
+#     user_stamp = time.strftime("%Y-%m-%d_%H-%M-%S")
+    user_stamp = "NONE"
 
     build_dir = f"{root_dir}/.pioenvs/{display_name}"
     build_flags = f"-D{display_name}=true -DUSER_STAMP={user_stamp}"
@@ -52,5 +53,6 @@ def platformio_run():
         "--environment", environment,
         "--project-dir", root_dir,
         "--target", "setup",
+        "--disable-auto-clean",
     ]
     subprocess.run(command_build)

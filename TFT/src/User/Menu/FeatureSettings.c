@@ -70,7 +70,8 @@ typedef enum
 }SKEY_LIST; 
 
 #define FE_PAGE_COUNT  (SKEY_COUNT+LISTITEM_PER_PAGE-1)/LISTITEM_PER_PAGE
-int fe_cur_page = 0;
+
+static int feature_current_page = 0;
 
 //
 //set item types
@@ -101,7 +102,7 @@ LISTITEM settingPage[SKEY_COUNT] = {
 //
 void updateFeatureSettings(uint8_t key_val)
 {
-  uint8_t item_index = fe_cur_page*LISTITEM_PER_PAGE+ key_val;
+  uint8_t item_index = feature_current_page*LISTITEM_PER_PAGE+ key_val;
   switch (item_index)
   {
     case SKEY_HIDEACK:
@@ -211,7 +212,7 @@ void updateFeatureSettings(uint8_t key_val)
 void loadFeatureSettings(){
   for (uint8_t i = 0; i < LISTITEM_PER_PAGE; i++)
   {
-    uint8_t item_index = fe_cur_page*LISTITEM_PER_PAGE + i;
+    uint8_t item_index = feature_current_page*LISTITEM_PER_PAGE + i;
     switch (item_index)
     {
       case SKEY_HIDEACK:
@@ -289,11 +290,11 @@ void loadFeatureSettings(){
   }
   else
   {
-    if(fe_cur_page == 0){
+    if(feature_current_page == 0){
       featureSettingsItems.items[5].icon = SYMBOL_BLANK;
       featureSettingsItems.items[6].icon = SYMBOL_PAGEDOWN;
     }
-    else if(fe_cur_page == (FE_PAGE_COUNT-1)){
+    else if(feature_current_page == (FE_PAGE_COUNT-1)){
       featureSettingsItems.items[5].icon = SYMBOL_PAGEUP;
       featureSettingsItems.items[6].icon = SYMBOL_BLANK;
     }
@@ -313,7 +314,7 @@ void menuFeatureSettings(void)
 {
   KEY_VALUES key_num = KEY_IDLE;
   SETTINGS now = infoSettings;
-  fe_cur_page = 0;
+  feature_current_page = 0;
   loadFeatureSettings();
   menuDrawListPage(&featureSettingsItems);
 
@@ -324,8 +325,8 @@ void menuFeatureSettings(void)
     {
     case KEY_ICON_5:
       if(FE_PAGE_COUNT > 1){
-        if (fe_cur_page > 0){
-          fe_cur_page--;
+        if (feature_current_page > 0){
+          feature_current_page--;
           loadFeatureSettings();
           menuRefreshListPage();
         }
@@ -334,8 +335,8 @@ void menuFeatureSettings(void)
 
     case KEY_ICON_6:
       if(FE_PAGE_COUNT > 1){
-        if (fe_cur_page < FE_PAGE_COUNT - 1){
-          fe_cur_page++;
+        if (feature_current_page < FE_PAGE_COUNT - 1){
+          feature_current_page++;
           loadFeatureSettings();
           menuRefreshListPage();
         }

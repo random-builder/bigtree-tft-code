@@ -4,38 +4,39 @@
 
 #pragma once
 
-#include "config.h"
-#include "icon_list.h"
-
-#include <AnyMenu.h>
-#include <AnyPopup.h>
-#include <ArkonGUI.h>
-#include <ArkonMenu.h>
-#include <ArkonMode.h>
-#include <CoolerControl.h>
-#include <FilamentControl.h>
-#include <HeaterControl.h>
-#include <HeaterPreset.h>
-#include <HomingControl.h>
-#include <HotbedBabyStep.h>
-#include <HotbedLeveling.h>
-#include <HotbedProbeOffset.h>
-#include <InvokeGcode.h>
-#include <list_view.h>
-#include <ledcolor.h>
-#include <ParameterControl.h>
-#include <PositionControl.h>
-#include <PrintControl.h>
-#include "variants.h"
-
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <TinkerFeedSpeed.h>
-#include <UnifiedHeating.h>
-#include <UnifiedMotion.h>
+
+#include "config.h"
+#include "icon_list.h"
+
+#include "AnyMenu.h"
+#include "AnyPopup.h"
+#include "ArkonGUI.h"
+#include "ArkonMenu.h"
+#include "ArkonMode.h"
+#include "CoolerControl.h"
+#include "FilamentControl.h"
+#include "HeaterControl.h"
+#include "HeaterPreset.h"
+#include "HomingControl.h"
+#include "HotbedBabyStep.h"
+#include "HotbedLeveling.h"
+#include "HotbedProbeOffset.h"
+#include "InvokeGcode.h"
+#include "list_view.h"
+#include "ledcolor.h"
+#include "ParameterControl.h"
+#include "PositionControl.h"
+#include "PrintControl.h"
+#include "variants.h"
+
+#include "TinkerFeedSpeed.h"
+#include "UnifiedHeating.h"
+#include "UnifiedMotion.h"
 #include "my_misc.h"
 
 #include "variants.h"
@@ -90,25 +91,21 @@
 #include "FeatureSettings.h"
 #include "PowerFailed.h"
 
-
 #define MAX_MENU_DEPTH 10       // max sub menu depth
-typedef void (*FP_MENU)(void); 
+typedef void (*MENU_FUNC)(void);
 
-typedef struct
-{
-  FP_MENU menu[MAX_MENU_DEPTH];  // Menu function buffer
-  u8      cur;                   // Current menu index in buffer
-}MENU;
+typedef struct {
+    MENU_FUNC menu[MAX_MENU_DEPTH];  // Menu function buffer
+    u8 cur;                   // Current menu index in buffer
+} MENU;
 
 extern MENU infoMenu;
 
-typedef struct
-{	
-  bool wait;       //Whether wait for Marlin's response
-  bool rx_ok[_USART_CNT]; //Whether receive Marlin's response or get Gcode by other UART(ESP3D/OctoPrint)
-  bool connected;  //Whether have connected to Marlin
-  bool printing;   //Whether the host is busy in printing execution. ( USB serial printing and GCODE print from onboard)
-}HOST;
+typedef struct {
+    bool wait;       //Whether wait for Marlin's response
+    bool rx_ok[_USART_CNT];  //Whether receive Marlin's response or get Gcode by other UART(ESP3D/OctoPrint)
+    bool connected;  //Whether have connected to Marlin
+    bool printing;   //Whether the host is busy in printing execution. ( USB serial printing and GCODE print from onboard)
+} HOST;
 
 extern HOST infoHost;
-

@@ -438,3 +438,4 @@ X_ENTRY(filament_control, speed_2_label, "2")// label-code or user-text
 X_ENTRY(filament_control, speed_3_rate, "1200")
 X_ENTRY(filament_control, speed_3_icon, "Fast")
 X_ENTRY(filament_control, speed_3_label, "3")// label-code or user-text
+
