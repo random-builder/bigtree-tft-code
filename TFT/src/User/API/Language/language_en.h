@@ -120,7 +120,7 @@
 #define EN_U_DISK_REMOVED       "U Disk removed!"
 #define EN_ONBOARDSD            "OnboardSD"
 #define EN_READ_ONBOARDSD_ERROR "Read Onboard SD card error!"
-#define EN_FILAMENT_RUNOUT      "filament runout!"
+#define EN_FILAMENT_RUNOUT      "Filament Runout"
 #define EN_PREHEAT              "Preheat"
 #define EN_PREHEAT_BOTH         "Both"
 #define EN_PREHEAT_PLA          "PLA"

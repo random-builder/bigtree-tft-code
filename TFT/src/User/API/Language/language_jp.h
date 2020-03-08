@@ -120,7 +120,7 @@
 #define JP_U_DISK_REMOVED       "U Diskカード出しました!"
 #define JP_ONBOARDSD            "内部 mSDカード"
 #define JP_READ_ONBOARDSD_ERROR "内部 mSDカードの読み取りがエラー発生しました!"
-#define JP_FILAMENT_RUNOUT      "filament runout!"
+#define JP_FILAMENT_RUNOUT      "Filament Runout"
 #define JP_PREHEAT              "Preheat"
 #define JP_PREHEAT_BOTH         "Both"
 #define JP_PREHEAT_PLA          "PLA"

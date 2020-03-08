@@ -1,5 +1,5 @@
 //
-//
+// EEPROM settings editor
 //
 
 #pragma once
