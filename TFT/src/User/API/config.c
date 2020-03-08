@@ -14,8 +14,8 @@
 #include "includes.h"
 #include "Configuration.h"
 
-// declare global instance and populate with default values
-SYSTEM_CONFIG system_config = {
+// generate global instance and populate with default values
+static SYSTEM_CONFIG system_config = {
 #define X_ENTRY(SECTION, NAME, DEFAULT_VALUE)   DEFAULT_VALUE,
 #include "config.inc"
 #undef  X_ENTRY
@@ -25,7 +25,7 @@ SYSTEM_CONFIG system_config = {
 static char **private_collect_entry = NULL;
 
 // collect multi-line config entries into one
-void private_config_collect(char **entry, const char *value) {
+static void private_config_collect(char **entry, const char *value) {
     if (entry != private_collect_entry) {
         // first visit, overwrite default
         private_collect_entry = entry;  // memento
@@ -40,7 +40,7 @@ void private_config_collect(char **entry, const char *value) {
 }
 
 // generate config parser event reactor; see ini_handler
-int private_config_handler(void *user, const char *section, const char *name, const char *value) {
+static int private_config_handler(void *user, const char *section, const char *name, const char *value) {
     SYSTEM_CONFIG *config = (SYSTEM_CONFIG*) user;
     if (false) {
     } /* x-macro start */
@@ -58,7 +58,7 @@ int private_config_handler(void *user, const char *section, const char *name, co
 }
 
 // fgets-style flash stream buffer reader; see ini_reader
-char* private_config_reader(char *string, int length, void *stream) {
+static char* private_config_reader(char *string, int length, void *stream) {
     FLASH_STREAM *flask = (FLASH_STREAM*) stream;
     char *buffer = string;  // mutable pointer
     char letter;  // current character
@@ -130,8 +130,7 @@ void config_issue_gcode(const char *command_list) {
     char *buffer = strdup(command_list);  // mutable
     char *command = strtok(buffer, "\n");
     while (command != NULL) {
-        //render_plain_message(command);
-        mustStoreCmd("%s\n", command);
+        storeCmd("%s\n", command);
         command = strtok(NULL, "\n");
     }
     free(buffer);

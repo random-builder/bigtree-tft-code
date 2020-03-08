@@ -1,3 +1,8 @@
+//
+//
+//
+
+#include <SystemDebug.h>
 #include "ScreenSettings.h"
 #include "includes.h"
 
@@ -11,7 +16,7 @@ LABEL_SCREEN_SETTINGS,
   {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {_ICON_EMPTY_,           _LABEL_EMPTY_},
-  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {ICON_More,              LABEL_CUSTOM}, // memory
   {ICON_Back,                 LABEL_BACK},}
 };
 
@@ -152,6 +157,10 @@ void menuScreenSettings(void)
         break;
       #endif
       
+      case KEY_ICON_6:
+        infoMenu.menu[++infoMenu.cur] = menu_system_memory_report;
+        break;
+
       case KEY_ICON_7:
         infoMenu.cur--;
         break;
