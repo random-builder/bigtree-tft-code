@@ -3,7 +3,7 @@
 //
 
 #include <malloc.h>
-#include <SystemDebug.h>
+
 #include "includes.h"
 
 // report memory allocator status
@@ -29,15 +29,6 @@ void menu_system_memory_report() {
     my_sprintf(text_line, "Total free (fordblks) : %d", memory_info.fordblks);
     GUI_DispString(0, BYTE_HEIGHT * 4, (u8*) text_line);
 
-    // touch to exit
-    GUI_DispStringInRect(20, LCD_HEIGHT - (BYTE_HEIGHT * 2), LCD_WIDTH - 20, LCD_HEIGHT, language_text(LABEL_TOUCH_TO_EXIT));
-    while (!isPress()) {
-        loopProcess();
-    }
-    while (isPress()) {
-        loopProcess();
-    }
-
-    infoMenu.cur--;
+    utility_prompt_touch_to_exit();
 
 }

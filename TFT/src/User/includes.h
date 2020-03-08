@@ -13,6 +13,9 @@
 #include "config.h"
 #include "icon_list.h"
 
+#include "SystemDebug.h"
+#include "Utility.h"
+
 #include "AnyMenu.h"
 #include "AnyPopup.h"
 #include "ArkonGUI.h"
