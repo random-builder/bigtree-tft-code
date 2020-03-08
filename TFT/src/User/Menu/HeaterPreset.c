@@ -23,7 +23,7 @@ static const GUI_POINT position_icon_text[8] =
         };
 
 // dynamic preheat menu
-static MENUITEMS preheatItems =
+static MENUITEMS PreheatItems =
         {
           // title
           LABEL_PREHEAT,
@@ -32,7 +32,7 @@ static MENUITEMS preheatItems =
             { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { _ICON_EMPTY_, _LABEL_EMPTY_ },
-            { ICON_Nozzle, LABEL_NOZZLE },
+            { ICON_Preheat_Both, LABEL_PREHEAT_BOTH },
             { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { _ICON_EMPTY_, _LABEL_EMPTY_ },
             { ICON_CoolDown, LABEL_ISSUE_RESET },
@@ -40,7 +40,7 @@ static MENUITEMS preheatItems =
           }
         };
 
-static const ITEM itemToolPreheat[] =
+static const ITEM PreheatToolItems[] =
         {
           // icon              label
           { ICON_Preheat_Both, LABEL_PREHEAT_BOTH },
@@ -127,7 +127,7 @@ void setup_preset_menu() {
             continue;  // protect "Back"
         }
         if (preset_entry->use) {
-            ITEM *menu_item = &(preheatItems.items[preset_entry->key]);
+            ITEM *menu_item = &(PreheatItems.items[preset_entry->key]);
             menu_item->icon = preset_entry->icon;
             menu_item->label.address = (uint8_t*) preset_entry->label;
         }
@@ -160,8 +160,8 @@ void perform_preset_apply(const KEY_VALUES key_num) {
 // switch between Nozzle, Hotbed, or Both
 void perform_switch_tool(const KEY_VALUES key_num) {
     current_heater_tool = (TOOL_PREHEAT) ((current_heater_tool + 1) % 3);
-    preheatItems.items[key_num] = itemToolPreheat[current_heater_tool];
-    menuDrawItem(&preheatItems.items[key_num], key_num);
+    PreheatItems.items[key_num] = PreheatToolItems[current_heater_tool];
+    menuDrawItem(&PreheatItems.items[key_num], key_num);
 }
 
 // turn off heating
@@ -185,7 +185,7 @@ void menuHeaterPreset(void) {
 
     parse_preset_data();
     setup_preset_menu();
-    menuDrawPage(&preheatItems);
+    menuDrawPage(&PreheatItems);
     render_menu_text_overlay();
 
     while (infoMenu.menu[infoMenu.cur] == menuHeaterPreset) {

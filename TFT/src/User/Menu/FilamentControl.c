@@ -24,9 +24,9 @@ MENUITEMS ExtruderItems =
 
 static u8 current_motor_index = 0;
 
-#define SPEED_STEP_COUNT 3
+#define SPEED_RATE_COUNT 3
 
-static const ITEM SpeedItems[SPEED_STEP_COUNT] =
+static ITEM SpeedItems[SPEED_RATE_COUNT] =
         {
           // icon      // label
           { ICON_Slow, LABEL_SLOW_SPEED },
@@ -34,18 +34,20 @@ static const ITEM SpeedItems[SPEED_STEP_COUNT] =
           { ICON_Fast, LABEL_FAST_SPEED },
         };
 
-static const u32 speed_step_size_list[SPEED_STEP_COUNT] =
+// find language label-index by user label-code
+static const u16 default_speed_label_list[POINT_COUNT + 1] =
         {
-        EXTRUDE_SLOW_SPEED,
-        EXTRUDE_NORMAL_SPEED,
-        EXTRUDE_FAST_SPEED,
+          0,  // invalid user entry
+          LABEL_SLOW_SPEED,
+          LABEL_NORMAL_SPEED,
+          LABEL_FAST_SPEED,
         };
 
 static u8 current_speed_index = 1;
 
 #define LENGTH_STEP_COUNT 3
 
-static const ITEM itemLen[LENGTH_STEP_COUNT] =
+static ITEM LengthItems[LENGTH_STEP_COUNT] =
         {
           // icon      // label
           { ICON_Emm_1, LABEL_1_MM },
@@ -53,7 +55,7 @@ static const ITEM itemLen[LENGTH_STEP_COUNT] =
           { ICON_Emm_10, LABEL_10_MM },
         };
 
-static const u8 length_step_size_list[LENGTH_STEP_COUNT] =
+static u8 length_step_list[LENGTH_STEP_COUNT] =
         {
           1,
           5,
@@ -85,7 +87,7 @@ static MOTOR_ENTRY motor_entry_list[EXTRUDER_COUNT] =
           { 0 },
         };
 
-// heater entry config parser
+// extruder entry config parser
 #define MOTOR_PARSE(NUM) \
     motor_entry_list[NUM-1].use = config_parse_bool(config->filament_control__tool_##NUM##_use); \
     motor_entry_list[NUM-1].icon = config_find_icon(config->filament_control__tool_##NUM##_icon); \
@@ -93,7 +95,23 @@ static MOTOR_ENTRY motor_entry_list[EXTRUDER_COUNT] =
     motor_entry_list[NUM-1].gcode_tool = config->filament_control__tool_##NUM##_gcode_tool; \
 // MOTOR_PARSE
 
-// extract heater settings from config.ini
+typedef struct {
+    u16 rate;           // speed feed rate
+    u16 icon;           // speed icon index for display
+    char *label;        // label-code or user-text
+} SPEED_ENTRY;
+
+static SPEED_ENTRY speed_rate_list[SPEED_RATE_COUNT] =
+        { 0 };  // loaded from config.ini
+
+// speed feed rate entry config parser
+#define SPEED_PARSE(NUM) \
+    speed_rate_list[NUM-1].rate = config_parse_expr(config->filament_control__speed_##NUM##_rate); \
+    speed_rate_list[NUM-1].icon = config_find_icon(config->filament_control__speed_##NUM##_icon); \
+    speed_rate_list[NUM-1].label = config->filament_control__speed_##NUM##_label; \
+// SPEED_PARSE
+
+// extract extruder settings from config.ini
 static void parse_motor_data(void) {
     const SYSTEM_CONFIG *config = config_instance();
     // nozzle 0 ... 5
@@ -103,6 +121,11 @@ static void parse_motor_data(void) {
     MOTOR_PARSE(4)
     MOTOR_PARSE(5)
     MOTOR_PARSE(6)
+    // speed rate 0 ... 2
+    SPEED_PARSE(1)
+    SPEED_PARSE(2)
+    SPEED_PARSE(3)
+    //
 }
 
 // customize tool menu item icon and label
@@ -113,6 +136,26 @@ static void setup_motor_icon(const u8 motor_index, const KEY_VALUES key_num) {
     menu_item->label.address = (uint8_t*) motor_entry->label;
 }
 
+// customize speed rate item icon and label
+static void setup_speed_data(void) {
+    for (u8 speed_index = 0; speed_index < SPEED_RATE_COUNT; speed_index++) {
+        SPEED_ENTRY *speed_entry = &(speed_rate_list[speed_index]);
+        ITEM *menu_item = &(SpeedItems[speed_index]);
+        menu_item->icon = speed_entry->icon;
+        const int label_code = config_parse_int(speed_entry->label);  // 0 for non-number
+        if (label_code == 0) {
+            // has text: custom user label from config.ini
+            menu_item->label.address = (uint8_t*) speed_entry->label;
+        } else if (0 <= label_code && label_code < SPEED_RATE_COUNT) {
+            // has number: lookup label index for the language
+            const uint32_t label_index = default_speed_label_list[label_code];
+            menu_item->label.index = (uint32_t) label_index;
+        } else {
+            // FIXME: render error
+        }
+    }
+}
+
 // populate from config arrays-to-be-removed
 static void setup_legacy_data(void) {
     for (u8 motor_index = 0; motor_index < EXTRUDER_COUNT; motor_index++) {
@@ -120,6 +163,16 @@ static void setup_legacy_data(void) {
         tool_change[motor_index] = motor_entry->gcode_tool;
 //        extruderDisplayID[motor_index] = motor_entry->label;
     }
+}
+
+static void render_speed_icon(const KEY_VALUES key_num) {
+    ExtruderItems.items[key_num] = SpeedItems[current_speed_index];
+    menuDrawItem(&ExtruderItems.items[key_num], key_num);
+}
+
+static void render_length_icon(const KEY_VALUES key_num) {
+    ExtruderItems.items[key_num] = LengthItems[current_length_index];
+    menuDrawItem(&ExtruderItems.items[key_num], key_num);
 }
 
 static void render_extruder_label(void) {
@@ -141,6 +194,11 @@ static void render_extruder_position(void) {
 static void render_extruder_status(void) {
     render_extruder_label();
     render_extruder_position();
+}
+
+static void render_extruder_icon(const KEY_VALUES key_num) {
+    setup_motor_icon(current_motor_index, key_num);
+    menuDrawItem(&ExtruderItems.items[key_num], key_num);
 }
 
 // report if tool is enabled in config.ini
@@ -172,22 +230,25 @@ void menuFilament(void) {
         loopProcess();
     }
 
-    parse_motor_data();
-    setup_legacy_data();
-    setup_motor_icon(current_motor_index, KEY_ICON_4);
-
     feed_rate = coordinateGetFeedRate();
     has_relative_E = eGetRelative();
     extruder_position = coordinateGetAxisTarget(E_AXIS);
     extruder_original = extruder_position;
     extruder_temporary = extruder_position;
 
-    menuDrawPage(&ExtruderItems);
-    render_extruder_status();
-
     if (has_relative_E) {
         mustStoreCmd("M82\n");  // set extruder to absolute
     }
+
+    parse_motor_data();
+    setup_speed_data();
+    setup_legacy_data();
+    setup_motor_icon(current_motor_index, KEY_ICON_4);
+
+    menuDrawPage(&ExtruderItems);
+    render_extruder_status();
+    render_speed_icon(KEY_ICON_5);
+    render_length_icon(KEY_ICON_6);
 
     while (infoMenu.menu[infoMenu.cur] == menuFilament)
     {
@@ -195,14 +256,15 @@ void menuFilament(void) {
         switch (key_num)
         {
         case KEY_ICON_0:  // Unload
-            extruder_temporary -= length_step_size_list[current_length_index];
+            extruder_temporary -= length_step_list[current_length_index];
             break;
 
         case KEY_ICON_1:  // TODO
+            // exruder status popup
             break;
 
         case KEY_ICON_2:  // Load
-            extruder_temporary += length_step_size_list[current_length_index];
+            extruder_temporary += length_step_list[current_length_index];
             break;
 
         case KEY_ICON_3:  // Preheat
@@ -212,20 +274,17 @@ void menuFilament(void) {
         case KEY_ICON_4:  // Switch Tool
             current_motor_index = extruder_next_tool(current_motor_index);
             render_extruder_status();
-            setup_motor_icon(current_motor_index, key_num);
-            menuDrawItem(&ExtruderItems.items[key_num], key_num);
+            render_extruder_icon(key_num);
             break;
 
         case KEY_ICON_5:  // Switch Speed
-            current_speed_index = (current_speed_index + 1) % SPEED_STEP_COUNT;
-            ExtruderItems.items[key_num] = SpeedItems[current_speed_index];
-            menuDrawItem(&ExtruderItems.items[key_num], key_num);
+            current_speed_index = (current_speed_index + 1) % SPEED_RATE_COUNT;
+            render_speed_icon(key_num);
             break;
 
         case KEY_ICON_6:  // Switch Length
             current_length_index = (current_length_index + 1) % LENGTH_STEP_COUNT;
-            ExtruderItems.items[key_num] = itemLen[current_length_index];
-            menuDrawItem(&ExtruderItems.items[key_num], key_num);
+            render_length_icon(key_num);
             break;
 
         case KEY_ICON_7:  // Back
@@ -242,7 +301,7 @@ void menuFilament(void) {
             if (current_motor_index != heatGetCurrentToolNozzle() - TOOL_NOZZLE0) {
                 config_issue_gcode(motor_entry_list[current_motor_index].gcode_tool);
             }
-            storeCmd("G0 E%.5f F%d\n", extruder_position, speed_step_size_list[current_speed_index]);
+            storeCmd("G0 E%.5f F%d\n", extruder_position, speed_rate_list[current_speed_index]);
         }
         loopProcess();
     }

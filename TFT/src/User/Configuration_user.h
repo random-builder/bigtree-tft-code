@@ -27,6 +27,13 @@
 // effectively discard these parameters
 #undef  TOOL_NUM
 #undef  EXTRUDER_NUM
+#undef  EXTRUDE_SLOW_SPEED
+#undef  EXTRUDE_NORMAL_SPEED
+#undef  EXTRUDE_FAST_SPEED
+
+//
+//
+//
 
 #undef  X_MAX_POS
 #undef  Y_MAX_POS

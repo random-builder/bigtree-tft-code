@@ -421,3 +421,20 @@ X_ENTRY(filament_control, tool_6_use, "yes")
 X_ENTRY(filament_control, tool_6_icon, "NozzleMoto")
 X_ENTRY(filament_control, tool_6_label, "Moto-5")
 X_ENTRY(filament_control, tool_6_gcode_tool, "T5\n")
+
+// extrusion speed
+
+// "slow"
+X_ENTRY(filament_control, speed_1_rate, "60")
+X_ENTRY(filament_control, speed_1_icon, "Slow")
+X_ENTRY(filament_control, speed_1_label, "1")// label-code or user-text
+
+// "norm"
+X_ENTRY(filament_control, speed_2_rate, "600")
+X_ENTRY(filament_control, speed_2_icon, "Normal")
+X_ENTRY(filament_control, speed_2_label, "2")// label-code or user-text
+
+// "fast"
+X_ENTRY(filament_control, speed_3_rate, "1200")
+X_ENTRY(filament_control, speed_3_icon, "Fast")
+X_ENTRY(filament_control, speed_3_label, "3")// label-code or user-text
