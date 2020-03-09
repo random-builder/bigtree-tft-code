@@ -9,7 +9,7 @@
 // custom commands
 //
 
-static LISTITEMS CustomCommandItems =
+static LISTITEMS CustomCommandPage =
         {
           // title
           LABEL_CUSTOM,
@@ -28,8 +28,8 @@ static LISTITEMS CustomCommandItems =
 
 #define CUSTOM_PAGE_COUNT  (CUSTOM_ENTRY_COUNT + LISTITEM_PER_PAGE - 1) / LISTITEM_PER_PAGE
 
-// remember current page
-static int custom_page_now = 0;
+// remember last page
+static LISTER_PAGE custom_page_now = 0;
 
 // a custom menu entry
 typedef struct {
@@ -46,16 +46,8 @@ static CUSTOM_ENTRY custom_entry_list[CUSTOM_ENTRY_COUNT] =
           { 0 }  // all zero
         };
 
-//perform action on button press
-void perform_custom_command(int key_num) {
-    int item_index = custom_page_now * LISTITEM_PER_PAGE + key_num;
-    if (item_index < CUSTOM_ENTRY_COUNT) {
-        CUSTOM_ENTRY custom_entry = custom_entry_list[item_index];
-        if (custom_entry.use) {
-            config_issue_gcode(custom_entry.gcode);
-        }
-    }
-}
+// index inside custom entry list
+typedef int CUSTOM_INDEX;
 
 // custom entry config parser
 #define PARSE_CUSTOM(NUM) \
@@ -67,7 +59,7 @@ void perform_custom_command(int key_num) {
 // PARSE_CUSTOM
 
 // extract custom menu entries from config.ini
-void parse_custom_data() {
+static void parse_custom_data() {
     const SYSTEM_CONFIG *config = config_instance();
     PARSE_CUSTOM(0)
     PARSE_CUSTOM(1)
@@ -91,40 +83,43 @@ void parse_custom_data() {
     PARSE_CUSTOM(19)
 }
 
+// resolve list view page+index into model index
+static CUSTOM_INDEX custom_index_from_view(const LISTER_INDEX entry_index) {
+    return custom_page_now * LISTITEM_PER_PAGE + entry_index;
+}
+
 // build custom menu from parsed config
-void setup_custom_menu(void) {
-    // setup dynamic label
-    for (int line_index = 0; line_index < LISTITEM_PER_PAGE; line_index++) {
-        int item_index = custom_page_now * LISTITEM_PER_PAGE + line_index;
-        CUSTOM_ENTRY custom_entry = custom_entry_list[item_index];
-        LISTITEM *menu_item = &(CustomCommandItems.items[line_index]);
-        if (custom_entry.use && item_index < CUSTOM_ENTRY_COUNT) {
-            menu_item->icon = symbol_index_by_name(custom_entry.icon);
+static void setup_custom_page(void) {
+    for (LISTER_INDEX entry_index = 0; entry_index < LISTITEM_PER_PAGE; entry_index++) {
+        const CUSTOM_INDEX custom_index = custom_index_from_view(entry_index);
+        CUSTOM_ENTRY *custom_entry = &(custom_entry_list[custom_index]);
+        LISTITEM *menu_item = &(CustomCommandPage.items[entry_index]);
+        if (custom_entry->use && custom_index < CUSTOM_ENTRY_COUNT) {
+            menu_item->icon = symbol_index_by_name(custom_entry->icon);
             menu_item->titlelabel.index = _LABEL_DYNAMIC_;
-            dynamic_label[line_index] = custom_entry.label;
+            dynamic_label[entry_index] = custom_entry->label;
         } else {
             menu_item->icon = _SYMBOL_EMPTY_;
             menu_item->titlelabel.index = _LABEL_EMPTY_;
-            dynamic_label[line_index] = "";
+            dynamic_label[entry_index] = "";
         }
     }
-    // setup page up/down button
-    LISTITEM *button_page_up = &(CustomCommandItems.items[KEY_ICON_5]);
-    LISTITEM *button_page_down = &(CustomCommandItems.items[KEY_ICON_6]);
-    if (CUSTOM_ENTRY_COUNT <= LISTITEM_PER_PAGE) {
-        button_page_up->icon = _SYMBOL_EMPTY_;
-        button_page_down->icon = _SYMBOL_EMPTY_;
-    } else {
-        if (custom_page_now == 0) {
-            button_page_up->icon = _SYMBOL_EMPTY_;
-            button_page_down->icon = SYMBOL_PAGEDOWN;
-        }
-        else if (custom_page_now == (CUSTOM_PAGE_COUNT - 1)) {
-            button_page_up->icon = SYMBOL_PAGEUP;
-            button_page_down->icon = _SYMBOL_EMPTY_;
-        } else {
-            button_page_up->icon = SYMBOL_PAGEUP;
-            button_page_down->icon = SYMBOL_PAGEDOWN;
+    lister_setup_pager_icons(custom_page_now, CUSTOM_PAGE_COUNT, &CustomCommandPage);
+}
+
+// rebuild menu page
+static void render_custom_page(void) {
+    setup_custom_page();
+    menuDrawListPage(&CustomCommandPage);
+}
+
+// perform action on button press
+static void perform_custom_command(const KEY_VALUE key_num) {
+    const CUSTOM_INDEX custom_index = custom_index_from_view(key_num);
+    if (custom_index < CUSTOM_ENTRY_COUNT) {
+        CUSTOM_ENTRY *custom_entry = &(custom_entry_list[custom_index]);
+        if (custom_entry->use) {
+            config_issue_gcode(custom_entry->gcode);
         }
     }
 }
@@ -133,39 +128,19 @@ void menuCustomCommand(void) {
     KEY_VALUE key_num = KEY_IDLE;
 
     parse_custom_data();
-    setup_custom_menu();
-    menuDrawListPage(&CustomCommandItems);
+    render_custom_page();
 
     while (infoMenu.menu[infoMenu.cur] == menuCustomCommand) {
 
         key_num = menuKeyGetValue();
 
-        switch (key_num) {
-        case KEY_ICON_5:  // Page Up
-            if (CUSTOM_PAGE_COUNT > 1) {
-                if (custom_page_now > 0) {
-                    custom_page_now--;
-                    setup_custom_menu();
-                    menuRefreshListPage();
-                }
-            }
-            break;
-        case KEY_ICON_6:  // Page Down
-            if (CUSTOM_PAGE_COUNT > 1) {
-                if (custom_page_now < CUSTOM_PAGE_COUNT - 1) {
-                    custom_page_now++;
-                    setup_custom_menu();
-                    menuRefreshListPage();
-                }
-            }
-            break;
-        case KEY_ICON_7:  // Back
-            infoMenu.cur--;
-            break;
-        default:
-            perform_custom_command(key_num);
-            break;
-        }
+        lister_process_navigation(
+                key_num,
+                &custom_page_now,
+                CUSTOM_PAGE_COUNT,
+                render_custom_page,
+                perform_custom_command
+                );
 
         loopProcess();
     }
@@ -220,7 +195,7 @@ static LIGHT_ENTRY light_entry_list[LIGHT_LEVEL_COUNT] =
 // PARSE_LIGHT
 
 // extract light control menu entries from config.ini
-void parse_light_data() {
+static void parse_light_data() {
     const SYSTEM_CONFIG *config = config_instance();
     PARSE_LIGHT(1)
     PARSE_LIGHT(2)
@@ -245,10 +220,10 @@ static const u16 default_light_label_list[LIGHT_LEVEL_COUNT + 1] =
         };
 
 // build light control menu from parsed config
-void setup_light_menu(void) {
+static void setup_light_menu(void) {
     for (int index = 0; index < LIGHT_LEVEL_COUNT; index++) {
         LIGHT_ENTRY *light_entry = &(light_entry_list[index]);
-        if (light_entry->key == KEY_ICON_7) {
+        if (light_entry->key == BUTTON_BACK) {
             continue;  // protect "Back"
         }
         if (light_entry->use) {
@@ -271,7 +246,7 @@ void setup_light_menu(void) {
 }
 
 // perform light level apply for enabled key
-void perform_light_control(const KEY_VALUE key_num) {
+static void perform_light_control(const KEY_VALUE key_num) {
     for (int index = 0; index < LIGHT_LEVEL_COUNT; index++) {
         LIGHT_ENTRY *light_entry = &(light_entry_list[index]);
         if (light_entry->use && light_entry->key == key_num) {
@@ -291,7 +266,7 @@ void menuLightControl(void) {
     while (infoMenu.menu[infoMenu.cur] == menuLightControl) {
         key_num = menuKeyGetValue();
         switch (key_num) {
-        case KEY_ICON_7:
+        case BUTTON_BACK:
             infoMenu.cur--;
             break;
         default:
@@ -353,7 +328,7 @@ void menuMachineSettings(void)
             infoMenu.menu[++infoMenu.cur] = parametersetting;
             break;
 
-        case KEY_ICON_7:
+        case BUTTON_BACK:
             infoMenu.cur--;
             break;
 

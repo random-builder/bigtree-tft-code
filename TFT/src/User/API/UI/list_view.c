@@ -285,3 +285,68 @@ void ListItem_DisplayCustomValue(const GUI_RECT *rect, uint8_t *value)
 
     GUI_RestoreColorDefault();
 }
+
+// setup page buttons attached to the list view
+void lister_setup_pager_icons(  //
+        const LISTER_PAGE page_index,  //
+        const LISTER_PAGE page_count,  //
+        LISTITEMS *list_view_page  //
+        ) {
+    LISTITEM *button_page_up = &(list_view_page->items[BUTTON_PAGE_UP]);
+    LISTITEM *button_page_down = &(list_view_page->items[BUTTON_PAGE_DOWN]);
+    if (page_count <= 1) {
+        button_page_up->icon = SYMBOL_BLANK;
+        button_page_down->icon = SYMBOL_BLANK;
+    } else {
+        if (page_index <= 0) {
+            button_page_up->icon = SYMBOL_BLANK;
+            button_page_down->icon = SYMBOL_PAGEDOWN;
+        } else if (page_index >= (page_count - 1)) {
+            button_page_up->icon = SYMBOL_PAGEUP;
+            button_page_down->icon = SYMBOL_BLANK;
+        } else {
+            button_page_up->icon = SYMBOL_PAGEUP;
+            button_page_down->icon = SYMBOL_PAGEDOWN;
+        }
+    }
+}
+
+// process key press for a list view
+void lister_process_navigation(  //
+        const KEY_VALUE key_num,  //
+        LISTER_PAGE *page_index,  //
+        const LISTER_PAGE page_count,  //
+        void (*react_button_page)(void),  //
+        void (*react_button_default)(const KEY_VALUE)  //
+        ) {
+
+    switch (key_num) {
+
+    case BUTTON_PAGE_UP:
+        if (page_count > 1) {
+            if ((*page_index) > 0) {
+                (*page_index)--;
+                react_button_page();
+            }
+        }
+        break;
+
+    case BUTTON_PAGE_DOWN:
+        if (page_count > 1) {
+            if ((*page_index) < page_count - 1) {
+                (*page_index)++;
+                react_button_page();
+            }
+        }
+        break;
+
+    case BUTTON_BACK:
+        infoMenu.cur--;
+        break;
+
+    default:
+        react_button_default(key_num);
+        break;
+    }
+
+}

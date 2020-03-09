@@ -10,7 +10,7 @@ static const LISTITEM FeatureEntryEmpty =
         { SYMBOL_BLANK, LIST_LABEL, _LABEL_EMPTY_, _LABEL_EMPTY_ };
 
 // feature menu page
-static LISTITEMS FeatureSettingsItems =
+static LISTITEMS FeatureSettingsPage =
         {
           // title
           LABEL_FEATURE_SETTINGS,
@@ -79,12 +79,15 @@ typedef enum {
 #endif
     // keep tail
     FEATURE_COUNT
-} FEATURE_INDEX;
+} FEATURE_ENUM;
+
+// position inside feature enum
+typedef int FEATURE_INDEX;
 
 #define FEATURE_PAGE_COUNT  ( FEATURE_COUNT + LISTITEM_PER_PAGE - 1 ) / LISTITEM_PER_PAGE
 
 // remember last page
-static int feature_page_now = 0;
+static LISTER_PAGE feature_page_now = 0;
 
 // feature option model/view
 static LISTITEM FeatureEntryList[FEATURE_COUNT] =
@@ -111,10 +114,20 @@ static LISTITEM FeatureEntryList[FEATURE_COUNT] =
 #endif
         };
 
+// feature index safety guard
+static bool has_valid_feature(const FEATURE_INDEX feature_index) {
+    return 0 <= feature_index && feature_index < FEATURE_COUNT;
+}
+
+// resolve list view page+index into model index
+static FEATURE_INDEX feature_index_from_view(const LISTER_INDEX entry_index) {
+    return feature_page_now * LISTITEM_PER_PAGE + entry_index;
+}
+
 // copy model state into view with optional model update
 static void setup_feature_entry(const FEATURE_INDEX feature_index, const bool with_update) {
 
-    if (feature_index < 0 || feature_index >= FEATURE_COUNT) {
+    if (!has_valid_feature(feature_index)) {
         return;  // failure
     }
 
@@ -213,56 +226,35 @@ static void setup_feature_entry(const FEATURE_INDEX feature_index, const bool wi
 }
 
 // load values on page change and reload
-static void setup_feature_screen() {
-
-    for (uint8_t entry_index = 0; entry_index < LISTITEM_PER_PAGE; entry_index++) {
-        const FEATURE_INDEX feature_index = feature_page_now * LISTITEM_PER_PAGE + entry_index;
-        if (feature_index >= FEATURE_COUNT) {
-            FeatureSettingsItems.items[entry_index] = FeatureEntryEmpty;  // copy
+static void setup_feature_page(void) {
+    for (LISTER_INDEX entry_index = 0; entry_index < LISTITEM_PER_PAGE; entry_index++) {
+        const FEATURE_INDEX feature_index = feature_index_from_view(entry_index);
+        LISTITEM *feature_entry = &(FeatureSettingsPage.items[entry_index]);
+        if (has_valid_feature(feature_index)) {
+            setup_feature_entry(feature_index, false);  // without update
+            *feature_entry = FeatureEntryList[feature_index];  // copy
         } else {
-            setup_feature_entry(feature_index, false);  // no update
-            FeatureSettingsItems.items[entry_index] = FeatureEntryList[feature_index];  // copy
+            *feature_entry = FeatureEntryEmpty;  // copy
         }
     }
+    lister_setup_pager_icons(feature_page_now, FEATURE_PAGE_COUNT, &FeatureSettingsPage);
+}
 
-    LISTITEM *button_page_up = &(FeatureSettingsItems.items[KEY_ICON_5]);
-    LISTITEM *button_page_down = &(FeatureSettingsItems.items[KEY_ICON_6]);
-    if (FEATURE_COUNT <= LISTITEM_PER_PAGE) {
-        button_page_up->icon = SYMBOL_BLANK;
-        button_page_down->icon = SYMBOL_BLANK;
-    } else {
-        if (feature_page_now <= 0) {
-            button_page_up->icon = SYMBOL_BLANK;
-            button_page_down->icon = SYMBOL_PAGEDOWN;
-        } else if (feature_page_now >= (FEATURE_PAGE_COUNT - 1)) {
-            button_page_up->icon = SYMBOL_PAGEUP;
-            button_page_down->icon = SYMBOL_BLANK;
-        } else {
-            button_page_up->icon = SYMBOL_PAGEUP;
-            button_page_down->icon = SYMBOL_PAGEDOWN;
-        }
-    }
-
+// rebuild feature menu
+static void render_feature_page(void) {
+    setup_feature_page();
+    menuDrawListPage(&FeatureSettingsPage);
 }
 
 // action on button press: update and render option value
-static void perform_feature_update(const uint8_t key_num) {
-
-    const FEATURE_INDEX feature_index = feature_page_now * LISTITEM_PER_PAGE + key_num;
-
-    if (feature_index < 0 || feature_index >= FEATURE_COUNT) {
+static void perform_feature_change(const KEY_VALUE key_num) {
+    const FEATURE_INDEX feature_index = feature_index_from_view(key_num);
+    if (!has_valid_feature(feature_index)) {
         return;  // ignore empty
     }
-
     setup_feature_entry(feature_index, true);  // with update
-    FeatureSettingsItems.items[key_num] = FeatureEntryList[feature_index];  // copy
-    menuDrawListItem(&FeatureSettingsItems.items[key_num], key_num);
-
-}
-
-static void render_feature_screen(void) {
-    setup_feature_screen();
-    menuDrawListPage(&FeatureSettingsItems);
+    FeatureSettingsPage.items[key_num] = FeatureEntryList[feature_index];  // copy
+    menuDrawListItem(&FeatureSettingsPage.items[key_num], key_num);
 }
 
 void menuFeatureSettings(void) {
@@ -270,40 +262,19 @@ void menuFeatureSettings(void) {
     KEY_VALUE key_num = KEY_IDLE;
     SETTINGS settings = infoSettings;  // copy
 
-    render_feature_screen();
+    render_feature_page();
 
     while (infoMenu.menu[infoMenu.cur] == menuFeatureSettings) {
 
         key_num = menuKeyGetValue();
 
-        switch (key_num) {
-
-        case KEY_ICON_5:  // Page Up
-            if (FEATURE_PAGE_COUNT > 1) {
-                if (feature_page_now > 0) {
-                    feature_page_now--;
-                    render_feature_screen();
-                }
-            }
-            break;
-
-        case KEY_ICON_6:  // Page Down
-            if (FEATURE_PAGE_COUNT > 1) {
-                if (feature_page_now < FEATURE_PAGE_COUNT - 1) {
-                    feature_page_now++;
-                    render_feature_screen();
-                }
-            }
-            break;
-
-        case KEY_ICON_7:  // Back
-            infoMenu.cur--;
-            break;
-
-        default:  // Entry change
-            perform_feature_update(key_num);
-            break;
-        }
+        lister_process_navigation(
+                key_num,
+                &feature_page_now,
+                FEATURE_PAGE_COUNT,
+                render_feature_page,
+                perform_feature_change
+                );
 
         loopProcess();
 

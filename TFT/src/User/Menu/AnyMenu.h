@@ -30,6 +30,12 @@ typedef enum {
     KEY_IDLE = IDLE_TOUCH,
 } KEY_VALUE;
 
+typedef enum {
+    BUTTON_PAGE_UP = KEY_ICON_5,
+    BUTTON_PAGE_DOWN = KEY_ICON_6,
+    BUTTON_BACK = KEY_ICON_7,
+} KEY_BUTTON;
+
 #define ITEM_PER_PAGE       8
 #define LISTITEM_PER_PAGE   5
 
@@ -77,7 +83,7 @@ typedef enum
 
 typedef struct
 {
-    uint16_t icon; // symbol index
+    uint16_t icon;  // symbol index
     LISTITEM_TYPE itemType;
     LABEL titlelabel;
     LABEL valueLabel;
