@@ -19,6 +19,54 @@
 X_ENTRY(display_behavior, reminder_timeout, "2000")// millisecond
 
 //
+// HomingControl.c
+//
+
+// [homing_control]
+
+X_ENTRY(homing_control, entry_1_use, "yes")
+X_ENTRY(homing_control, entry_1_key, "0")
+X_ENTRY(homing_control, entry_1_icon, "Home")
+X_ENTRY(homing_control, entry_1_label, "1")// label-code or user-text
+X_ENTRY(homing_control, entry_1_gcode, "G28\n")
+
+X_ENTRY(homing_control, entry_2_use, "yes")
+X_ENTRY(homing_control, entry_2_key, "1")
+X_ENTRY(homing_control, entry_2_icon, "Home_X")
+X_ENTRY(homing_control, entry_2_label, "2")// label-code or user-text
+X_ENTRY(homing_control, entry_2_gcode, "G28 X")
+
+X_ENTRY(homing_control, entry_3_use, "yes")
+X_ENTRY(homing_control, entry_3_key, "2")
+X_ENTRY(homing_control, entry_3_icon, "Home_Y")
+X_ENTRY(homing_control, entry_3_label, "3")// label-code or user-text
+X_ENTRY(homing_control, entry_3_gcode, "G28 Y")
+
+X_ENTRY(homing_control, entry_4_use, "yes")
+X_ENTRY(homing_control, entry_4_key, "3")
+X_ENTRY(homing_control, entry_4_icon, "Home_Z")
+X_ENTRY(homing_control, entry_4_label, "4")// label-code or user-text
+X_ENTRY(homing_control, entry_4_gcode, "G28 Z")
+
+X_ENTRY(homing_control, entry_5_use, "no")
+X_ENTRY(homing_control, entry_5_key, "4")
+X_ENTRY(homing_control, entry_5_icon, "Home")
+X_ENTRY(homing_control, entry_5_label, "5")// label-code or user-text
+X_ENTRY(homing_control, entry_5_gcode, "M105\n")
+
+X_ENTRY(homing_control, entry_6_use, "no")
+X_ENTRY(homing_control, entry_6_key, "5")
+X_ENTRY(homing_control, entry_6_icon, "Home")
+X_ENTRY(homing_control, entry_6_label, "6")// label-code or user-text
+X_ENTRY(homing_control, entry_6_gcode, "M105\n")
+
+X_ENTRY(homing_control, entry_7_use, "no")
+X_ENTRY(homing_control, entry_7_key, "6")
+X_ENTRY(homing_control, entry_7_icon, "Home")
+X_ENTRY(homing_control, entry_7_label, "7")// label-code or user-text
+X_ENTRY(homing_control, entry_7_gcode, "M105\n")
+
+//
 // HotbedLeveling.c
 //
 

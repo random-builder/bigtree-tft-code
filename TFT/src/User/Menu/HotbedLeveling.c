@@ -129,7 +129,7 @@ static void setup_point_menu() {
         if (point_entry->key == KEY_ICON_3) {
             continue;  // protect "Home"
         }
-        if (point_entry->key == KEY_ICON_7) {
+        if (point_entry->key == BUTTON_BACK) {
             continue;  // protect "Back"
         }
         if (point_entry->use) {
