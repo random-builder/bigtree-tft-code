@@ -11,6 +11,7 @@
 #include <string.h>
 
 #include "config.h"
+#include "symbol.h"
 #include "icon_list.h"
 
 #include "SystemDebug.h"

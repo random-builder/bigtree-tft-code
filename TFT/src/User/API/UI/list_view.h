@@ -4,20 +4,11 @@
 
 #pragma once
 
-#include <AnyMenu.h>
 #include "stdint.h"
 #include "stdbool.h"
-#include "GUI.h"
 
-// generate symbol index
-enum {
-#define X_STAMP(NAME,IMAGE,COLOR)   SYMBOL_##NAME ,
-#include "symbol.inc"
-#undef  X_STAMP
-    // keep tail
-    _SYMBOL_COUNT_,
-    _SYMBOL_EMPTY_  // marker
-};
+#include <AnyMenu.h>
+#include "GUI.h"
 
 typedef enum {
     TOP_LEFT = 0,
@@ -44,12 +35,6 @@ extern char *dynamic_label[LISTITEM_PER_PAGE];
 #define MATT_PURPLE         0x9135
 
 //#define _LABEL_DYNAMIC_ 12345 //just random number for reference
-
-// resolve symbol image text from symbol index
-uint8_t* symbol_image_by_index(const uint8_t symbol_index);
-
-// resolve symbol enum index given symbol enum name
-uint16_t symbol_index_by_name(const char *symbol_name);
 
 void ListItem_Display(const GUI_RECT *rect, uint8_t positon, const LISTITEM *curitem, bool pressed);
 

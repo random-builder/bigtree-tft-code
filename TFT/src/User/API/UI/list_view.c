@@ -5,45 +5,10 @@
 #include <AnyMenu.h>
 #include <list_view.h>
 #include "includes.h"
+#include "symbol.h"
 #include "GUI.h"
 
 char *dynamic_label[LISTITEM_PER_PAGE];
-
-// generate symbol color mapper (by symbol index)
-static const uint16_t mapper_color[_SYMBOL_COUNT_] = {
-#define X_STAMP(NAME,IMAGE,COLOR) COLOR ,
-#include "symbol.inc"
-#undef  X_STAMP
-        };
-
-// generate symbol image mapper (by symbol index)
-static const char *const mapper_image[_SYMBOL_COUNT_] = {
-#define X_STAMP(NAME,IMAGE,COLOR) IMAGE ,
-#include "symbol.inc"
-#undef  X_STAMP
-        };
-
-// generate symbol name mapper (by symbol index)
-static const char *const mapper_name[_SYMBOL_COUNT_] = {
-#define X_STAMP(NAME,IMAGE,COLOR) STRINGIFY(SYMBOL_##NAME) ,
-#include "symbol.inc"
-#undef  X_STAMP
-        };
-
-// resolve symbol image text from symbol index
-uint8_t* symbol_image_by_index(const uint8_t symbol_index) {
-    return (uint8_t*) mapper_image[symbol_index];
-}
-
-// resolve symbol enum index given symbol enum name
-uint16_t symbol_index_by_name(const char *symbol_name) {
-    for (uint16_t symbol_index = 0; symbol_index < _SYMBOL_COUNT_; symbol_index++) {
-        if (strcmp(symbol_name, mapper_name[symbol_index]) == 0) {
-            return symbol_index;
-        }
-    }
-    return SYMBOL_ERROR;  // display error for invalid symbol name
-}
 
 GUI_POINT getTextStartPoint(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, ICON_POS pos, const char *textchar) {
 
@@ -111,8 +76,8 @@ GUI_POINT getTextStartPoint(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, 
 
 void ListDrawIcon(const GUI_RECT *rect, ICON_POS iconalign, uint16_t iconindex, uint16_t btn_color) {
 
-    GUI_POINT icon_p = getTextStartPoint(rect->x0, rect->y0, rect->x1, rect->y1, iconalign, mapper_image[iconindex]);
-    GUI_SetColor(mapper_color[iconindex]);
+    GUI_POINT icon_p = getTextStartPoint(rect->x0, rect->y0, rect->x1, rect->y1, iconalign, symbol_mapper_image[iconindex]);
+    GUI_SetColor(symbol_mapper_color[iconindex]);
     GUI_SetBkColor(btn_color);
     GUI_ClearPrect(rect);
     GUI_DispString(icon_p.x, icon_p.y, symbol_image_by_index(iconindex));
@@ -154,7 +119,7 @@ void ListItem_Display(const GUI_RECT *rect, uint8_t positon, const LISTITEM *cur
     }
     else if (curitem->icon != _SYMBOL_EMPTY_) {
 
-        GUI_POINT pos = getTextStartPoint(rect->x0, rect->y0, rect->x1, rect->y1, LEFT_CENTER, mapper_image[curitem->icon]);
+        GUI_POINT pos = getTextStartPoint(rect->x0, rect->y0, rect->x1, rect->y1, LEFT_CENTER, symbol_mapper_image[curitem->icon]);
         int textarea_width;
         switch (curitem->itemType)
         {
@@ -188,7 +153,7 @@ void ListItem_Display(const GUI_RECT *rect, uint8_t positon, const LISTITEM *cur
             textarea_width = LISTITEM_WIDTH - (pos.x + wy);                                 //width after removing the width for icon
 
             GUI_DispLenString(pos.x, pos.y, language_text(curitem->titlelabel.index), textarea_width);
-            pos = getTextStartPoint(rect->x0, rect->y0, rect->x1, rect->y1, RIGHT_CENTER, mapper_image[SYMBOL_TOGGLE_BODY]);
+            pos = getTextStartPoint(rect->x0, rect->y0, rect->x1, rect->y1, RIGHT_CENTER, symbol_mapper_image[SYMBOL_TOGGLE_BODY]);
             GUI_ClearRect(rect->x1 - wy, rect->y0, rect->x1, rect->y1);
             ListItem_DisplayToggle(pos.x, pos.y, curitem->icon);
             DrawListItemPress(rect, pressed);
@@ -206,8 +171,8 @@ void ListItem_Display(const GUI_RECT *rect, uint8_t positon, const LISTITEM *cur
 
             GUI_DispLenString(pos.x, pos.y, language_text(curitem->titlelabel.index), textarea_width);
 
-            pos = getTextStartPoint(rect->x0, rect->y0, rect->x1, rect->y1, RIGHT_CENTER, mapper_image[SYMBOL_DETAIL]);
-            GUI_SetColor(mapper_color[SYMBOL_DETAIL]);
+            pos = getTextStartPoint(rect->x0, rect->y0, rect->x1, rect->y1, RIGHT_CENTER, symbol_mapper_image[SYMBOL_DETAIL]);
+            GUI_SetColor(symbol_mapper_color[SYMBOL_DETAIL]);
             GUI_DispString(pos.x, pos.y, symbol_image_by_index(SYMBOL_DETAIL));
 
             DrawListItemPress(rect, pressed);
@@ -246,10 +211,10 @@ void ListItem_DisplayToggle(uint16_t sx, uint16_t sy, uint8_t iconchar_state)
     //GUI_ClearPrect(&rect_item);
     GUI_SetTextMode(GUI_TEXTMODE_NORMAL);
     GUI_SetColor(LISTBTN_BKCOLOR);
-    GUI_DispString(sx, sy, (uint8_t*) mapper_image[SYMBOL_TOGGLE_BODY]);
+    GUI_DispString(sx, sy, (uint8_t*) symbol_mapper_image[SYMBOL_TOGGLE_BODY]);
     GUI_SetTextMode(GUI_TEXTMODE_TRANS);
 
-    GUI_SetColor(mapper_color[iconchar_state]);
+    GUI_SetColor(symbol_mapper_color[iconchar_state]);
     if (iconchar_state == SYMBOL_TOGGLE_OFF)
             {
         GUI_DispString(sx, sy, symbol_image_by_index(SYMBOL_TOGGLE_SWITCH));
