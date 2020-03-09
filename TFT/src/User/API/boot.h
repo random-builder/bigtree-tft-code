@@ -63,8 +63,8 @@
 #define HAS_CONFIG  (1<<4)
 
 // resource file path
-#define TFT_BMP_DIR         "0:" RESOURCE_DIR "/bmp"
-#define TFT_FONT_DIR        "0:" RESOURCE_DIR "/font"
+#define TFT_BMP_DIR         "0:" ROOT_DIR "/bmp"
+#define TFT_FONT_DIR        "0:" ROOT_DIR "/font"
 #define TFT_ASCII_FILE      TFT_FONT_DIR "/byte_ascii.fon"
 #define TFT_UNICODE_FILE    TFT_FONT_DIR "/word_unicode.fon"
 #define TFT_RESET_FILE      "0:reset.txt"

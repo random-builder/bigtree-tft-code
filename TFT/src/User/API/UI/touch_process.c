@@ -58,13 +58,13 @@ u8 calibrationEnsure(u16 x,u16 y)
   tp_x = XPT2046_Repeated_Compare_AD(CMD_RDX);
   tp_y = XPT2046_Repeated_Compare_AD(CMD_RDY);
 
-  //	
+  //
   lcd_x = (A*tp_x+B*tp_y+C)/K;
   lcd_y = (D*tp_x+E*tp_y+F)/K;
 
 
   if(lcd_x < x+TS_ERR_RANGE && lcd_x>x-TS_ERR_RANGE  && lcd_y > y-TS_ERR_RANGE && lcd_y<y+TS_ERR_RANGE)
-  {		
+  {
     x_offset=(LCD_WIDTH - GUI_StrPixelWidth(language_text(LABEL_ADJUST_OK))) >> 1;
     GUI_DispString(x_offset, LCD_HEIGHT-40, language_text(LABEL_ADJUST_OK));
     Delay_ms(1000);
@@ -185,7 +185,7 @@ u16 KEY_GetValue(u8 total_rect,const GUI_RECT* menuRect)
 
   u16 key_return=IDLE_TOUCH;
 
-  if (touchScreenIsPress)        
+  if (touchScreenIsPress)
   {
     if(firstPress)
     {
@@ -218,10 +218,10 @@ typedef enum
   LONG_PRESS,
 }KEY_STATUS;
 
-#define KEY_DOUOBLE_SPACE        15     //�೤ʱ���ڵ�������ж�Ϊ˫��
-#define KEY_LONG_PRESS_START     200     //��������ÿ�ʼ�ж�Ϊ ���� ��ֵ
+#define KEY_DOUOBLE_SPACE        15     //�೤ʱ���ڵ�������ж��?˫��
+#define KEY_LONG_PRESS_START     200     //��������ÿ�ʼ�ж��? ���� ��ֵ
 
-#define KEY_LONG_PRESS_SPACE_MAX 10     //����ʱ ���÷���һ�μ�ֵ
+#define KEY_LONG_PRESS_SPACE_MAX 10     //����ʱ ���÷���һ�μ��?
 #define KEY_LONG_PRESS_SPACE_MIN 2      //����ʱ ��̶�÷���һ�μ�ֵ
 
 //u16 KEY_GetValue(u8 total_rect,const GUI_RECT* menuRect)
@@ -234,11 +234,11 @@ typedef enum
 
 //  static KEY_STATUS nowStatus = NO_CLICK;    //������ǰ��״̬
 
-//  if(touchScreenIsPress)        
+//  if(touchScreenIsPress)
 //  {
 //    switch(nowStatus)
 //    {
-//      case NO_CLICK: 
+//      case NO_CLICK:
 //        nowStatus=FIRST_CLICK;
 //        first_key=Key_value(total_rect,menuRect);
 //        first_time=OS_GetTime();
@@ -255,10 +255,10 @@ typedef enum
 //      case FIRST_RELEASE:
 //        if(first_key == Key_value(total_rect,menuRect))
 //        {
-//          nowStatus  = SECOND_CLICK;   
-//          first_key |= KEY_DOUBLE_CLICK;  
+//          nowStatus  = SECOND_CLICK;
+//          first_key |= KEY_DOUBLE_CLICK;
 //        }
-//        else                  
+//        else
 //        {
 //          nowStatus=NO_CLICK;
 //        }
@@ -278,7 +278,7 @@ typedef enum
 //          if(long_press_space>KEY_LONG_PRESS_SPACE_MIN)
 //            long_press_space--;
 //          first_time=OS_GetTime();
-//          key_return = first_key;		
+//          key_return = first_key;
 //        }
 //        break;
 
@@ -290,7 +290,7 @@ typedef enum
 //  {
 //    switch(nowStatus)
 //    {
-//      case FIRST_CLICK: 
+//      case FIRST_CLICK:
 //        nowStatus=FIRST_RELEASE;
 //        break;
 
@@ -380,7 +380,7 @@ u16 KNOB_GetRV(GUI_RECT *knob)
     }
   }
   if(key_return != IDLE_TOUCH)
-  {		
+  {
     oldx=x;
     oldy=y;
   }
@@ -392,11 +392,11 @@ void TIM3_Config(u16 psc,u16 arr)
 {
 	NVIC_InitTypeDef NVIC_InitStructure;
 
-	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;  
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;  
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; 
-	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; 
-	NVIC_Init(&NVIC_InitStructure); 
+	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&NVIC_InitStructure);
 
 	RCC->APB1ENR|=1<<1;
  	TIM3->ARR=arr;
@@ -408,9 +408,9 @@ void TIM3_Config(u16 psc,u16 arr)
 }
 
 void Buzzer_Config(void)
-{  
+{
   GPIO_InitSet(BUZZER_PIN, MGPIO_MODE_OUT_PP, 0);
-  
+
 	TIM3_Config(999, F_CPUM-1);  //1Khz
 }
 
@@ -428,20 +428,20 @@ typedef struct{
 static BUZZER buzzer;
 
 /*  */
-void openBuzzer(u16 h_us, u16 l_us)   
+void openBuzzer(u16 h_us, u16 l_us)
 {
   if(infoSettings.silent) return;
-  
+
   buzzer.h_us = h_us;
   buzzer.l_us = l_us;
   if( h_us == 80 )
     buzzer.num = 1000;
   else
-    buzzer.num = 500;        
+    buzzer.num = 500;
 
-  TIM3->CR1 |= 0x01;               //ʹ�ܶ�ʱ��3	
+  TIM3->CR1 |= 0x01;               //ʹ�ܶ�ʱ��3
 }
-void closeBuzzer(void)   
+void closeBuzzer(void)
 {
 	buzzer.num = 0;
 	TIM3->CR1 &= ~(0x01);
@@ -450,9 +450,9 @@ void closeBuzzer(void)
 void TIM3_IRQHandler(void)   //TIM3�ж�
 {
   static bool flag = false;
-  if ((TIM3->SR&0x01) != 0 ) //���ָ����TIM�жϷ������:TIM �ж�Դ 
+  if ((TIM3->SR&0x01) != 0 ) //���ָ����TIM�жϷ������?:TIM �ж�Դ
   {
-    flag = !flag;    
+    flag = !flag;
     if( flag )
     {
       TIM3->ARR = buzzer.h_us;
@@ -461,7 +461,7 @@ void TIM3_IRQHandler(void)   //TIM3�ж�
     {
       TIM3->ARR = buzzer.l_us;
     }
-    
+
     GPIO_SetLevel(BUZZER_PIN, flag);
     buzzer.num--;
     if( buzzer.num == 0 )
@@ -469,7 +469,7 @@ void TIM3_IRQHandler(void)   //TIM3�ж�
       TIM3->CR1 &= ~(0x01);
     }
 
-    TIM3->SR = (uint16_t)~(1<<0);  //���TIMx���жϴ�����λ:TIM �ж�Դ 
+    TIM3->SR = (uint16_t)~(1<<0);  //���TIMx���жϴ�����λ:TIM �ж�Դ
   }
 }
 #endif

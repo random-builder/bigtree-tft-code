@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include "GUI.h"
-
+#include "variants.h"
 
 //Colors for drawing the icons
 #define GANTRYLBL_BKCOLOR   0x2187
@@ -26,8 +25,8 @@ void toggleTool(void);
 void statusScreen_setMsg(const uint8_t *title,const uint8_t *msg);
 void drawStatusScreenMsg(void);
 float getAxisLocation(uint8_t n);
-//void gantry_dec(int n, float val);
-//void gantry_inc(int n, float val);
+void gantry_dec(int n, float val);
+void gantry_inc(int n, float val);
 //LCD resolution, font and icon size
 #if defined(TFT35_V1_0) || defined(TFT35_V1_1) || defined(TFT35_V1_2) || defined(TFT35_V2_0) || defined(TFT35_V3_0)
 
@@ -47,7 +46,7 @@ float getAxisLocation(uint8_t n);
   #define STATUS_GANTRY_YOFFSET       6
 
 
-#elif defined(TFT28_V1_0) || defined(TFT24_V1_1) || defined(TFT28_V3_0)
+#elif defined(TFT28_V1_0) || defined(TFT24_V1_1) || defined(TFT28_V3_0)|| defined(MKS_32_V1_4)
 
   #define SSICON_VAL_Y0           47
   //#define  statusicon_val_charcount  7
