@@ -264,7 +264,7 @@ void menuFeatureSettings(void) {
 
     render_feature_page();
 
-    while (infoMenu.menu[infoMenu.cur] == menuFeatureSettings) {
+    while (utility_has_menu_func(menuFeatureSettings)) {
 
         key_num = menuKeyGetValue();
 

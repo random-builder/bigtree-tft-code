@@ -250,8 +250,8 @@ void menuFilament(void) {
     render_speed_icon(KEY_ICON_5);
     render_length_icon(KEY_ICON_6);
 
-    while (infoMenu.menu[infoMenu.cur] == menuFilament)
-    {
+    while (utility_has_menu_func(menuFilament)) {
+
         key_num = menuKeyGetValue();
         switch (key_num)
         {

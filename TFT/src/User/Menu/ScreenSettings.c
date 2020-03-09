@@ -12,7 +12,7 @@ LABEL_SCREEN_SETTINGS,
 // icon                       label
  {{ICON_Rotate,               LABEL_ROTATE_UI},
   {ICON_TP_Adjust,            LABEL_SCREEN_ADJUST},
-  {ICON_Language,             LABEL_LANGUAGE}, 
+  {ICON_Language,             LABEL_LANGUAGE},
   {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {_ICON_EMPTY_,           _LABEL_EMPTY_},
@@ -72,9 +72,9 @@ LABEL_SCREEN_SETTINGS,
   static u8  item_bgcolor_i = 0;
   static u8  item_fontcolor_i = 0;
 #endif
-  
+
 void menuScreenSettings(void)
-{ 
+{
   KEY_VALUE key_num = KEY_IDLE;
   SETTINGS now = infoSettings;
 
@@ -88,7 +88,7 @@ void menuScreenSettings(void)
       }
     }
   #endif
-  
+
   #ifdef ST7920_SPI
     for(u8 i=0; i<ITEM_COLOR_NUM; i++) // LCD12864 background color
     {
@@ -119,19 +119,19 @@ void menuScreenSettings(void)
         infoSettings.rotate_ui = !infoSettings.rotate_ui;
         LCD_RefreshDirection();
         TSC_Calibration();
-        menuDrawPage(&screenSettingsItems);        
+        menuDrawPage(&screenSettingsItems);
         break;
-      
+
       case KEY_ICON_1:
         TSC_Calibration();
         menuDrawPage(&screenSettingsItems);
         break;
-      
-      case KEY_ICON_2: 
+
+      case KEY_ICON_2:
         infoSettings.language = (infoSettings.language + 1) % _LANG_COUNT_;
         menuDrawPage(&screenSettingsItems);
         break;
-      
+
       #ifdef BUZZER_PIN
       case BUZZER_KEY_INDEX:
         item_silent_i = (item_silent_i + 1) % ITEM_SILENT_NUM;                
@@ -140,7 +140,7 @@ void menuScreenSettings(void)
         infoSettings.silent = item_silent[item_silent_i];
         break;
       #endif
-      
+
       #ifdef ST7920_SPI
       case LCD12864_BG_INDEX:
         item_bgcolor_i = (item_bgcolor_i + 1) % ITEM_COLOR_NUM;                
@@ -156,7 +156,7 @@ void menuScreenSettings(void)
         infoSettings.font_color = item_color[item_fontcolor_i];
         break;
       #endif
-      
+
       case KEY_ICON_6:
         infoMenu.menu[++infoMenu.cur] = menu_system_memory_report;
         break;
@@ -164,13 +164,13 @@ void menuScreenSettings(void)
       case KEY_ICON_7:
         infoMenu.cur--;
         break;
-      
+
       default:
         break;
     }
-    loopProcess();		
+    loopProcess();
   }
-  
+
   if(memcmp(&now, &infoSettings, sizeof(SETTINGS)))
   {
     storePara();

@@ -303,11 +303,11 @@ void menuMachineSettings(void)
 
     menuDrawPage(&MachineSettingsItems);
 
-    while (infoMenu.menu[infoMenu.cur] == menuMachineSettings)
-    {
+    while (utility_has_menu_func(menuMachineSettings)) {
+
         key_num = menuKeyGetValue();
-        switch (key_num)
-        {
+        switch (key_num) {
+
         case KEY_ICON_0:
             infoMenu.menu[++infoMenu.cur] = menuCustomCommand;
             break;
@@ -338,4 +338,5 @@ void menuMachineSettings(void)
 
         loopProcess();
     }
+
 }

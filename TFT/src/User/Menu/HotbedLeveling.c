@@ -5,7 +5,7 @@
 #include <HotbedLeveling.h>
 #include "includes.h"
 
-const MENUITEMS autoLevelingItems =
+static const MENUITEMS AutoLevelingPage =
         { LABEL_AUTO_LEVEL,
           {
             { ICON_BLTouchDeploy, LABEL_BLTOUCH_DEPLOY },
@@ -23,7 +23,7 @@ void menuAutoLeveling(void) {
     KEY_VALUE key_num = KEY_IDLE;
     const SYSTEM_CONFIG *config = config_instance();
 
-    menuDrawPage(&autoLevelingItems);
+    menuDrawPage(&AutoLevelingPage);
 
     while (infoMenu.menu[infoMenu.cur] == menuAutoLeveling) {
         key_num = menuKeyGetValue();
@@ -49,7 +49,7 @@ void menuAutoLeveling(void) {
         case KEY_ICON_6:  // Baby Step
             infoMenu.menu[++infoMenu.cur] = menuBabyStep;
             break;
-        case KEY_ICON_7:
+        case BUTTON_BACK:
             infoMenu.cur--;
             break;
         default:
@@ -60,7 +60,7 @@ void menuAutoLeveling(void) {
 }
 
 // dynamic tune point menu
-MENUITEMS manualLevelingItems =
+static MENUITEMS ManualLevelingPage =
         {
           LABEL_HAND_LEVEL,
           {
@@ -86,7 +86,7 @@ typedef struct {
 } POINT_ENTRY;
 
 // parsed tune plane configuration
-POINT_ENTRY point_entry_list[POINT_COUNT] =
+static POINT_ENTRY point_entry_list[POINT_COUNT] =
         {
           { 0 },
         };
@@ -102,7 +102,7 @@ POINT_ENTRY point_entry_list[POINT_COUNT] =
 // PARSE_POINT
 
 // extract manual leveling points from config.ini
-void parse_point_data() {
+static void parse_point_data() {
     const SYSTEM_CONFIG *config = config_instance();
     PARSE_POINT(1)
     PARSE_POINT(2)
@@ -123,7 +123,7 @@ static const u16 default_point_label_list[POINT_COUNT + 1] =
         };
 
 // activate configured point icons
-void setup_point_menu() {
+static void setup_point_menu() {
     for (int index = 0; index < POINT_COUNT; index++) {
         POINT_ENTRY *point_entry = &(point_entry_list[index]);
         if (point_entry->key == KEY_ICON_3) {
@@ -133,7 +133,7 @@ void setup_point_menu() {
             continue;  // protect "Back"
         }
         if (point_entry->use) {
-            ITEM *menu_item = &(manualLevelingItems.items[point_entry->key]);
+            ITEM *menu_item = &(ManualLevelingPage.items[point_entry->key]);
             menu_item->icon = point_entry->icon;
             const int label_code = config_parse_int(point_entry->label);  // 0 for non-number
             if (label_code == 0) {
@@ -151,7 +151,7 @@ void setup_point_menu() {
 }
 
 // perform actual motion sequence
-void invoke_point_move(const POINT_ENTRY *point_entry) {
+static void invoke_point_move(const POINT_ENTRY *point_entry) {
     const SYSTEM_CONFIG *config = config_instance();
     // home on demand
     if (coordinateIsClear() == false) {
@@ -171,7 +171,7 @@ void invoke_point_move(const POINT_ENTRY *point_entry) {
 }
 
 // perform point move only for enabled key
-void perform_point_move(const KEY_VALUE key_num) {
+static void perform_point_move(const KEY_VALUE key_num) {
     for (int index = 0; index < POINT_COUNT; index++) {
         POINT_ENTRY *point_entry = &(point_entry_list[index]);
         if (point_entry->use && point_entry->key == key_num) {
@@ -187,9 +187,9 @@ void menuManualLeveling(void) {
 
     parse_point_data();
     setup_point_menu();
-    menuDrawPage(&manualLevelingItems);
+    menuDrawPage(&ManualLevelingPage);
 
-    while (infoMenu.menu[infoMenu.cur] == menuManualLeveling) {
+    while (utility_has_menu_func(menuManualLeveling)) {
         key_num = menuKeyGetValue();
         switch (key_num) {
         case KEY_ICON_3:

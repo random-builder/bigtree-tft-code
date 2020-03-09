@@ -335,7 +335,8 @@ void menuHeaterControl(void) {
 
     render_both_temp();
 
-    while (infoMenu.menu[infoMenu.cur] == menuHeaterControl) {
+    while (utility_has_menu_func(menuHeaterControl)) {
+
         key_num = menuKeyGetValue();
 
         const u16 temp_min = heater_entry_list[heater_active.tool].temp_min;
