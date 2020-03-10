@@ -26,3 +26,7 @@ void utility_setup_config_menu(
         int button_protect_count,
         KEY_VALUE button_protect_list[]
         );
+
+bool utility_has_matach(const char *source, const char *target);
+
+bool utility_has_substring(const char *string, const char *search);

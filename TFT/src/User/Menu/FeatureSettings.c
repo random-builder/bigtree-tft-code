@@ -58,6 +58,7 @@ static const LABEL speed_rate_label[SPEED_RATE_COUNT] =
 // feature option index
 typedef enum {
     OPTION_HIDE_ACK = 0,
+    OPTION_INVERT_X,
     OPTION_INVERT_Y,
     OPTION_INVERT_Z,
     //
@@ -93,6 +94,7 @@ static LISTER_PAGE feature_page_now = 0;
 static LISTITEM FeatureEntryList[FEATURE_COUNT] =
         {
           { SYMBOL_TOGGLE_ON, LIST_TOGGLE, LABEL_TERMINAL_ACK, _LABEL_EMPTY_ },
+          { SYMBOL_TOGGLE_ON, LIST_TOGGLE, LABEL_INVERT_XAXIS, _LABEL_EMPTY_ },
           { SYMBOL_TOGGLE_ON, LIST_TOGGLE, LABEL_INVERT_YAXIS, _LABEL_EMPTY_ },
           { SYMBOL_TOGGLE_ON, LIST_TOGGLE, LABEL_INVERT_ZAXIS, _LABEL_EMPTY_ },
           //
@@ -140,6 +142,13 @@ static void setup_feature_entry(const FEATURE_INDEX feature_index, const bool wi
             infoSettings.terminalACK = (infoSettings.terminalACK + 1) % TOGGLE_ENTRY_COUNT;
         }
         feature_entry->icon = toggle_entry_symbol[infoSettings.terminalACK];
+        break;
+
+    case OPTION_INVERT_X:
+        if (with_update) {
+            infoSettings.invert_xaxis = (infoSettings.invert_xaxis + 1) % TOGGLE_ENTRY_COUNT;
+        }
+        feature_entry->icon = toggle_entry_symbol[infoSettings.invert_xaxis];
         break;
 
     case OPTION_INVERT_Y:

@@ -59,11 +59,19 @@ void utility_setup_config_menu(
             // has text: custom user label from config.ini
             menu_item->label.address = (uint8_t*) config_entry->label;
         } else if (0 < label_code && label_code < UTILITY_DEFAULT_LABEL_COUNT) {
-            // has number: lookup label index for the language
+            // has number: lookup default label index for the language
             const uint32_t label_index = default_label_list[label_code];
             menu_item->label.index = (uint32_t) label_index;
         } else {
             // FIXME: render error
         }
     }
+}
+
+bool utility_has_matach(const char *source, const char *target) {
+    return strcmp(source, target) == 0;
+}
+
+bool utility_has_substring(const char *string, const char *search) {
+    return strstr(string, search) != NULL;
 }

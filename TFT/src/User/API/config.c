@@ -126,8 +126,8 @@ const SYSTEM_CONFIG* config_instance() {
 }
 
 // tokenize and send g-code commands to the printer
-void config_issue_gcode(const char *command_list) {
-    char *buffer = strdup(command_list);  // mutable
+void config_issue_gcode(const char *command_text) {
+    char *buffer = strdup(command_text);  // mutable
     char *command = strtok(buffer, "\n");
     while (command != NULL) {
         storeCmd("%s\n", command);
