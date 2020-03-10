@@ -72,6 +72,8 @@ X_ENTRY(homing_control, entry_7_gcode, "M105\n")
 
 // [position_control]
 
+// general commands
+
 // find head location
 X_ENTRY(position_control, command_postion_query, "M114\n")// M114 - Get Current Position
 
@@ -81,7 +83,28 @@ X_ENTRY(position_control, command_move_prefix, "G91\n")// G91 - Relative Positio
 // invoke after the move
 X_ENTRY(position_control, command_move_suffix, "G90\n")// G90 - Absolute Positioning
 
-// default layout entries
+// motion feed rate
+X_ENTRY(position_control, command_feed_rate, "G1 F%d\n")// single parameter: navigation speed
+
+// navigation speed
+
+// "slow"
+X_ENTRY(position_control, speed_1_rate, "1000")// mm/min
+X_ENTRY(position_control, speed_1_icon, "Slow")// Slow.bmp
+X_ENTRY(position_control, speed_1_label, "1")// label-code or user-text
+
+// "norm"
+X_ENTRY(position_control, speed_2_rate, "3000")// mm/min
+X_ENTRY(position_control, speed_2_icon, "Normal")// Normal.bmp
+X_ENTRY(position_control, speed_2_label, "2")// label-code or user-text
+
+// "fast"
+X_ENTRY(position_control, speed_3_rate, "5000")// mm/min
+X_ENTRY(position_control, speed_3_icon, "Fast")// Fast.bmp
+X_ENTRY(position_control, speed_3_label, "3")// label-code or user-text
+
+// default menu layout entries
+
 // [key=0 : Z-][key=1 : Y+][key=2 : Z+][key=3 : Step]
 // [key=4 : X-][key=5 : Y-][key=6 : X+][key=7 : Back]
 
@@ -97,7 +120,7 @@ X_ENTRY(position_control, entry_2_use, "yes")
 X_ENTRY(position_control, entry_2_key, "2")
 X_ENTRY(position_control, entry_2_icon, "Inc_Z")
 X_ENTRY(position_control, entry_2_label, "3")// label-code or user-text
-X_ENTRY(position_control, entry_2_gcode, "G1 Z%.1f\n")// single parameter
+X_ENTRY(position_control, entry_2_gcode, "G1 Z%.1f\n")// single parameter: position
 X_ENTRY(position_control, entry_2_shift, "Z+")// axis and direction
 
 // Y+
@@ -105,14 +128,14 @@ X_ENTRY(position_control, entry_3_use, "yes")
 X_ENTRY(position_control, entry_3_key, "1")
 X_ENTRY(position_control, entry_3_icon, "Inc_Y")
 X_ENTRY(position_control, entry_3_label, "2")// label-code or user-text
-X_ENTRY(position_control, entry_3_gcode, "G1 Y%.1f\n")// single parameter
+X_ENTRY(position_control, entry_3_gcode, "G1 Y%.1f\n")// single parameter: position
 X_ENTRY(position_control, entry_3_shift, "Y+")// axis and direction
 // Y-
 X_ENTRY(position_control, entry_4_use, "yes")
 X_ENTRY(position_control, entry_4_key, "5")
 X_ENTRY(position_control, entry_4_icon, "Dec_Y")
 X_ENTRY(position_control, entry_4_label, "6")// label-code or user-text
-X_ENTRY(position_control, entry_4_gcode, "G1 Y%.1f\n")// single parameter
+X_ENTRY(position_control, entry_4_gcode, "G1 Y%.1f\n")// single parameter: position
 X_ENTRY(position_control, entry_4_shift, "Y-")// axis and direction
 
 // X-
@@ -120,14 +143,14 @@ X_ENTRY(position_control, entry_5_use, "yes")
 X_ENTRY(position_control, entry_5_key, "4")
 X_ENTRY(position_control, entry_5_icon, "Dec_X")
 X_ENTRY(position_control, entry_5_label, "5")// label-code or user-text
-X_ENTRY(position_control, entry_5_gcode, "G1 X%.1f\n")// single parameter
+X_ENTRY(position_control, entry_5_gcode, "G1 X%.1f\n")// single parameter: position
 X_ENTRY(position_control, entry_5_shift, "X-")// axis and direction
 // X+
 X_ENTRY(position_control, entry_6_use, "yes")
 X_ENTRY(position_control, entry_6_key, "6")
 X_ENTRY(position_control, entry_6_icon, "Inc_X")
 X_ENTRY(position_control, entry_6_label, "7")// label-code or user-text
-X_ENTRY(position_control, entry_6_gcode, "G1 X%.1f\n")// single parameter
+X_ENTRY(position_control, entry_6_gcode, "G1 X%.1f\n")// single parameter: position
 X_ENTRY(position_control, entry_6_shift, "X+")// axis and direction
 
 //
