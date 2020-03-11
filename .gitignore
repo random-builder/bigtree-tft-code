@@ -122,3 +122,6 @@ cmake-build-*
 
 ###
 .env
+
+###
+/doxy
