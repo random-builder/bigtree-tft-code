@@ -177,3 +177,4 @@
 #define DU_WALKING              "Walking"
 #define DU_HOMING               "Homing"
 #define DU_CASE_LIGHT           "Case Light"
+#define DU_DEBUG                "Debug"

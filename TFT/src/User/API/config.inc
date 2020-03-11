@@ -574,3 +574,17 @@ X_ENTRY(filament_control, speed_3_rate, "1200")
 X_ENTRY(filament_control, speed_3_icon, "Fast")
 X_ENTRY(filament_control, speed_3_label, "3")// label-code or user-text
 
+//
+// SystemDebug.c
+//
+
+// [debug_menu]
+
+X_ENTRY(debug_menu, entry_1_use, "yes")
+X_ENTRY(debug_menu, entry_1_icon, STRINGIFY(SYMBOL_BULLET))
+X_ENTRY(debug_menu, entry_1_label, "Memory Report")
+X_ENTRY(debug_menu, entry_1_command, "show_memory_report")
+
+//
+//
+//

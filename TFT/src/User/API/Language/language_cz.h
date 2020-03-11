@@ -177,3 +177,4 @@
 #define CZ_WALKING              "Walking"
 #define CZ_HOMING               "Homing"
 #define CZ_CASE_LIGHT           "Case Light"
+#define CZ_DEBUG                "Debug"

@@ -177,3 +177,4 @@
 #define DE_WALKING              "Walking"
 #define DE_HOMING               "Homing"
 #define DE_CASE_LIGHT           "Case Light"
+#define DE_DEBUG                "Debug"

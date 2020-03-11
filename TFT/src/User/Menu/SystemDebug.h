@@ -4,5 +4,6 @@
 
 #pragma once
 
-// report memory allocator status
-void menu_system_memory_report();
+//
+void menu_system_debug();
+

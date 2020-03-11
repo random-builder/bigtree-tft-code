@@ -75,7 +75,7 @@ LABEL_SETTINGS,
   {ICON_About,               LABEL_SCREEN_INFO},
   {ICON_Disconnect,          LABEL_DISCONNECT},
   {ICON_BaudRate,            LABEL_BAUDRATE_115200},
-  {_ICON_EMPTY_,          _LABEL_EMPTY_},
+  {ICON_More,                LABEL_DEBUG},
   {ICON_Back,                LABEL_BACK},}
 };
 
@@ -138,10 +138,14 @@ void menuSettings(void)
         Serial_Init(infoSettings.baudrate);
         break;
 
+      case KEY_ICON_6:
+        infoMenu.menu[++infoMenu.cur] = menu_system_debug;
+        break;
+
       case KEY_ICON_7:
         infoMenu.cur--;
         break;
-      
+
       default:
         break;
     }

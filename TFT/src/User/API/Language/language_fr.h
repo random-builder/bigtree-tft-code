@@ -175,3 +175,4 @@
 #define FR_WALKING              "Walking"
 #define FR_HOMING               "Homing"
 #define FR_CASE_LIGHT           "Case Light"
+#define FR_DEBUG                "Debug"

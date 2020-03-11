@@ -175,3 +175,4 @@
 #define RU_WALKING              "Walking"
 #define RU_HOMING               "Homing"
 #define RU_CASE_LIGHT           "Case Light"
+#define RU_DEBUG                "Debug"

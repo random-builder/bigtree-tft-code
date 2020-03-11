@@ -175,3 +175,4 @@
 #define JP_WALKING              "Walking"
 #define JP_HOMING               "Homing"
 #define JP_CASE_LIGHT           "Case Light"
+#define JP_DEBUG                "Debug"

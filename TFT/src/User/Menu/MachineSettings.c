@@ -130,7 +130,7 @@ void menuCustomCommand(void) {
     parse_custom_data();
     render_custom_page();
 
-    while (infoMenu.menu[infoMenu.cur] == menuCustomCommand) {
+    while (utility_has_menu_func(menuCustomCommand)) {
 
         key_num = menuKeyGetValue();
 

@@ -177,3 +177,4 @@
 #define CN_WALKING              "Walking"
 #define CN_HOMING               "Homing"
 #define CN_CASE_LIGHT           "Case Light"
+#define CN_DEBUG                "Debug"
