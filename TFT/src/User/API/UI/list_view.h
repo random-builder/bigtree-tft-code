@@ -45,25 +45,3 @@ void ListItem_DisplayToggle(uint16_t sx, uint16_t sy, uint8_t iconchar_state);
 void ListItem_DisplayCustomValue(const GUI_RECT *rect, uint8_t *value);
 
 GUI_POINT getTextStartPoint(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, ICON_POS pos, const char *textchar);
-
-// list view page index and count
-typedef int LISTER_PAGE;
-
-// list view entry index inside the page
-typedef int LISTER_INDEX;
-
-// setup page buttons attached to the list view
-void lister_setup_pager_icons(  //
-        const LISTER_PAGE page_index,  //
-        const LISTER_PAGE page_count,  //
-        LISTITEMS *list_view_page  //
-        );
-
-// process key press for a list view
-void lister_process_navigation(  //
-        const KEY_VALUE key_num,  //
-        LISTER_PAGE *page_index,  //
-        const LISTER_PAGE page_count,  //
-        void (*react_button_page)(void),  //
-        void (*react_button_default)(const KEY_VALUE)  //
-                );

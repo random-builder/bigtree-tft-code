@@ -246,7 +246,11 @@ static void setup_feature_page(void) {
             *feature_entry = FeatureEntryEmpty;  // copy
         }
     }
-    lister_setup_pager_icons(feature_page_now, FEATURE_PAGE_COUNT, &FeatureSettingsPage);
+    lister_setup_pager_icons(
+            &FeatureSettingsPage,
+            feature_page_now,
+            FEATURE_PAGE_COUNT
+            );
 }
 
 // rebuild feature menu

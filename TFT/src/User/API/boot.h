@@ -33,7 +33,7 @@
 #define BYTE_ASCII_ADDR         BASE_ADDR
 #define BYTE_ASCII_TAIL         BYTE_ASCII_ADDR + BYTE_ASCII_SIZE
 
-#define CONFIG_FILE_SIZE        0x4000 // config.ini: permit up to 16K
+#define CONFIG_FILE_SIZE        0x10000 // config.ini: permit up to 64K
 #define CONFIG_FILE_ADDR        BYTE_ASCII_TAIL
 #define CONFIG_FILE_TAIL        CONFIG_FILE_ADDR + CONFIG_FILE_SIZE
 

@@ -10,13 +10,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "UtilityFunc.h"
 #include "config.h"
 #include "symbol.h"
 #include "icon_list.h"
 
 #include "SystemDebug.h"
-#include "Utility.h"
-
 #include "AnyMenu.h"
 #include "AnyPopup.h"
 #include "ArkonGUI.h"

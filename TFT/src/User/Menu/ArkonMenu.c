@@ -3,6 +3,7 @@
 //
 
 #include <ArkonMenu.h>
+#include <CustomCommand.h>
 #include "includes.h"
 
 //1 title, ITEM_PER_PAGE items(icon+label) 

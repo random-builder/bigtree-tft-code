@@ -2,9 +2,8 @@
 // shared functions
 //
 
+#include <UtilityFunc.h>
 #include "includes.h"
-
-#include "Utility.h"
 
 void utility_await_button_touch() {
     while (!isPress()) {
@@ -88,23 +87,89 @@ void utility_setup_config_menu(
     }
 }
 
+// setup page buttons attached to the list view
+void lister_setup_pager_icons(  //
+        LISTITEMS *list_view_page,  //
+        const LISTER_PAGE page_index,  //
+        const LISTER_PAGE page_count  //
+        ) {
+    LISTITEM *button_page_up = &(list_view_page->items[BUTTON_PAGE_UP]);
+    LISTITEM *button_page_down = &(list_view_page->items[BUTTON_PAGE_DOWN]);
+    if (page_count <= 1) {
+        button_page_up->icon = SYMBOL_BLANK;
+        button_page_down->icon = SYMBOL_BLANK;
+    } else {
+        if (page_index <= 0) {
+            button_page_up->icon = SYMBOL_BLANK;
+            button_page_down->icon = SYMBOL_PAGEDOWN;
+        } else if (page_index >= (page_count - 1)) {
+            button_page_up->icon = SYMBOL_PAGEUP;
+            button_page_down->icon = SYMBOL_BLANK;
+        } else {
+            button_page_up->icon = SYMBOL_PAGEUP;
+            button_page_down->icon = SYMBOL_PAGEDOWN;
+        }
+    }
+}
+
+// process key press for a list view
+void lister_process_navigation(  //
+        const KEY_VALUE key_num,  //
+        LISTER_PAGE *page_index,  //
+        const LISTER_PAGE page_count,  //
+        void (*react_button_page)(void),  //
+        void (*react_button_default)(const KEY_VALUE)  //
+        ) {
+
+    switch (key_num) {
+
+    case BUTTON_PAGE_UP:
+        if (page_count > 1) {
+            if ((*page_index) > 0) {
+                (*page_index)--;
+                react_button_page();
+            }
+        }
+        break;
+
+    case BUTTON_PAGE_DOWN:
+        if (page_count > 1) {
+            if ((*page_index) < page_count - 1) {
+                (*page_index)++;
+                react_button_page();
+            }
+        }
+        break;
+
+    case BUTTON_BACK:
+        infoMenu.cur--;
+        break;
+
+    default:
+        react_button_default(key_num);
+        break;
+    }
+
+}
+
 // resolve list view (page,index) into model index
-int utility_lister_index_from_view(
+int lister_index_from_view(
         LISTER_PAGE lister_page_now,
         LISTER_INDEX lister_index
         ) {
     return lister_page_now * LISTITEM_PER_PAGE + lister_index;
 }
 
-void utility_setup_lister_page(
+// build list view page from config entries
+void lister_setup_config_page(
         LISTITEMS *lister_page,
-        LISTER_PAGE *lister_page_now,
-        LISTER_PAGE lister_page_count,
+        const LISTER_PAGE lister_page_now,
+        const LISTER_PAGE lister_page_count,
         LISTER_ENTRY config_entry_list[],
-        int config_entry_count
+        const int config_entry_count
         ) {
     for (LISTER_INDEX lister_index = 0; lister_index < LISTITEM_PER_PAGE; lister_index++) {
-        const int entry_index = utility_lister_index_from_view(*lister_page_now, lister_index);
+        const int entry_index = lister_index_from_view(lister_page_now, lister_index);
         const LISTER_ENTRY *config_entry = &(config_entry_list[entry_index]);
         LISTITEM *menu_item = &(lister_page->items[lister_index]);
         if (config_entry->use && entry_index < config_entry_count) {
@@ -117,5 +182,9 @@ void utility_setup_lister_page(
             dynamic_label[lister_index] = "";
         }
     }
-    lister_setup_pager_icons(*lister_page_now, lister_page_count, lister_page);
+    lister_setup_pager_icons(
+            lister_page,
+            lister_page_now,
+            lister_page_count
+            );
 }

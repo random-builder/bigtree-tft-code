@@ -114,8 +114,18 @@
 #define LEVELING_FEEDRATE_ZZ        600   // (mm/min) Z axis move feedrate
 
 //
-#define CUSTOM_ENTRY_COUNT 20
+// no longer used
 //
+
+#undef PREHEAT_BED
+#undef PREHEAT_HOTEND
+#undef PREHEAT_TEXT
+
+#undef HEAT_MAX_TEMP
+#undef HEAT_SIGN_ID
+#undef HEAT_DISPLAY_ID
+#undef HEAT_CMD
+#undef HEAT_WAIT_CMD
 
 #undef  CUSTOM_0_LABEL //"Restore EEPROM"
 #undef  CUSTOM_0_GCODE //"M501\n"
@@ -157,58 +167,3 @@
 #undef  CUSTOM_18_GCODE //"M105\n"
 #undef  CUSTOM_19_LABEL //"Custom19"
 #undef  CUSTOM_19_GCODE //"M105\n"
-
-#define CUSTOM_0_LABEL "Restore EEPROM"
-#define CUSTOM_0_GCODE "M501\n"
-#define CUSTOM_1_LABEL "Disable Steppers"
-#define CUSTOM_1_GCODE "M84\n"
-#define CUSTOM_2_LABEL "Init SD Card"
-#define CUSTOM_2_GCODE "M21\n"
-#define CUSTOM_3_LABEL "Release Sd Card"
-#define CUSTOM_3_GCODE "M22\n"
-#define CUSTOM_4_LABEL "Custom4"
-#define CUSTOM_4_GCODE "M105\n"
-#define CUSTOM_5_LABEL "Custom5"
-#define CUSTOM_5_GCODE "M105\n"
-#define CUSTOM_6_LABEL "Custom6"
-#define CUSTOM_6_GCODE "M105\n"
-#define CUSTOM_7_LABEL "Custom7"
-#define CUSTOM_7_GCODE "M105\n"
-#define CUSTOM_8_LABEL "Custom8"
-#define CUSTOM_8_GCODE "M105\n"
-#define CUSTOM_9_LABEL "Custom9"
-#define CUSTOM_9_GCODE "M105\n"
-#define CUSTOM_10_LABEL "Custom10"
-#define CUSTOM_10_GCODE "M105\n"
-#define CUSTOM_11_LABEL "Custom11"
-#define CUSTOM_11_GCODE "M105\n"
-#define CUSTOM_12_LABEL "Custom12"
-#define CUSTOM_12_GCODE "M105\n"
-#define CUSTOM_13_LABEL "Custom13"
-#define CUSTOM_13_GCODE "M105\n"
-#define CUSTOM_14_LABEL "Custom14"
-#define CUSTOM_14_GCODE "M105\n"
-#define CUSTOM_15_LABEL "Custom15"
-#define CUSTOM_15_GCODE "M105\n"
-#define CUSTOM_16_LABEL "Custom16"
-#define CUSTOM_16_GCODE "M105\n"
-#define CUSTOM_17_LABEL "Custom17"
-#define CUSTOM_17_GCODE "M105\n"
-#define CUSTOM_18_LABEL "Custom18"
-#define CUSTOM_18_GCODE "M105\n"
-#define CUSTOM_19_LABEL "Custom19"
-#define CUSTOM_19_GCODE "M105\n"
-
-//
-// no longer used
-//
-
-#undef PREHEAT_BED
-#undef PREHEAT_HOTEND
-#undef PREHEAT_TEXT
-
-#undef HEAT_MAX_TEMP
-#undef HEAT_SIGN_ID
-#undef HEAT_DISPLAY_ID
-#undef HEAT_CMD
-#undef HEAT_WAIT_CMD

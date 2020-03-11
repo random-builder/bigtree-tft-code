@@ -18,7 +18,7 @@ static void render_system_memory_report(void) {
 
     GUI_Clear(BACKGROUND_COLOR);
 
-    GUI_DispString(0, BYTE_HEIGHT * 1, (u8*) "Memory Report (mallinfo)");
+    GUI_DispString(0, BYTE_HEIGHT * 1, (u8*) "Memory Status (mallinfo)");
 
     my_sprintf(text_line, "Total size (arena)    : %d", memory_info.arena);
     GUI_DispString(0, BYTE_HEIGHT * 2, (u8*) text_line);
@@ -32,19 +32,46 @@ static void render_system_memory_report(void) {
     utility_prompt_touch_to_exit();
 
     infoMenu.cur--;
-
 }
 
-//
-//
-//
+// version infomation
+void render_system_version_report(void) {
+
+    const char *hardware = HARDWARE_VERSION;
+    const char *firmware = STRINGIFY(SOFTWARE_VERSION);
+    const char *build_stamp = __DATE__ " " __TIME__;
+
+    char text_line[64];
+
+    GUI_Clear(BACKGROUND_COLOR);
+
+    GUI_DispString(0, BYTE_HEIGHT * 1, (u8*) "System Version");
+
+    my_sprintf(text_line, "Hardware    : %s", hardware);
+    GUI_DispString(0, BYTE_HEIGHT * 2, (u8*) text_line);
+
+    my_sprintf(text_line, "Firmware    : %s", firmware);
+    GUI_DispString(0, BYTE_HEIGHT * 3, (u8*) text_line);
+
+    my_sprintf(text_line, "Build Stamp : %s", build_stamp);
+    GUI_DispString(0, BYTE_HEIGHT * 4, (u8*) text_line);
+
+    utility_prompt_touch_to_exit();
+
+    infoMenu.cur--;
+}
 
 // show memory status
 static void show_memory_report(void) {
     infoMenu.menu[++infoMenu.cur] = render_system_memory_report;
 }
 
-#define DEBUG_ENTRY_COUNT 3
+// show system version
+static void show_system_version(void) {
+    infoMenu.menu[++infoMenu.cur] = render_system_version_report;
+}
+
+#define DEBUG_ENTRY_COUNT 2
 
 static LISTITEMS DebugPage =
         {
@@ -81,12 +108,14 @@ typedef void (*FUNCTION_ARRAY[DEBUG_ENTRY_COUNT])(void);
 // command func by index
 static FUNCTION_ARRAY debug_function_list =
         {
+          show_system_version,
           show_memory_report,
         };
 
 // function name by index
 static char *debug_command_list[DEBUG_ENTRY_COUNT] =
         {
+          STRINGIFY(show_system_version),
           STRINGIFY(show_memory_report),
         };
 
@@ -108,44 +137,35 @@ typedef int ENTRY_INDEX;
     debug_entry_list[NUM-1].use = config_parse_bool(config->debug_menu__entry_##NUM##_use); \
     debug_entry_list[NUM-1].icon = config->debug_menu__entry_##NUM##_icon; \
     debug_entry_list[NUM-1].label = config->debug_menu__entry_##NUM##_label; \
-    debug_entry_list[NUM-1].command = config->debug_menu__entry_##NUM##_command; \
+    debug_entry_list[NUM-1].gcode = config->debug_menu__entry_##NUM##_gcode; \
 // PARSE_DEBUG
 
 // extract custom menu entries from config.ini
 static void parse_debug_data() {
     const SYSTEM_CONFIG *config = config_instance();
     PARSE_DEBUG(1)
-//    PARSE_DEBUG(2)
-//    PARSE_DEBUG(3)
-//    PARSE_DEBUG(4)
-//    PARSE_DEBUG(5)
-//    PARSE_DEBUG(6)
-//    PARSE_DEBUG(7)
-//    PARSE_DEBUG(8)
-//    PARSE_DEBUG(9)
+    PARSE_DEBUG(2)
 }
 
 // rebuild menu page
 static void render_debug_page(void) {
-
-    utility_setup_lister_page(
+    lister_setup_config_page(
             &DebugPage,
-            &debug_page_now,
+            debug_page_now,
             DEBUG_PAGE_COUNT,
             debug_entry_list,
             DEBUG_ENTRY_COUNT
             );
-
     menuDrawListPage(&DebugPage);
 }
 
 // perform action on button press
 static void perform_debug_command(const KEY_VALUE key_num) {
-    const ENTRY_INDEX debug_index = utility_lister_index_from_view(debug_page_now, key_num);
+    const ENTRY_INDEX debug_index = lister_index_from_view(debug_page_now, key_num);
     if (debug_index < DEBUG_ENTRY_COUNT) {
         const LISTER_ENTRY *debug_entry = &(debug_entry_list[debug_index]);
         if (debug_entry->use) {
-            void (*function)(void) = debug_func_by_name(debug_entry->command);
+            void (*function)(void) = debug_func_by_name(debug_entry->gcode);
             if (function != NULL) {
                 function();
             }

@@ -4,6 +4,11 @@
 
 #pragma once
 
+#include <stdbool.h>
+
+#include "AnyMenu.h"
+#include "variants.h"
+
 bool utility_has_menu_func(void (*menu_func)(void));
 
 bool utility_has_matach(const char *source, const char *target);
@@ -26,15 +31,10 @@ typedef struct {
     bool use;       // enable menu icon
     char *icon;     // icon name
     char *label;    // label-code or user-text from config.ini
-    char *command;
+    char *gcode;
 } LISTER_ENTRY;
 
 #define UTILITY_DEFAULT_LABEL_COUNT 9
-
-int utility_lister_index_from_view(
-        LISTER_PAGE lister_page_now,
-        LISTER_INDEX lister_index
-        );
 
 void utility_setup_config_menu(
         MENUITEMS *screen_page,
@@ -45,9 +45,38 @@ void utility_setup_config_menu(
         KEY_VALUE button_protect_list[]
         );
 
-void utility_setup_lister_page(
+// list view page index and count
+typedef int LISTER_PAGE;
+
+// list view entry index inside the page
+typedef int LISTER_INDEX;
+
+// setup page buttons attached to the list view
+void lister_setup_pager_icons(  //
+        LISTITEMS *list_view_page,  //
+        const LISTER_PAGE page_index,  //
+        const LISTER_PAGE page_count  //
+        );
+
+// process key press for a list view
+void lister_process_navigation(  //
+        const KEY_VALUE key_num,  //
+        LISTER_PAGE *page_index,  //
+        const LISTER_PAGE page_count,  //
+        void (*react_button_page)(void),  //
+        void (*react_button_default)(const KEY_VALUE)  //
+                );
+
+// resolve list view (page,index) into model index
+int lister_index_from_view(
+        LISTER_PAGE lister_page_now,
+        LISTER_INDEX lister_index
+        );
+
+// build list view page from config entries
+void lister_setup_config_page(
         LISTITEMS *lister_page,
-        LISTER_PAGE *lister_page_now,
+        LISTER_PAGE lister_page_now,
         LISTER_PAGE lister_page_count,
         LISTER_ENTRY config_entry_list[],
         int config_entry_count

@@ -27,29 +27,6 @@ void infoSettingsReset(void)
   
 }
 
-// Version infomation
-void menuInfo(void)
-{
-  const char* hardware = "Board   : BIGTREETECH_" HARDWARE_VERSION;
-  const char* firmware = "Firmware: "HARDWARE_VERSION"." STRINGIFY(SOFTWARE_VERSION) " " __DATE__;
-  
-  u16 HW_X = (LCD_WIDTH - GUI_StrPixelWidth((u8 *)hardware))/2;
-  u16 FW_X = (LCD_WIDTH - GUI_StrPixelWidth((u8 *)firmware))/2;
-  u16 centerY = LCD_HEIGHT/2;
-  u16 startX = MIN(HW_X, FW_X);
-  
-  GUI_Clear(BACKGROUND_COLOR);
-
-  GUI_DispString(startX, centerY - BYTE_HEIGHT, (u8 *)hardware);
-  GUI_DispString(startX, centerY, (u8 *)firmware);
-  GUI_DispStringInRect(20, LCD_HEIGHT - (BYTE_HEIGHT*2), LCD_WIDTH-20, LCD_HEIGHT, language_text(LABEL_TOUCH_TO_EXIT));
-
-  while(!isPress()) loopProcess();
-  while(isPress())  loopProcess();
-
-  infoMenu.cur--;
-}
-
 // Set uart pins to input, free uart
 void menuDisconnect(void)
 {
@@ -72,7 +49,7 @@ LABEL_SETTINGS,
  {{ICON_TSCSettings,         LABEL_SCREEN_SETTINGS},
   {ICON_MachineSettings,     LABEL_MACHINE_SETTINGS},
   {ICON_FeatureSettings,     LABEL_FEATURE_SETTINGS},
-  {ICON_About,               LABEL_SCREEN_INFO},
+  {_ICON_EMPTY_,             _LABEL_EMPTY_},
   {ICON_Disconnect,          LABEL_DISCONNECT},
   {ICON_BaudRate,            LABEL_BAUDRATE_115200},
   {ICON_More,                LABEL_DEBUG},
@@ -121,9 +98,9 @@ void menuSettings(void)
         infoMenu.menu[++infoMenu.cur] = menuFeatureSettings;
         break;
       
-      case KEY_ICON_3:
-        infoMenu.menu[++infoMenu.cur] = menuInfo;
-        break;
+//      case KEY_ICON_3:
+//        infoMenu.menu[++infoMenu.cur] = menuInfo;
+//        break;
       
       case KEY_ICON_4:
         infoMenu.menu[++infoMenu.cur] = menuDisconnect;
