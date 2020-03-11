@@ -569,11 +569,15 @@ X_ENTRY(debug_menu, entry_1_icon, STRINGIFY(SYMBOL_BULLET))
 X_ENTRY(debug_menu, entry_1_label, "System Version")
 X_ENTRY(debug_menu, entry_1_gcode, "show_system_version")
 
-
 X_ENTRY(debug_menu, entry_2_use, "yes")
 X_ENTRY(debug_menu, entry_2_icon, STRINGIFY(SYMBOL_BULLET))
 X_ENTRY(debug_menu, entry_2_label, "Memory Report")
 X_ENTRY(debug_menu, entry_2_gcode, "show_memory_report")
+
+X_ENTRY(debug_menu, entry_3_use, "yes")
+X_ENTRY(debug_menu, entry_3_icon, STRINGIFY(SYMBOL_BULLET))
+X_ENTRY(debug_menu, entry_3_label, "SPI Flash Report")
+X_ENTRY(debug_menu, entry_3_gcode, "show_spiflash_report")
 
 //
 //

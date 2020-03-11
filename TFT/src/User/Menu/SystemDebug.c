@@ -6,6 +6,33 @@
 
 #include "includes.h"
 
+// version infomation
+void render_system_version_report(void) {
+
+    const char *hardware = HARDWARE_VERSION;
+    const char *firmware = STRINGIFY(SOFTWARE_VERSION);
+    const char *build_stamp = __DATE__ " " __TIME__;
+
+    char text_line[64];
+
+    GUI_Clear(BACKGROUND_COLOR);
+
+    GUI_DispString(0, BYTE_HEIGHT * 1, (u8*) "System Version");
+
+    my_sprintf(text_line, "Hardware    : %s", hardware);
+    GUI_DispString(0, BYTE_HEIGHT * 2, (u8*) text_line);
+
+    my_sprintf(text_line, "Firmware    : %s", firmware);
+    GUI_DispString(0, BYTE_HEIGHT * 3, (u8*) text_line);
+
+    my_sprintf(text_line, "Build Stamp : %s", build_stamp);
+    GUI_DispString(0, BYTE_HEIGHT * 4, (u8*) text_line);
+
+    utility_prompt_touch_to_exit();
+
+    infoMenu.cur--;
+}
+
 // report memory allocator status
 // see https://linux.die.net/man/3/mallinfo
 // see https://www.gnu.org/software/libc/manual/html_node/Statistics-of-Malloc.html
@@ -34,36 +61,33 @@ static void render_system_memory_report(void) {
     infoMenu.cur--;
 }
 
-// version infomation
-void render_system_version_report(void) {
+// spi flash usage report
+void render_system_spiflash_report(void) {
 
-    const char *hardware = HARDWARE_VERSION;
-    const char *firmware = STRINGIFY(SOFTWARE_VERSION);
-    const char *build_stamp = __DATE__ " " __TIME__;
+    const int total_size = FLASH_TOTAL_SIZE;
+    const int total_used = report_flash_used();
+    const int usage_percent = total_used * 100 / total_size;
 
     char text_line[64];
 
     GUI_Clear(BACKGROUND_COLOR);
 
-    GUI_DispString(0, BYTE_HEIGHT * 1, (u8*) "System Version");
+    GUI_DispString(0, BYTE_HEIGHT * 1, (u8*) "SPI Flash Usage");
 
-    my_sprintf(text_line, "Hardware    : %s", hardware);
+    my_sprintf(text_line, "Total size    : %d", total_size);
     GUI_DispString(0, BYTE_HEIGHT * 2, (u8*) text_line);
 
-    my_sprintf(text_line, "Firmware    : %s", firmware);
+    my_sprintf(text_line, "Total used    : %d", total_used);
     GUI_DispString(0, BYTE_HEIGHT * 3, (u8*) text_line);
 
-    my_sprintf(text_line, "Build Stamp : %s", build_stamp);
+    my_sprintf(text_line, "Usage percent : %d %%", usage_percent);
     GUI_DispString(0, BYTE_HEIGHT * 4, (u8*) text_line);
+
+    GUI_DispString(0, BYTE_HEIGHT * 5, (u8*) "(tracks files updated during boot)");
 
     utility_prompt_touch_to_exit();
 
     infoMenu.cur--;
-}
-
-// show memory status
-static void show_memory_report(void) {
-    infoMenu.menu[++infoMenu.cur] = render_system_memory_report;
 }
 
 // show system version
@@ -71,7 +95,18 @@ static void show_system_version(void) {
     infoMenu.menu[++infoMenu.cur] = render_system_version_report;
 }
 
-#define DEBUG_ENTRY_COUNT 2
+// show memory status
+static void show_memory_report(void) {
+    infoMenu.menu[++infoMenu.cur] = render_system_memory_report;
+}
+
+// show memory status
+static void show_spiflash_report(void) {
+    infoMenu.menu[++infoMenu.cur] = render_system_spiflash_report;
+}
+
+//
+#define DEBUG_ENTRY_COUNT 3
 
 static LISTITEMS DebugPage =
         {
@@ -110,6 +145,7 @@ static FUNCTION_ARRAY debug_function_list =
         {
           show_system_version,
           show_memory_report,
+          show_spiflash_report,
         };
 
 // function name by index
@@ -117,6 +153,7 @@ static char *debug_command_list[DEBUG_ENTRY_COUNT] =
         {
           STRINGIFY(show_system_version),
           STRINGIFY(show_memory_report),
+          STRINGIFY(show_spiflash_report),
         };
 
 // resolve function by its name
@@ -145,6 +182,7 @@ static void parse_debug_data() {
     const SYSTEM_CONFIG *config = config_instance();
     PARSE_DEBUG(1)
     PARSE_DEBUG(2)
+    PARSE_DEBUG(3)
 }
 
 // rebuild menu page

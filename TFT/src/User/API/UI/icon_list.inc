@@ -9,6 +9,8 @@
 // https://en.wikipedia.org/wiki/X_Macro
 //
 
+// 95x95 26.8 KiB (27,416)
+
 X_IMAGE (MainMenu)
 X_IMAGE (Print)
 
@@ -159,9 +161,13 @@ X_IMAGE (SilentOff)
 X_IMAGE (Custom)
 
 X_IMAGE (parametersetting)
+
+// 24x24 1.7 KiB (1,784)
+
 X_IMAGE (global_nozzle)
 X_IMAGE (global_bed)
-X_IMAGE (ledcolor)
+
+// 154x50 22.7 KiB (23,256)
 
 X_IMAGE (printing_nozzle)
 X_IMAGE (printing_bed)

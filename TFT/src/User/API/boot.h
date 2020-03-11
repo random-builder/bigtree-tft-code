@@ -81,3 +81,5 @@ typedef union {
 
 void scanUpdates(void);
 bool bmpDecode(char *bmp, u32 addr);
+
+int report_flash_used(void);
