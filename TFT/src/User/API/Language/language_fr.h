@@ -176,3 +176,4 @@
 #define FR_HOMING               "Homing"
 #define FR_CASE_LIGHT           "Case Light"
 #define FR_DEBUG                "Debug"
+#define FR_MINI_STEP            "Steps Z"

@@ -580,5 +580,44 @@ X_ENTRY(debug_menu, entry_3_label, "SPI Flash Report")
 X_ENTRY(debug_menu, entry_3_gcode, "show_spiflash_report")
 
 //
+// TinkerMiniStep.c
+//
+
+// [tinker_ministep]
+
+// M290 - Babystep
+X_ENTRY(tinker_ministep, command_edit, "M290 Z%.2f\n")// single parameter: Z offset
+
+// M500 - store current settings in EEPROM
+X_ENTRY(tinker_ministep, command_save, "M500\n")// single parameter: Z offset
+
+// mini step adjustment range
+X_ENTRY(tinker_ministep, range_min, "-5.0")// lower limit
+
+// mini step adjustment range
+X_ENTRY(tinker_ministep, range_max, "+5.0")// upper limit
+
+//
+// TinkerProbeOffset.c
+//
+
+// [tinker_probster]
+
+// M851 - XYZ Probe Offset
+X_ENTRY(tinker_probster, command_query, "M851\n")// query current probe offset
+
+// M851 - XYZ Probe Offset
+X_ENTRY(tinker_probster, command_edit, "M851 Z%.2f\n")// single parameter: Z offset
+
+// M500 - store current settings in EEPROM
+X_ENTRY(tinker_probster, command_save, "M500\n")// single parameter: Z offset
+
+// probe offset adjustment range
+X_ENTRY(tinker_probster, range_min, "-20.0")// lower limit
+
+// probe offset adjustment range
+X_ENTRY(tinker_probster, range_max, "+20.0")// upper limit
+
+//
 //
 //

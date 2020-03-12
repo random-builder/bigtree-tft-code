@@ -29,7 +29,7 @@
 #define EN_BLTOUCH_DEPLOY       "Drop"
 #define EN_BLTOUCH_STOW         "Stow"
 #define EN_BLTOUCH_REPEAT       "Repeat"
-#define EN_PROBE_OFFSET         "Offset"
+#define EN_PROBE_OFFSET         "Probe Z"
 #define EN_EEPROM_SAVE          "Save"
 #define EN_INC                  "Increase"
 #define EN_DEC                  "Decrease"
@@ -176,3 +176,4 @@
 #define EN_HOMING               "Homing"
 #define EN_CASE_LIGHT           "Case Light"
 #define EN_DEBUG                "Debug"
+#define EN_MINI_STEP            "Steps Z"

@@ -130,6 +130,7 @@ void config_issue_gcode(const char *command_text) {
     char *buffer = strdup(command_text);  // mutable
     char *command = strtok(buffer, "\n");
     while (command != NULL) {
+        //popupReminder((u8*) "issue gcode", (u8*) command);
         storeCmd("%s\n", command);
         command = strtok(NULL, "\n");
     }

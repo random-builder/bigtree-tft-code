@@ -176,3 +176,4 @@
 #define PL_HOMING               "Homing"
 #define PL_CASE_LIGHT           "Case Light"
 #define PL_DEBUG                "Debug"
+#define PL_MINI_STEP            "Steps Z"

@@ -178,3 +178,4 @@
 #define CZ_HOMING               "Homing"
 #define CZ_CASE_LIGHT           "Case Light"
 #define CZ_DEBUG                "Debug"
+#define CZ_MINI_STEP            "Steps Z"

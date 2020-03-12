@@ -178,3 +178,4 @@
 #define AM_HOMING               "Homing"
 #define AM_CASE_LIGHT           "Case Light"
 #define AM_DEBUG                "Debug"
+#define AM_MINI_STEP            "Steps Z"

@@ -33,6 +33,16 @@ bool utility_has_substring(const char *string, const char *search) {
     return strstr(string, search) != NULL;
 }
 
+float utility_limit_float(float min, float value, float max) {
+    if (value < min) {
+        return min;
+    }
+    if (value > max) {
+        return max;
+    }
+    return value;
+}
+
 static bool has_key_in_list(  //
         const KEY_VALUE key_num,  //
         const int value_count,  //

@@ -19,6 +19,8 @@ void utility_prompt_touch_to_exit();
 
 void utility_await_button_touch();
 
+float utility_limit_float(float min, float value, float max);
+
 typedef struct {
     bool use;       // enable menu icon
     u16 key;        // re-map icon key position

@@ -9,6 +9,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <TinkerMiniStep.h>
+#include <TinkerProbeOffset.h>
 
 #include "UtilityFunc.h"
 #include "config.h"
@@ -26,9 +28,7 @@
 #include "HeaterControl.h"
 #include "HeaterPreset.h"
 #include "HomingControl.h"
-#include "HotbedBabyStep.h"
 #include "HotbedLeveling.h"
-#include "HotbedProbeOffset.h"
 #include "InvokeGcode.h"
 #include "list_view.h"
 #include "ledcolor.h"

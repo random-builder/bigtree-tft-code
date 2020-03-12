@@ -176,3 +176,4 @@
 #define JP_HOMING               "Homing"
 #define JP_CASE_LIGHT           "Case Light"
 #define JP_DEBUG                "Debug"
+#define JP_MINI_STEP            "Steps Z"

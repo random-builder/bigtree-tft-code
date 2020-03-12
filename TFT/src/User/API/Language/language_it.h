@@ -178,3 +178,4 @@
 #define IT_HOMING               "Homing"
 #define IT_CASE_LIGHT           "Case Light"
 #define IT_DEBUG                "Debug"
+#define IT_MINI_STEP            "Steps Z"

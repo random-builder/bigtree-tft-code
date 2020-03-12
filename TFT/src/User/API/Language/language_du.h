@@ -178,3 +178,4 @@
 #define DU_HOMING               "Homing"
 #define DU_CASE_LIGHT           "Case Light"
 #define DU_DEBUG                "Debug"
+#define DU_MINI_STEP            "Steps Z"

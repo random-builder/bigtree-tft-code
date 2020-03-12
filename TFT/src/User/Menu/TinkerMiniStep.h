@@ -4,4 +4,4 @@
 
 #pragma once
 
-void menuBabyStep(void);
+void menu_tinker_mini_step(void);

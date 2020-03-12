@@ -60,12 +60,12 @@ _LABEL_EMPTY_,
   {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {_ICON_EMPTY_,           _LABEL_EMPTY_},
   {ICON_Pause,                LABEL_PAUSE},
-  {ICON_BabyStep,             LABEL_BABYSTEP},
+  {ICON_BabyStep,             LABEL_MINI_STEP},
   {ICON_More,                 LABEL_MORE},
   {ICON_Stop,                 LABEL_STOP},}
 };
 const ITEM itemBlank      = {_ICON_EMPTY_, _LABEL_EMPTY_};
-const ITEM itemBabyStep   = {ICON_BabyStep, LABEL_BABYSTEP};
+const ITEM itemBabyStep   = {ICON_BabyStep, LABEL_MINI_STEP};
 const ITEM itemIsPause[2] = {
 // icon                       label
   {ICON_Pause,                LABEL_PAUSE},
@@ -626,7 +626,7 @@ void menuPrinting(void)
         setPrintPause(!isPause(),false);
         }
         else{
-        infoMenu.menu[++infoMenu.cur] = menuBabyStep;
+        infoMenu.menu[++infoMenu.cur] = menu_tinker_mini_step;
         }
         break;
       

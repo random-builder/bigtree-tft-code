@@ -14,7 +14,7 @@ static const MENUITEMS AutoLevelingPage =
             { ICON_BLTouch, LABEL_AUTO_PROBE },
             { ICON_BLTouchRepeat, LABEL_ISSUE_RESET },
             { ICON_ProbeOffset, LABEL_PROBE_OFFSET },
-            { ICON_BabyStep, LABEL_BABYSTEP },
+            { ICON_BabyStep, LABEL_MINI_STEP },
             { ICON_Back, LABEL_BACK },
           }
         };
@@ -44,10 +44,10 @@ void menuAutoLeveling(void) {
             config_issue_gcode(config->leveling_auto__command_probe_reset);
             break;
         case KEY_ICON_5:  // Offset Z
-            infoMenu.menu[++infoMenu.cur] = menuProbeOffset;
+            infoMenu.menu[++infoMenu.cur] = menu_tinker_probe_offset;
             break;
         case KEY_ICON_6:  // Baby Step
-            infoMenu.menu[++infoMenu.cur] = menuBabyStep;
+            infoMenu.menu[++infoMenu.cur] = menu_tinker_mini_step;
             break;
         case BUTTON_BACK:
             infoMenu.cur--;

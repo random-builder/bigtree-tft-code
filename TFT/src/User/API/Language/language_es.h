@@ -178,3 +178,4 @@
 #define ES_HOMING               "Homing"
 #define ES_CASE_LIGHT           "Case Light"
 #define ES_DEBUG                "Debug"
+#define ES_MINI_STEP            "Steps Z"

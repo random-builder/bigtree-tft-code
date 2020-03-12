@@ -178,3 +178,4 @@
 #define PT_HOMING               "Homing"
 #define PT_CASE_LIGHT           "Case Light"
 #define PT_DEBUG                "Debug"
+#define PT_MINI_STEP            "Steps Z"
