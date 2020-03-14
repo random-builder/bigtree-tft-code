@@ -179,3 +179,5 @@
 #define DU_CASE_LIGHT           "Case Light"
 #define DU_DEBUG                "Debug"
 #define DU_MINI_STEP            "Steps Z"
+#define DU_CURRENT_SETTING      "Driver Setting"
+#define DU_STEPS_SETTING        "Stepper Setting"

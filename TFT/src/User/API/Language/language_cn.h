@@ -179,3 +179,5 @@
 #define CN_CASE_LIGHT           "Case Light"
 #define CN_DEBUG                "Debug"
 #define CN_MINI_STEP            "Steps Z"
+#define CN_CURRENT_SETTING      "Driver Setting"
+#define CN_STEPS_SETTING        "Stepper Setting"

@@ -177,3 +177,5 @@
 #define JP_CASE_LIGHT           "Case Light"
 #define JP_DEBUG                "Debug"
 #define JP_MINI_STEP            "Steps Z"
+#define JP_CURRENT_SETTING      "Driver Setting"
+#define JP_STEPS_SETTING        "Stepper Setting"

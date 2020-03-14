@@ -177,3 +177,5 @@
 #define RU_CASE_LIGHT           "Case Light"
 #define RU_DEBUG                "Debug"
 #define RU_MINI_STEP            "Steps Z"
+#define RU_CURRENT_SETTING      "Driver Setting"
+#define RU_STEPS_SETTING        "Stepper Setting"

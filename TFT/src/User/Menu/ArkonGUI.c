@@ -1,67 +1,61 @@
-//
-// top level / root screen
-//
-
-#include <ArkonGUI.h>
+#include "ArkonGUI.h"
 #include "includes.h"
 #include "GUI.h"
-
-//1 title, ITEM_PER_PAGE items (icon + label) 
-static MENUITEMS StatusItems = {
+//1 title, ITEM_PER_PAGE items (icon + label)
+const MENUITEMS StatusItems = {
 // title
 LABEL_READY,
 // icon                       label
  {
-  {ICON_StatusNozzle,        _LABEL_EMPTY_}, // 0
+  {ICON_StatusNozzle,        _LABEL_EMPTY_},
   {ICON_StatusBed,           _LABEL_EMPTY_},
   {ICON_StatusFan,           _LABEL_EMPTY_},
   {ICON_StatusSpeed,         _LABEL_EMPTY_},
-  {ICON_MainMenu,             LABEL_MAINMENU},   // 4
-  {_ICON_EMPTY_,           _LABEL_EMPTY_}, // status window
-  {_ICON_EMPTY_,           _LABEL_EMPTY_}, // status window
-  {_ICON_EMPTY_,           _LABEL_EMPTY_}, // {ICON_PRINT,                LABEL_PRINT},}
+  {ICON_MainMenu,             LABEL_MAINMENU},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
+  {_ICON_EMPTY_,           _LABEL_EMPTY_},
  }
 };
 
-static const ITEM ToolItems[3] = {
+const ITEM ToolItems[3] = {
 // icon                       label
   {ICON_StatusNozzle,         _LABEL_EMPTY_},
   {ICON_StatusBed,            _LABEL_EMPTY_},
   {ICON_StatusFan,            _LABEL_EMPTY_},
 };
-static const ITEM SpeedItems[2] = {
+const ITEM SpeedItems[2] = {
 // icon                       label
   {ICON_StatusSpeed,         _LABEL_EMPTY_},
-  {ICON_StatusFlow,          _LABEL_EMPTY_},
+  {ICON_StatusFlow,          _LABEL_EMPTY_},                            
 };
 
-static u32 nowTime = 0;
-static u32 update_time = 100; // 1 seconds is 100
-static SCROLL     msgScroll;
-static int connected_status = -1;
+static u32 nextTime = 0;
+static u32 update_time = 200; // 1 seconds is 100
+SCROLL     msgScroll;
+static int lastConnection_status = -1;
 
-static char msg_head[20];
-static char msg_body[512];
+static char msgtitle[20];
+static char msgbody[512];
 
-//static char msgxyz[512];
-static float position_X;
-static float position_Y;
-static float position_Z;
-static bool positionCmdWait = false;
+static float xaxis;
+static float yaxis;
+static float zaxis;
+static bool gantryCmdWait = false;
 
-static TOOL current_Ext = TOOL_NOZZLE0;
-static int current_fan = 0;
-static int current_speedID = 0;
-static const char* SpeedID[2] = SPEED_ID;
-// text position rectangles for Live icons 
+TOOL current_Ext = TOOL_NOZZLE0;
+int current_fan = 0;
+int current_speedID = 0;
+const char* SpeedID[2] = SPEED_ID;
+// text position rectangles for Live icons
 //icon 0
-static const GUI_POINT pointID[4] = {
+const GUI_POINT pointID[4] = {
   {1*ICON_WIDTH+0*SPACE_X+START_X - BYTE_WIDTH/2,    ICON_START_Y + 0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_NAME_Y0},
   {2*ICON_WIDTH+1*SPACE_X+START_X - BYTE_WIDTH/2,    ICON_START_Y + 0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_NAME_Y0},
   {3*ICON_WIDTH+2*SPACE_X+START_X - BYTE_WIDTH/2,    ICON_START_Y + 0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_NAME_Y0},
   {4*ICON_WIDTH+3*SPACE_X+START_X - BYTE_WIDTH/2,    ICON_START_Y + 0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_NAME_Y0},
 };
-static const GUI_RECT rectB[4] = {
+const GUI_RECT rectB[4] = {
   {START_X + 0 * ICON_WIDTH + 0 * SPACE_X,  ICON_START_Y +  0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_VAL_Y0,
    START_X + 1 * ICON_WIDTH + 0 * SPACE_X,  ICON_START_Y +  0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_VAL_Y0 + BYTE_HEIGHT},
 
@@ -75,14 +69,14 @@ static const GUI_RECT rectB[4] = {
    START_X + 4 * ICON_WIDTH + 3 * SPACE_X,  ICON_START_Y +  0 * ICON_HEIGHT + 0 * SPACE_Y + SSICON_VAL_Y0 + BYTE_HEIGHT},
 };
 
-//info rectangle          
-static const GUI_RECT RectInfo = {START_X + 1 * ICON_WIDTH + 1 * SPACE_X,  ICON_START_Y +  1 * ICON_HEIGHT + 1 * SPACE_Y,
+//info rectangle
+const GUI_RECT RectInfo = {START_X + 1 * ICON_WIDTH + 1 * SPACE_X,  ICON_START_Y +  1 * ICON_HEIGHT + 1 * SPACE_Y,
                            START_X + 3 * ICON_WIDTH + 2 * SPACE_X,  ICON_START_Y +  2 * ICON_HEIGHT + 1 * SPACE_Y};
 
-static const  GUI_RECT msgRect ={START_X + 1 * ICON_WIDTH + 1 * SPACE_X + 2,   ICON_START_Y +  1 * ICON_HEIGHT + 1 * SPACE_Y + STATUS_MSG_BODY_YOFFSET,
+const  GUI_RECT msgRect ={START_X + 1 * ICON_WIDTH + 1 * SPACE_X + 2,   ICON_START_Y +  1 * ICON_HEIGHT + 1 * SPACE_Y + STATUS_MSG_BODY_YOFFSET,
                           START_X + 3 * ICON_WIDTH + 2 * SPACE_X - 2,   ICON_START_Y +  2 * ICON_HEIGHT + 1 * SPACE_Y - STATUS_MSG_BODY_BOTTOM};
 
-static const GUI_RECT RecGantry = {START_X,                        1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y + STATUS_GANTRY_YOFFSET,
+const GUI_RECT RecGantry = {START_X,                        1*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y + STATUS_GANTRY_YOFFSET,
                             4*ICON_WIDTH+3*SPACE_X+START_X, 1*ICON_HEIGHT+1*SPACE_Y+ICON_START_Y - STATUS_GANTRY_YOFFSET};
 
 
@@ -96,7 +90,7 @@ static const GUI_RECT RecGantry = {START_X,                        1*ICON_HEIGHT
 
 } */
 
-static void drawTemperature(void)
+void drawTemperature(void)
 {
   //icons and their values are updated one by one to reduce flicker/clipping
 
@@ -123,9 +117,13 @@ static void drawTemperature(void)
   GUI_SetColor(VAL_COLOR);
 
   u8 fs;
+  #ifdef SHOW_FAN_PERCENTAGE
     fs = (fanGetSpeed(current_fan)*100)/255;
     my_sprintf(tempstr, "%d%%", fs);
-
+  #else
+    fs = fanSpeed[current_fan];
+    my_sprintf(tempstr, "%d", fs);
+  #endif
   GUI_DispStringInPrect(&rectB[2], (u8 *)tempstr);                        //Fan value
 
   GUI_SetColor(HEADING_COLOR);
@@ -138,104 +136,103 @@ static void drawTemperature(void)
   GUI_SetTextMode(GUI_TEXTMODE_NORMAL);
   GUI_SetColor(GANTRYLBL_COLOR);
   GUI_SetBkColor(GANTRYLBL_BKCOLOR);
-  my_sprintf(tempstr, "   X: %.2f   Y: %.2f   Z: %.2f   ", position_X, position_Y, position_Z);
+  my_sprintf(tempstr, "   X: %.2f   Y: %.2f   Z: %.2f   ", xaxis, yaxis, zaxis);
   GUI_DispStringInPrect(&RecGantry,(u8 *)tempstr);
 
   GUI_RestoreColorDefault();
 }
 
-void persistPosition(int n, float val){
+void storegantry(int n, float val){
     //float* px = &val;
   switch (n)
   {
   case 0:
-    position_X = val;
+    xaxis = val;
     break;
   case 1:
-    position_Y = val;
+    yaxis = val;
     break;
   case 2:
-    position_Z = val;
+    zaxis = val;
     break;
   default:
     break;
   }
-  positionCmdWait = false;
+  gantryCmdWait = false;
 }
 
-//static void gantry_inc(int n, float val){
-//    //float* px = &val;
-//  switch (n)
-//  {
-//  case 0:
-//    position_X += val;
-//    if ( position_X > X_MAX_POS){
-//      position_X = X_MAX_POS;
-//    }
-//    break;
-//  case 1:
-//    position_Y += val;
-//    if ( position_Y > Y_MAX_POS){
-//      position_Y = Y_MAX_POS;
-//    }
-//    break;
-//  case 2:
-//    position_Z += val;
-//    if ( position_Z > Z_MAX_POS){
-//      position_Z = Z_MAX_POS;
-//    }
-//    break;
-//  default:
-//    break;
-//  }
-//}
-
-//static void gantry_dec(int n, float val){
-//    //float* px = &val;
-//  switch (n)
-//  {
-//  case 0:
-//    position_X -= val;
-//    if ( position_X < X_MIN_POS){
-//      position_X = X_MIN_POS;
-//    }
-//    break;
-//  case 1:
-//    position_Y -= val;
-//    if ( position_Y < Y_MIN_POS){
-//      position_Y = Y_MIN_POS;
-//    }
-//    break;
-//  case 2:
-//    position_Z -= val;
-//    if ( position_Z < Z_MIN_POS){
-//      position_Z = Z_MIN_POS;
-//    }
-//    break;
-//  default:
-//    break;
-//  }
-//}
+void gantry_inc(int n, float val){
+    //float* px = &val;
+  switch (n)
+  {
+  case 0:
+    xaxis += val;
+    if ( xaxis > X_MAX_POS){
+      xaxis = X_MAX_POS;
+    }
+    break;
+  case 1:
+    yaxis += val;
+    if ( yaxis > Y_MAX_POS){
+      yaxis = Y_MAX_POS;
+    }
+    break;
+  case 2:
+    zaxis += val;
+    if ( zaxis > Z_MAX_POS){
+      zaxis = Z_MAX_POS;
+    }
+    break;
+  default:
+    break;
+  }
+}
+void gantry_dec(int n, float val){
+    //float* px = &val;
+  switch (n)
+  {
+  case 0:
+    xaxis -= val;
+    if ( xaxis < X_MIN_POS){
+      xaxis = X_MIN_POS;
+    }
+    break;
+  case 1:
+    yaxis -= val;
+    if ( yaxis < Y_MIN_POS){
+      yaxis = Y_MIN_POS;
+    }
+    break;
+  case 2:
+    zaxis -= val;
+    if ( zaxis < Z_MIN_POS){
+      zaxis = Z_MIN_POS;
+    }
+    break;
+  default:
+    break;
+  }
+}
 
 float getAxisLocation(u8 n){
   switch (n)
   {
   case 0:
-    return position_X;
+    return xaxis;
   case 1:
-    return position_Y;
+    return yaxis;
   case 2:
-    return position_Z;
+    return zaxis;
   default:
-    return position_X;
+    return xaxis;
   }
 }
 
 
 void statusScreen_setMsg(const uint8_t *title, const uint8_t *msg)
 {
-  memcpy(msg_head, (char *)title, sizeof(msg_head));
-  memcpy(msg_body, (char *)msg, sizeof(msg_body));
+  memcpy(msgtitle, (char *)title, sizeof(msgtitle));
+  memcpy(msgbody, (char *)msg, sizeof(msgbody));
 
   if (infoMenu.menu[infoMenu.cur] == menuStatus)
   {
@@ -250,13 +247,13 @@ void drawStatusScreenMsg(void)
 
   ICON_CustomReadDisplay(RectInfo.x0,RectInfo.y0,INFOBOX_WIDTH,INFOBOX_HEIGHT,INFOBOX_ADDR);
   GUI_SetColor(INFOMSG_BKCOLOR);
-  GUI_DispString(RectInfo.x0 + STATUS_MSG_ICON_XOFFSET, RectInfo.y0 + STATUS_MSG_ICON_YOFFSET,symbol_image_by_index(SYMBOL_INFO));
+  GUI_DispString(RectInfo.x0 + STATUS_MSG_ICON_XOFFSET, RectInfo.y0 + STATUS_MSG_ICON_YOFFSET,IconCharSelect(SYMBOL_INFO));
 
-  GUI_DispString(RectInfo.x0 + BYTE_HEIGHT+ STATUS_MSG_TITLE_XOFFSET,RectInfo.y0 + STATUS_MSG_ICON_YOFFSET,(u8*)msg_head);
+  GUI_DispString(RectInfo.x0 + BYTE_HEIGHT+ STATUS_MSG_TITLE_XOFFSET,RectInfo.y0 + STATUS_MSG_ICON_YOFFSET,(u8*)msgtitle);
   GUI_SetBkColor(INFOMSG_BKCOLOR);
   GUI_FillPrect(&msgRect);
 
-  Scroll_CreatePara(&msgScroll, (u8 *)msg_body, &msgRect);
+  Scroll_CreatePara(&msgScroll, (u8 *)msgbody, &msgRect);
 
   GUI_RestoreColorDefault();
 }
@@ -270,11 +267,11 @@ void scrollMsg(void){
 
 void toggleTool(void)
 {
-  if (OS_GetTime() > nowTime + update_time)
+  if (OS_GetTime() > nextTime)
   {
-    // FIXME decouple extruder from heater
+    if (EXTRUDER_COUNT > 1)
     {
-      current_Ext = heater_next_nozzle(current_Ext);
+      current_Ext = (TOOL)((current_Ext + 1) % HEATER_COUNT);
       if (current_Ext == 0)
       {
         current_Ext += 1;
@@ -285,20 +282,20 @@ void toggleTool(void)
       current_fan = (current_fan + 1) % FAN_NUM;
     }
     current_speedID = (current_speedID + 1) % 2;
-    nowTime = OS_GetTime();
+    nextTime = OS_GetTime() + update_time;
     drawTemperature();
 
     if (infoHost.connected == true)
     {
-      if (positionCmdWait != true)
+      if (gantryCmdWait != true)
       {
-        positionCmdWait = true;
-        storeCmd("M114\n"); // query position
+        gantryCmdWait = true;
+        storeCmd("M114\n");
       }
     }
     else
     {
-      positionCmdWait = false;
+      gantryCmdWait = false;
     }
   }
 }
@@ -306,54 +303,48 @@ void toggleTool(void)
 void menuStatus(void)
 {
   KEY_VALUE key_num = KEY_IDLE;
-
-  heater_ensure_config();
   GUI_SetBkColor(BACKGROUND_COLOR);
-//set_status_icon();
+  //set_status_icon();
   menuDrawPage(&StatusItems);
   GUI_SetColor(GANTRYLBL_BKCOLOR);
-//GUI_ClearPrect(&RecGantry);
+      //GUI_ClearPrect(&RecGantry);
   GUI_FillPrect(&RecGantry);
   drawTemperature();
   drawStatusScreenMsg();
 
   while (infoMenu.menu[infoMenu.cur] == menuStatus)
   {
-    if(infoHost.connected != connected_status){
+    if(infoHost.connected != lastConnection_status){
       if(infoHost.connected == false){
         statusScreen_setMsg(language_text(LABEL_SCREEN_INFO), language_text(LABEL_UNCONNECTED));
       }
       else{
         statusScreen_setMsg(language_text(LABEL_SCREEN_INFO), language_text(LABEL_READY));
       }
-      connected_status = infoHost.connected;
+      lastConnection_status = infoHost.connected;
     }
     scrollMsg();
     key_num = menuKeyGetValue();
     switch (key_num)
     {
-      case KEY_ICON_0: // dynamic nozzle
-        heatSetCurrentTool(TOOL_NOZZLE0);
+      case KEY_ICON_0:
         infoMenu.menu[++infoMenu.cur] = menuHeaterControl;
         break;
-      case KEY_ICON_1: // dynamic hotbed
-        heatSetCurrentTool(TOOL_HOTBED);
+      case KEY_ICON_1:
         infoMenu.menu[++infoMenu.cur] = menuHeaterControl;
         break;
-      case KEY_ICON_2: // dynamic fan
+      case KEY_ICON_2:
         infoMenu.menu[++infoMenu.cur] = menuCoolerControl;
         break;
-      case KEY_ICON_3: // dynamic motion speed / feed rate
+      case KEY_ICON_3:
         infoMenu.menu[++infoMenu.cur] = menuFeedSpeed;
         break;
-
       case KEY_ICON_4:
         infoMenu.menu[++infoMenu.cur] = menuMain;
         break;
-
-//      case KEY_ICON_7:
-//        infoMenu.menu[++infoMenu.cur] = menuMain; // menuPrint;
-//        break;
+      case KEY_ICON_7:
+        infoMenu.menu[++infoMenu.cur] = menuPrint;
+        break;
 
       default:break;
     }

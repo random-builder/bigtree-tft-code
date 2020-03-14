@@ -84,6 +84,7 @@
 #include "parseACK.h"
 #include "Selectmode.h"
 #include "extend.h"
+#include "SanityCheck.h"
 
 //menu
 #include "Printing.h"

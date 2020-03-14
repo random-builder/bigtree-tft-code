@@ -41,7 +41,7 @@ typedef enum {
 
 typedef union {
     uint32_t index;    // language text index, address = language_text(index)
-    uint8_t *address;  // reference to non-language text, address is explicit
+    void *address;  // reference to non-language text, address is explicit
 } LABEL;
 
 typedef struct

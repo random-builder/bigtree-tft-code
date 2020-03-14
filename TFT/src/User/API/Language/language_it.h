@@ -179,3 +179,5 @@
 #define IT_CASE_LIGHT           "Case Light"
 #define IT_DEBUG                "Debug"
 #define IT_MINI_STEP            "Steps Z"
+#define IT_CURRENT_SETTING      "Driver Setting"
+#define IT_STEPS_SETTING        "Stepper Setting"

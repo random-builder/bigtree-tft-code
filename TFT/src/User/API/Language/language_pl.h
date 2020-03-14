@@ -177,3 +177,5 @@
 #define PL_CASE_LIGHT           "Case Light"
 #define PL_DEBUG                "Debug"
 #define PL_MINI_STEP            "Steps Z"
+#define PL_CURRENT_SETTING      "Driver Setting"
+#define PL_STEPS_SETTING        "Stepper Setting"

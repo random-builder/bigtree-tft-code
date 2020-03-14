@@ -179,3 +179,5 @@
 #define PT_CASE_LIGHT           "Case Light"
 #define PT_DEBUG                "Debug"
 #define PT_MINI_STEP            "Steps Z"
+#define PT_CURRENT_SETTING      "Driver Setting"
+#define PT_STEPS_SETTING        "Stepper Setting"

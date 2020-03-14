@@ -179,3 +179,5 @@
 #define CZ_CASE_LIGHT           "Case Light"
 #define CZ_DEBUG                "Debug"
 #define CZ_MINI_STEP            "Steps Z"
+#define CZ_CURRENT_SETTING      "Driver Setting"
+#define CZ_STEPS_SETTING        "Stepper Setting"

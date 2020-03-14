@@ -179,3 +179,5 @@
 #define ES_CASE_LIGHT           "Case Light"
 #define ES_DEBUG                "Debug"
 #define ES_MINI_STEP            "Steps Z"
+#define ES_CURRENT_SETTING      "Driver Setting"
+#define ES_STEPS_SETTING        "Stepper Setting"

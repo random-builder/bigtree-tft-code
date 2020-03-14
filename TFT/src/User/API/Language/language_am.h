@@ -179,3 +179,5 @@
 #define AM_CASE_LIGHT           "Case Light"
 #define AM_DEBUG                "Debug"
 #define AM_MINI_STEP            "Steps Z"
+#define AM_CURRENT_SETTING      "Driver Setting"
+#define AM_STEPS_SETTING        "Stepper Setting"

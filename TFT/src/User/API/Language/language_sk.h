@@ -178,3 +178,5 @@
 #define SK_CASE_LIGHT           "Case Light"
 #define SK_DEBUG                "Debug"
 #define SK_MINI_STEP            "Steps Z"
+#define SK_CURRENT_SETTING      "Driver Setting"
+#define SK_STEPS_SETTING        "Stepper Setting"

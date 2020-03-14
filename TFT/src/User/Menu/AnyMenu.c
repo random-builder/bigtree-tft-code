@@ -137,7 +137,7 @@ void menuRefreshListPage(void){
           if(isPrinting() == true)
         #endif
         {
-          loopBackEnd();	 //perform backend printing loop between drawing icons to avoid printer idling
+          loopBackEnd();     //perform backend printing loop between drawing icons to avoid printer idling
         }
       #endif      
     }
@@ -200,7 +200,7 @@ void show_reminder_process(SYS_STATUS status_code)
 }
 
 static void loop_reminder_failure_reset(void)
-{	
+{   
   switch(reminder_failure.status_code)
   {
     case STATUS_IDLE:
@@ -224,7 +224,7 @@ static void loop_reminder_failure_reset(void)
       return;
   }
 
-  /* Clear warning message */		
+  /* Clear warning message */       
   reminder_failure.status_code = STATUS_IDLE;
   if(CurrentMenuItems == NULL)
     return;
@@ -232,7 +232,7 @@ static void loop_reminder_failure_reset(void)
 }
 
 static void loop_reminder_success_reset(void)
-{	
+{   
   switch(reminder_success.status_code)
   {
     case STATUS_NORMAL:
@@ -243,7 +243,7 @@ static void loop_reminder_success_reset(void)
       return;
   }
 
-  /* Clear warning message */		
+  /* Clear warning message */       
   reminder_success.status_code = STATUS_IDLE;
   if(CurrentMenuItems == NULL)
     return;
@@ -251,7 +251,7 @@ static void loop_reminder_success_reset(void)
 }
 
 static void loop_reminder_process_reset(void)
-{	
+{   
   switch(reminder_process.status_code)
   {
     case STATUS_IDLE:
@@ -263,7 +263,7 @@ static void loop_reminder_process_reset(void)
      break;
   }
 
-  /* End Busy display sing */		
+  /* End Busy display sing */       
   render_reminder_process(false);
   reminder_process.status_code = STATUS_IDLE;
 }
@@ -307,7 +307,7 @@ void menuDrawPage(const MENUITEMS *menuItems)
         if(isPrinting() == true)
       #endif
       {
-        loopBackEnd();	 //perform backend printing loop between drawing icons to avoid printer idling
+        loopBackEnd();   //perform backend printing loop between drawing icons to avoid printer idling
       }
     #endif
   }
@@ -339,7 +339,7 @@ void menuDrawListPage(const LISTITEMS *listItems)
         if(isPrinting() == true)
       #endif
       {
-        loopBackEnd();	 //perform backend printing loop between drawing icons to avoid printer idling
+        loopBackEnd();   //perform backend printing loop between drawing icons to avoid printer idling
       }
     #endif
   }    
@@ -409,7 +409,7 @@ void loopBackEnd(void)
   
   parseRcvGcode();                    //Parse the received Gcode from other UART, such as: ESP3D, etc...
 
-  loopCheckHeater();			            //Temperature related settings
+  loopCheckHeater();                        //Temperature related settings
   
 
 #if defined ONBOARD_SD_SUPPORT && !defined M27_AUTOREPORT

@@ -146,23 +146,23 @@ static void setup_feature_entry(const FEATURE_INDEX feature_index, const bool wi
 
     case OPTION_INVERT_X:
         if (with_update) {
-            infoSettings.invert_xaxis = (infoSettings.invert_xaxis + 1) % TOGGLE_ENTRY_COUNT;
+            infoSettings.invert_axis[X_AXIS] = (infoSettings.invert_axis[X_AXIS] + 1) % TOGGLE_ENTRY_COUNT;
         }
-        feature_entry->icon = toggle_entry_symbol[infoSettings.invert_xaxis];
+        feature_entry->icon = toggle_entry_symbol[infoSettings.invert_axis[X_AXIS]];
         break;
 
     case OPTION_INVERT_Y:
         if (with_update) {
-            infoSettings.invert_yaxis = (infoSettings.invert_yaxis + 1) % TOGGLE_ENTRY_COUNT;
+            infoSettings.invert_axis[Y_AXIS] = (infoSettings.invert_axis[Y_AXIS] + 1) % TOGGLE_ENTRY_COUNT;
         }
-        feature_entry->icon = toggle_entry_symbol[infoSettings.invert_yaxis];
+        feature_entry->icon = toggle_entry_symbol[infoSettings.invert_axis[Y_AXIS]];
         break;
 
     case OPTION_INVERT_Z:
         if (with_update) {
-            infoSettings.invert_zaxis = (infoSettings.invert_zaxis + 1) % TOGGLE_ENTRY_COUNT;
+            infoSettings.invert_axis[Z_AXIS] = (infoSettings.invert_axis[Z_AXIS] + 1) % TOGGLE_ENTRY_COUNT;
         }
-        feature_entry->icon = toggle_entry_symbol[infoSettings.invert_zaxis];
+        feature_entry->icon = toggle_entry_symbol[infoSettings.invert_axis[Z_AXIS]];
         break;
 
 #ifdef PS_ON_PIN

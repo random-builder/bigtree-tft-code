@@ -160,37 +160,37 @@ static int compute_length_factor(const char *shift) {
     if (false) {
         // noop
     } else if (utility_has_matach(shift, "X-")) {
-        if (infoSettings.invert_xaxis == 0) {
+        if (infoSettings.invert_axis[X_AXIS] == 0) {
             return -1;
         } else {
             return +1;
         }
     } else if (utility_has_matach(shift, "X+")) {
-        if (infoSettings.invert_xaxis == 0) {
+        if (infoSettings.invert_axis[X_AXIS] == 0) {
             return +1;
         } else {
             return -1;
         }
     } else if (utility_has_matach(shift, "Y-")) {
-        if (infoSettings.invert_yaxis == 0) {
+        if (infoSettings.invert_axis[Y_AXIS] == 0) {
             return -1;
         } else {
             return +1;
         }
     } else if (utility_has_matach(shift, "Y+")) {
-        if (infoSettings.invert_yaxis == 0) {
+        if (infoSettings.invert_axis[Y_AXIS] == 0) {
             return +1;
         } else {
             return -1;
         }
     } else if (utility_has_matach(shift, "Z-")) {
-        if (infoSettings.invert_zaxis == 0) {
+        if (infoSettings.invert_axis[Z_AXIS] == 0) {
             return -1;
         } else {
             return +1;
         }
     } else if (utility_has_matach(shift, "Z+")) {
-        if (infoSettings.invert_zaxis == 0) {
+        if (infoSettings.invert_axis[Z_AXIS] == 0) {
             return +1;
         } else {
             return -1;

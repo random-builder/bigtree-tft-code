@@ -177,3 +177,5 @@
 #define FR_CASE_LIGHT           "Case Light"
 #define FR_DEBUG                "Debug"
 #define FR_MINI_STEP            "Steps Z"
+#define FR_CURRENT_SETTING      "Driver Setting"
+#define FR_STEPS_SETTING        "Stepper Setting"

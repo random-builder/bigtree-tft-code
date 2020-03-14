@@ -36,12 +36,15 @@ extern char *dynamic_label[LISTITEM_PER_PAGE];
 
 //#define _LABEL_DYNAMIC_ 12345 //just random number for reference
 
-void ListItem_Display(const GUI_RECT *rect, uint8_t positon, const LISTITEM *curitem, bool pressed);
-
-void ListMenuSetItem(const LISTITEM *menuItem, uint8_t positon);
-
+uint8_t * IconCharSelect(uint8_t sel);
+void setDynamicLabel(uint8_t i,char *label);
+char * getDynamicLabel(uint8_t i);
+void setDynamicValue(uint8_t i,float value);
+float getDynamicValue(uint8_t i);
+void DrawCharIcon(const GUI_RECT * rect,ICON_POS iconalign, uint16_t iconindex, uint16_t btn_color);
+void ListItem_Display(const GUI_RECT* rect, uint8_t positon, const LISTITEM * curitem, bool pressed);
+void ListMenuSetItem (const LISTITEM * menuItem, uint8_t positon);
+void draw_itemtitle(GUI_POINT pos,LABEL label, uint8_t position, int textarea_width);
 void ListItem_DisplayToggle(uint16_t sx, uint16_t sy, uint8_t iconchar_state);
-
-void ListItem_DisplayCustomValue(const GUI_RECT *rect, uint8_t *value);
-
-GUI_POINT getTextStartPoint(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, ICON_POS pos, const char *textchar);
+void ListItem_DisplayCustomValue(const GUI_RECT* rect,LABEL value,int i);
+GUI_POINT getTextStartPoint(uint16_t sx, uint16_t sy, uint16_t ex, uint16_t ey, ICON_POS pos, const char * textchar);
